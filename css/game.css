@@ -1,0 +1,200 @@
+* {
+	box-sizing: border-box;
+	user-select: none;
+	margin: 0;
+	padding: 0;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+body {
+	background: #000000;
+	display: flex;
+	justify-content: center;
+}
+
+#context-menu {
+	border: solid 0.1vh black;
+	border-radius: 2vh;
+	display: none;
+	position: absolute;
+	z-index: 1000;
+	min-width: 30vh;
+	background: #eeeeee;
+	padding: 2vh 0 2vh 0;
+}
+
+.content-button {
+	cursor: pointer;
+	padding: 1vh;
+	display: block;
+	width: 100%;
+	border: none;
+	border-radius: 0;
+	font-size: 2.5vh;
+	background: #f0f0f0;
+}
+.content-button:hover {
+	background: #e2e2e2;
+}
+
+#press-f11 {
+	display: none;
+	position: fixed;
+	z-index: 888;
+	color: #000000;
+	opacity: 1;
+	transition: opacity 1s;
+}
+
+/* Стили главного меню */
+
+#game-menu {
+	aspect-ratio: 1920/1080;
+	position: fixed;
+	background: #000000;
+	min-height: 100vh;
+}
+
+#game-bg {
+	aspect-ratio: 1920/1080;
+	height: 100vh;
+	position: fixed;
+	z-index: 1;
+}
+
+.settings-svg-box {
+	top: 2vh;
+	left: calc((100vw - 100vh * 16 / 9) / 2 + 2vh);
+	position: fixed;
+	z-index: 2;
+}
+
+#settings-svg {
+	aspect-ratio: 1/1;
+	height: 10vh;
+	border-radius: 50%;
+	background: #00000000;
+	transition: background 0.5s;
+}
+
+#settings-svg g {
+	fill: #4d4d4d;
+}
+
+#settings-svg:hover {
+	transition: background 0.5s;
+	background: #7575754b;
+	cursor: pointer;
+}
+
+/* settings */
+
+.settingsView-box {
+	opacity: 0;
+	transition: opacity 0.2s;
+	aspect-ratio: 1920/1080;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #00000098;
+	position: fixed;
+	z-index: -10;
+}
+
+.settingsView {
+	aspect-ratio: 1920/1080;
+	display: block;
+	background: #dadada;
+	border: solid 0.3vh #000;
+	border-radius: 3vh;
+	min-height: 80vh;
+	-webkit-box-shadow: 0px 0px 16px -6px rgba(34, 60, 80, 0.6) inset;
+	-moz-box-shadow: 0px 0px 16px -6px rgba(34, 60, 80, 0.6) inset;
+	box-shadow: 0px 0px 16px -6px rgba(34, 60, 80, 0.6) inset;
+	position: fixed;
+	z-index: 11;
+}
+
+.svg-box {
+	display: flex;
+	justify-content: flex-end;
+	height: 5vh;
+	margin: 2vh 2vh 2vh 2vh;
+}
+
+#close_settings {
+	cursor: pointer;
+	aspect-ratio: 52/52;
+	max-height: 7vh;
+	fill:#e01010;
+	transition: fill 0.5s;
+}
+#close_settings:hover {
+	transition: fill 0.3s;
+	fill:#bd0707;
+}
+
+#volume {
+	appearance: none;
+	-webkit-appearance: none; /* Убираем стандартный стиль для WebKit браузеров */
+	width: 80vh; /* Длина ползунка 80vh */
+	height: 1vh; /* Высота полоски */
+	background: #a1a1a1; /* Цвет фона полоски */
+	border-radius: 1vh; /* Закругление краев */
+	outline: none; /* Убираем обводку */
+	opacity: 0.8; /* Прозрачность */
+	transition: opacity .2s; /* Плавный переход прозрачности */
+}
+
+#volume:hover {
+	opacity: 1; /* Увеличиваем непрозрачность при наведении */
+}
+
+#volume::-webkit-slider-thumb {
+	-webkit-appearance: none; /* Убираем стандартный стиль для WebKit браузеров */
+	appearance: none; /* Убираем стандартный стиль */
+	width: 3vh; /* Ширина "ползунка" */
+	height: 4vh; /* Высота "ползунка" */
+	border-radius: 5vh; /* Круглая форма "ползунка" */
+	background: #990303; /* Цвет "ползунка" */
+	cursor: pointer; /* Курсор в виде указателя */
+}
+
+#volume::-moz-range-thumb {
+	width: 20px; /* Ширина "ползунка" */
+	height: 20px; /* Высота "ползунка" */
+	border-radius: 50%; /* Круглая форма "ползунка" */
+	background: #8f2929; /* Цвет "ползунка" */
+	cursor: pointer; /* Курсор в виде указателя */
+}
+
+.volume {
+	display: flex;
+	margin: 0 10vh 6vh 5vh;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.theme {
+	display: flex;
+	margin: 0 10vh 0 5vh;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.theme_item {
+	aspect-ratio: 1920/1080;
+	max-height: 17vh;
+	border-radius: 3vh;
+	outline: solid 0.4vh #000000;
+	transition: outline 1s;
+	cursor: pointer;
+	transition: box-shadow 0.5s;
+}
+.theme_item:hover {
+	transition: box-shadow 0.3s;
+	-webkit-box-shadow: 0px 0px 13px 3px rgba(34, 60, 80, 0.2);
+	-moz-box-shadow: 0px 0px 13px 3px rgba(34, 60, 80, 0.2);
+	box-shadow: 0px 0px 13px 3px rgba(34, 60, 80, 0.2);
+}
