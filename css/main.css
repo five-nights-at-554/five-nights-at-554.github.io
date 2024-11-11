@@ -38,7 +38,7 @@ body {
 }
 
 #press-f11 {
-	display: none;
+	/* display: none; */
 	position: fixed;
 	z-index: 888;
 	color: #868686;
@@ -49,7 +49,7 @@ body {
 /* Дисклеймер / предупреждение */
 
 #disclaimer {
-	display: none;
+	/* display: none; */
 	aspect-ratio: 1920/1080;
 	position: fixed;
 	min-height: 100vh;
@@ -182,10 +182,35 @@ body {
 	text-decoration: none;
 }
 
+#main-filipp {
+	aspect-ratio: 1920/648;
+	height: 60vh;
+	position: fixed;
+	display: grid;
+	grid-template-columns: 10fr 2fr 1fr;
+	z-index: 9;
+	top: 44vh;
+}
+
+@keyframes main-fila {
+    0% { transform: rotate(2deg); }
+    25% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+    75% { transform: rotate(-2deg); }
+    100% { transform: rotate(2deg); }
+}
+
+#main-filipp-image {
+	animation: main-fila 10s infinite cubic-bezier(0.5, 0, 0.5, 1);
+	transform-origin: center;
+	aspect-ratio: 1080/2088;
+	height: 60vh;
+}
+
 /* settings */
 
 .settingsView-box {
-	opacity: 100;
+	opacity: 0;
 	transition: opacity 0.2s;
 	aspect-ratio: 1920/1080;
 	min-height: 100vh;
@@ -194,7 +219,7 @@ body {
 	align-items: center;
 	background: #00000098;
 	position: fixed;
-	z-index: 10;
+	z-index: -10;
 }
 
 .settingsView {
@@ -270,7 +295,7 @@ body {
 	justify-content: space-between;
 	align-items: center;
 }
- 
+
 .theme {
 	display: flex;
 	margin: 0 10vh 0 5vh;
