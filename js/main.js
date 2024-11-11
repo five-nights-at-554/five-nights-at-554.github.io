@@ -1,5 +1,5 @@
 let contextMenuTF = false
-let disc_check = sessionStorage.getItem('disc') || false
+let disc_check = localStorage.getItem('disc') || false
 var audTF = false
 
 document.addEventListener('visibilitychange', function() {
@@ -57,7 +57,7 @@ function discClose() {
 		muz_first()
 		document.getElementById('disclaimer').style.display = 'none'
 		contextMenuTF = true
-		sessionStorage.setItem('disc', true)
+		localStorage.setItem('disc', true)
 	}
 	else {
 		disc_pass_input.style.outline = 'solid 0.1rem #bd0707'
