@@ -1,5 +1,18 @@
-contextMenuTF = false
+let contextMenuTF = false
 let disc_check = sessionStorage.getItem('disc') || false
+var audTF = false
+
+document.addEventListener('visibilitychange', function() {
+	if (audTF) {
+		if (document.visibilityState === 'hidden') {
+			AUDIO.mainMenu.pause()
+		}
+		else {
+			AUDIO.mainMenu.play()
+		}
+	}
+})
+
 
 function createSound(path) {
 	let audio = new Audio()
@@ -39,6 +52,7 @@ function discClose() {
 	disc_pass = disc_pass_input.value
 	if (disc_pass === 'filipok226') {
 		disc_pass_input.style.border = 'solid 0.1rem green'
+		audTF = true
 		f11Message()
 		muz_first()
 		document.getElementById('disclaimer').style.display = 'none'
@@ -55,6 +69,7 @@ if (disc_check) {
 	document.getElementById('disc-pass').style.display = 'none'
 	document.getElementById('disc_accept').addEventListener('click', () => {
 		document.getElementById('disclaimer').style.display = 'none'
+		audTF = true
 		f11Message()
 		muz_first()
 		contextMenuTF = true

@@ -1,7 +1,5 @@
 var bgImg = localStorage.getItem('bgImg') || 1
 var volume_val = localStorage.getItem('volume_value') || 80
-console.log(bgImg)
-console.log(volume_val)
 
 function bgCheck() {
 	if (bgImg === '1') {
@@ -50,9 +48,6 @@ document.querySelector('#close_settings').addEventListener('click', () => {
 	volume_val = document.getElementById('volume').value
 	localStorage.setItem('volume_value', volume_val)
 	localStorage.setItem('bgImg', bgImg)
-	console.log('Значения для сохранения:')
-	console.log(localStorage.getItem('volume_value'))
-	console.log(localStorage.getItem('bgImg'))
 	document.querySelector('.settingsView-box').style.opacity = 0
 	setTimeout(function() {
 		document.querySelector('.settingsView-box').style.zIndex = -10
