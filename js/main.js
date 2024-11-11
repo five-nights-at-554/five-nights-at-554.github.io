@@ -1,4 +1,4 @@
-contextMenuTF = true
+contextMenuTF = false
 let disc_check = sessionStorage.getItem('disc') || false
 
 function createSound(path) {
