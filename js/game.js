@@ -1,5 +1,9 @@
 var audTF = true
 
+const BG = {
+	
+}
+
 document.addEventListener('visibilitychange', function() {
 	if (audTF) {
 		if (document.visibilityState === 'hidden') {
