@@ -113,7 +113,7 @@ body {
 	-moz-box-shadow: 0px 0px 16px -6px rgba(34, 60, 80, 0.6) inset;
 	box-shadow: 0px 0px 16px -6px rgba(34, 60, 80, 0.6) inset;
 	position: fixed;
-	z-index: 11;
+	z-index: 99;
 }
 
 .svg-box {
@@ -197,4 +197,12 @@ body {
 	-webkit-box-shadow: 0px 0px 13px 3px rgba(34, 60, 80, 0.2);
 	-moz-box-shadow: 0px 0px 13px 3px rgba(34, 60, 80, 0.2);
 	box-shadow: 0px 0px 13px 3px rgba(34, 60, 80, 0.2);
+}
+
+#gg {
+	position: fixed;
+	z-index: 20;
+	height: 70vh;
+	top: 24vh;
+	left: calc((100vw - 100vh * 16 / 9) / 2 + 3vh);
 }

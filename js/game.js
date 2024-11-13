@@ -1,4 +1,4 @@
-var audTF = false
+var audTF = true
 
 document.addEventListener('visibilitychange', function() {
 	if (audTF) {
@@ -44,7 +44,7 @@ f11Message()
 
 const contextMenu = document.getElementById('context-menu')
 
-    window.addEventListener('contextmenu', (e) => {
+window.addEventListener('contextmenu', (e) => {
         e.preventDefault()
 
         if (contextMenuTF) {
@@ -67,14 +67,54 @@ const contextMenu = document.getElementById('context-menu')
 
         	contextMenu.style.display = 'block'
 			}
-    })
+})
 
-    window.addEventListener('click', () => {
-        contextMenu.style.display = 'none'
-    })
+window.addEventListener('click', () => {
+    contextMenu.style.display = 'none'
+})
+
+let lef = 2
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+		if (!settingsOn) {
+			lef = lef - 2
+			document.getElementById('gg').src = 'images/fil-left.png'
+			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+		}
+        console.log('Нажата стрелка влево')
+    } else if (event.key === 'ArrowRight') {
+		if (!settingsOn) {
+			lef = lef + 2
+			document.getElementById('gg').src = 'images/fil-right.png'
+			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+
+		}
+		console.log('Нажата стрелка')
+    }
+
+	if (lef <= 0 || lef >= 156.5) {
+		document.getElementById('gg').style.display = 'none'
+	} else if (lef > 0 && lef < 156.5) {
+		document.getElementById('gg').style.display = 'inline-block'
+	}
+})
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // settings
-
+let settingsOn = false
 var volume_val = localStorage.getItem('volume_value') || 80
 console.log(volume_val)
 	
@@ -83,8 +123,9 @@ AUDIO.game_bg.volume = volume_val / 100
 document.getElementById('volume-span').textContent = volume_val
 
 function settingsView() {
-	document.querySelector('.settingsView-box').style.zIndex = 10
+	document.querySelector('.settingsView-box').style.zIndex = 100
 	document.querySelector('.settingsView-box').style.opacity = 100
+	settingsOn = true
 }
 
 document.getElementById('volume').addEventListener('input', () => {
@@ -100,6 +141,7 @@ document.querySelector('#close_settings').addEventListener('click', () => {
 	setTimeout(function() {
 		document.querySelector('.settingsView-box').style.zIndex = -10
 	}, 200)
+	settingsOn = false
 })
 
 document.getElementById('settings-svg').addEventListener('click', () => {
