@@ -76,51 +76,13 @@ window.addEventListener('contextmenu', (e) => {
 window.addEventListener('click', () => {
     contextMenu.style.display = 'none'
 })
+	
+	let isArrowLeftPressed = false 
+	let isArrowRightPressed = false 
+	
+	const gg = document.getElementById('gg')
+	
 
-// let lef = 2
-// document.addEventListener('keydown', (event) => {
-	//     if (event.key === 'ArrowLeft') {
-		// 		if (!settingsOn) {
-			// 			lef = lef - 1.7
-			// 			document.getElementById('gg').src = 'images/fil-left.png'
-			// 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-			// 		}
-			//         console.log('Нажата стрелка влево')
-			//     } else if (event.key === 'ArrowRight') {
-				// 		if (!settingsOn) {
-					// 			lef = lef + 1.7
-					// 			document.getElementById('gg').src = 'images/fil-right.png'
-					// 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-					
-					// 		}
-					// 		console.log('Нажата стрелка')
-//     }
-
-// 	if (lef <= 0) {
-// 		lef = 155
-// 		document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-// 		--bg_number
-// 		document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
-// 	}
-// 	else if (lef >= 156.5) {
-// 		lef = 2
-// 		document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-// 		++bg_number
-// 		document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
-// 	}
-// 	 else if (lef > 0 && lef < 156.5) {
-	// 		document.getElementById('gg').style.display = 'inline-block'
-	// 	}
-	// })
-	
-	
-	
-	let isArrowLeftPressed = false // Флаг для отслеживания нажатия стрелки влево
-	let isArrowRightPressed = false // Флаг для отслеживания нажатия стрелки вправо
-	
-	const gg = document.getElementById('gg') // Получаем элемент
-	
-	// Функция для перемещения объекта
 let lef = 3
 let bg_number = 2
 
