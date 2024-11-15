@@ -1,4 +1,5 @@
 var audTF = true
+let speed = 2
 
 const BG = [
 
@@ -7,10 +8,10 @@ const BG = [
 document.addEventListener('visibilitychange', function() {
 	if (audTF) {
 		if (document.visibilityState === 'hidden') {
-			AUDIO.game_bg.pause()
+			AUDIO.mainMenu.pause()
 		}
 		else {
-			AUDIO.game_bg.play()
+			AUDIO.mainMenu.play()
 		}
 	}
 })
@@ -28,9 +29,9 @@ const AUDIO = {
 }
 
 function muz_game() {
-	AUDIO.game_bg.play()
-	AUDIO.game_bg.loop = true
-	AUDIO.game_bg.autoplay = true
+	AUDIO.mainMenu.play()
+	AUDIO.mainMenu.loop = true
+	AUDIO.mainMenu.autoplay = true
 }
 
 muz_game()
@@ -87,14 +88,62 @@ let lef = 3
 let bg_number = 202
 
 function movegg() {
+	const arrow_hint = document.getElementById('arrow_hint')
+
+	if (bg_number === 204) {
+		if (lef >= 14.5 && lef <= 75.5) {
+			// isArrowRightPressed = false
+			// isArrowLeftPressed = false
+			arrow_hint.style.display = 'block'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+	else if (bg_number === 205) {
+		if (lef >= 91.5 && lef <= 155) {
+			// isArrowRightPressed = false
+			// isArrowLeftPressed = false
+			arrow_hint.style.display = 'block'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 202) {
+		if (lef >= 56 && lef <= 98) {
+			// isArrowRightPressed = false
+			// isArrowLeftPressed = false
+			arrow_hint.style.display = 'block'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 203) {
+		if (lef >= 27 && lef <= 62) {
+			// isArrowRightPressed = false
+			// isArrowLeftPressed = false
+			arrow_hint.style.display = 'block'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+	else {
+		arrow_hint.style.display = 'none'
+	}
+
     if (isArrowLeftPressed) {
  
-        lef = lef - 0.5
+        lef = lef - speed
         gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
     }
     if (isArrowRightPressed) {
 
-        lef = lef + 0.5
+        lef = lef + speed
         gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
     }
 
@@ -130,6 +179,7 @@ document.addEventListener('keyup', (event) => {
     } else if (event.key === 'ArrowRight') {
         isArrowRightPressed = false
     }
+	
 })
 requestAnimationFrame(movegg)
 
@@ -245,7 +295,7 @@ var volume_val = localStorage.getItem('volume_value') || 80
 console.log(volume_val)
 	
 document.getElementById('volume').value = volume_val
-AUDIO.game_bg.volume = volume_val / 100
+AUDIO.mainMenu.volume = volume_val / 100
 document.getElementById('volume-span').textContent = volume_val
 
 function settingsView() {
@@ -256,10 +306,16 @@ function settingsView() {
 
 document.getElementById('volume').addEventListener('input', () => {
 	let volume_value = document.getElementById('volume').value
-	AUDIO.game_bg.volume = volume_value / 100
+	AUDIO.mainMenu.volume = volume_value / 100
 	document.getElementById('volume-span').textContent = volume_value
 
 	muz_game()
+})
+
+document.getElementById('speed-vaule').addEventListener('input', () => {
+	let speed_value = document.getElementById('speed-vaule').value
+	speed = speed_value / 10
+	document.getElementById('speed-span').textContent = speed_value * 10
 })
 
 document.querySelector('#close_settings').addEventListener('click', () => {

@@ -178,6 +178,46 @@ body {
 	justify-content: space-between;
 	align-items: center;
 }
+.speed {
+	display: flex;
+	margin: 0 10vh 5vh 5vh;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#speed-vaule {
+	appearance: none;
+	-webkit-appearance: none; /* Убираем стандартный стиль для WebKit браузеров */
+	width: 80vh; /* Длина ползунка 80vh */
+	height: 1vh; /* Высота полоски */
+	background: #a1a1a1; /* Цвет фона полоски */
+	border-radius: 1vh; /* Закругление краев */
+	outline: none; /* Убираем обводку */
+	opacity: 0.8; /* Прозрачность */
+	transition: opacity .2s; /* Плавный переход прозрачности */
+}
+
+#speed-vaule:hover {
+	opacity: 1; /* Увеличиваем непрозрачность при наведении */
+}
+
+#speed-vaule::-webkit-slider-thumb {
+	-webkit-appearance: none; /* Убираем стандартный стиль для WebKit браузеров */
+	appearance: none; /* Убираем стандартный стиль */
+	width: 3vh; /* Ширина "ползунка" */
+	height: 4vh; /* Высота "ползунка" */
+	border-radius: 5vh; /* Круглая форма "ползунка" */
+	background: #990303; /* Цвет "ползунка" */
+	cursor: pointer; /* Курсор в виде указателя */
+}
+
+#speed-vaule::-moz-range-thumb {
+	width: 20px; /* Ширина "ползунка" */
+	height: 20px; /* Высота "ползунка" */
+	border-radius: 50%; /* Круглая форма "ползунка" */
+	background: #8f2929; /* Цвет "ползунка" */
+	cursor: pointer; /* Курсор в виде указателя */
+}
 
 .theme {
 	display: flex;
@@ -248,8 +288,18 @@ body {
 #npc-name {
 	color: #ff1010;
 }
-/* npc-talk */
-/* Я не могу войти в эту дверь! */
+
+#arrow_hint {
+	border-radius: 1vh;
+	padding: 1vh;
+	top: 2vh;
+	background: #f0f0f0a4;
+	/* display: block; */
+	display: none;
+	position: fixed;
+	z-index: 400;
+	color: #000000;
+}
 
 
 /* ОБЪЕКТЫ КОРИДОРОВ И КОМНАТ */
