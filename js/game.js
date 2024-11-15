@@ -8,10 +8,10 @@ const BG = [
 document.addEventListener('visibilitychange', function() {
 	if (audTF) {
 		if (document.visibilityState === 'hidden') {
-			AUDIO.mainMenu.pause()
+			AUDIO.game_bg.pause()
 		}
 		else {
-			AUDIO.mainMenu.play()
+			AUDIO.game_bg.play()
 		}
 	}
 })
@@ -29,9 +29,9 @@ const AUDIO = {
 }
 
 function muz_game() {
-	AUDIO.mainMenu.play()
-	AUDIO.mainMenu.loop = true
-	AUDIO.mainMenu.autoplay = true
+	AUDIO.game_bg.play()
+	AUDIO.game_bg.loop = true
+	AUDIO.game_bg.autoplay = true
 }
 
 muz_game()
@@ -295,7 +295,7 @@ var volume_val = localStorage.getItem('volume_value') || 80
 console.log(volume_val)
 	
 document.getElementById('volume').value = volume_val
-AUDIO.mainMenu.volume = volume_val / 100
+AUDIO.game_bg.volume = volume_val / 100
 document.getElementById('volume-span').textContent = volume_val
 
 function settingsView() {
@@ -306,7 +306,7 @@ function settingsView() {
 
 document.getElementById('volume').addEventListener('input', () => {
 	let volume_value = document.getElementById('volume').value
-	AUDIO.mainMenu.volume = volume_value / 100
+	AUDIO.game_bg.volume = volume_value / 100
 	document.getElementById('volume-span').textContent = volume_value
 
 	muz_game()
