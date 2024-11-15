@@ -84,17 +84,17 @@ window.addEventListener('click', () => {
 	
 
 let lef = 3
-let bg_number = 2
+let bg_number = 202
 
 function movegg() {
     if (isArrowLeftPressed) {
  
-        lef = lef - 1.5
+        lef = lef - 0.5
         gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
     }
     if (isArrowRightPressed) {
 
-        lef = lef + 1.5
+        lef = lef + 0.5
         gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
     }
 
@@ -116,10 +116,10 @@ function movegg() {
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft' && !isArrowLeftPressed) {
-		document.getElementById('gg').src = 'images/fil-left.png'
+		document.getElementById('gg-img').src = 'images/fil-left.png'
         isArrowLeftPressed = true
     } else if (event.key === 'ArrowRight' && !isArrowRightPressed) {
-		document.getElementById('gg').src = 'images/fil-right.png'
+		document.getElementById('gg-img').src = 'images/fil-right.png'
         isArrowRightPressed = true
     }
 })
@@ -133,7 +133,101 @@ document.addEventListener('keyup', (event) => {
 })
 requestAnimationFrame(movegg)
 
+let dsn = true
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowUp') {
+        console.log('Нажата стрелочка вверх')
+		if (bg_number === 204) {
+			if (lef >= 14.5 && lef <= 75.5) {
+				// isArrowRightPressed = false
+				// isArrowLeftPressed = false
 
+				if (dsn) {	
+					document.getElementById('npc-talk').textContent = 'Я не могу войти в эту дверь!'
+					document.getElementById('text').style.display = 'block'
+					document.getElementById('text').style.opacity = 100
+					dsn = false
+					setTimeout(function() {
+						document.getElementById('text').style.opacity = 0
+					}, 1500)
+					setTimeout(function() {
+						document.getElementById('text').style.display = 'none'
+						dsn = true
+					}, 1800)
+				}
+			}
+		}
+		else if (bg_number === 205) {
+			if (lef >= 91.5 && lef <= 155) {
+				// isArrowRightPressed = false
+				// isArrowLeftPressed = false
+
+				if (dsn) {	
+					document.getElementById('npc-talk').textContent = 'Я не могу войти в эту дверь!'
+					document.getElementById('text').style.display = 'block'
+					document.getElementById('text').style.opacity = 100
+					dsn = false
+					setTimeout(function() {
+						document.getElementById('text').style.opacity = 0
+					}, 1500)
+					setTimeout(function() {
+						document.getElementById('text').style.display = 'none'
+						dsn = true
+					}, 1800)
+				}
+			}
+		}
+
+		else if (bg_number === 202) {
+			if (lef >= 56 && lef <= 98) {
+				// isArrowRightPressed = false
+				// isArrowLeftPressed = false
+
+				if (dsn) {	
+					document.getElementById('npc-talk').textContent = 'Этот шкаф закрыт!'
+					document.getElementById('text').style.display = 'block'
+					document.getElementById('text').style.opacity = 100
+					dsn = false
+					setTimeout(function() {
+						document.getElementById('text').style.opacity = 0
+					}, 1500)
+					setTimeout(function() {
+						document.getElementById('text').style.display = 'none'
+						dsn = true
+					}, 1800)
+				}
+			}
+		}
+
+		else if (bg_number === 203) {
+			if (lef >= 27 && lef <= 62) {
+				// isArrowRightPressed = false
+				// isArrowLeftPressed = false
+
+				if (dsn) {	
+					document.getElementById('npc-talk').textContent = 'Уже так темно...'
+					document.getElementById('text').style.display = 'block'
+					document.getElementById('text').style.opacity = 100
+					dsn = false
+					setTimeout(function() {
+						document.getElementById('text').style.opacity = 0
+					}, 1500)
+					setTimeout(function() {
+						document.getElementById('text').style.display = 'none'
+						dsn = true
+					}, 1800)
+				}
+			}
+		}
+    }
+})
+
+document.addEventListener('visibilitychange', function() {
+	if (document.visibilityState === 'hidden') {
+		isArrowRightPressed = false
+		isArrowLeftPressed = false
+	}
+})
 
 
 
@@ -155,7 +249,7 @@ AUDIO.game_bg.volume = volume_val / 100
 document.getElementById('volume-span').textContent = volume_val
 
 function settingsView() {
-	document.querySelector('.settingsView-box').style.zIndex = 100
+	document.querySelector('.settingsView-box').style.zIndex = 850
 	document.querySelector('.settingsView-box').style.opacity = 100
 	settingsOn = true
 }
@@ -164,6 +258,8 @@ document.getElementById('volume').addEventListener('input', () => {
 	let volume_value = document.getElementById('volume').value
 	AUDIO.game_bg.volume = volume_value / 100
 	document.getElementById('volume-span').textContent = volume_value
+
+	muz_game()
 })
 
 document.querySelector('#close_settings').addEventListener('click', () => {

@@ -6,6 +6,11 @@
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+@font-face {
+	font-family: 'com';
+	src: url('fonts/RobotoSlab-Medium.ttf');
+}
+
 body {
 	background: #000000;
 	display: flex;
@@ -112,8 +117,6 @@ body {
 	-webkit-box-shadow: 0px 0px 16px -6px rgba(34, 60, 80, 0.6) inset;
 	-moz-box-shadow: 0px 0px 16px -6px rgba(34, 60, 80, 0.6) inset;
 	box-shadow: 0px 0px 16px -6px rgba(34, 60, 80, 0.6) inset;
-	position: fixed;
-	z-index: 99;
 }
 
 .svg-box {
@@ -201,8 +204,52 @@ body {
 
 #gg {
 	position: fixed;
-	z-index: 20;
+	z-index: 200;
 	height: 80vh;
 	top: 14vh;
 	left: calc((100vw - 100vh * 16 / 9) / 2 + 3vh);
 }
+
+#gg-img {
+	position: fixed;
+	z-index: 200;
+	height: 80vh;
+	top: 14vh;
+}
+
+#text {
+	opacity: 0;
+	display: none;
+
+	position: fixed;
+	z-index: 210;
+	bottom: 1vh;
+	height: 25vh;
+	left: calc((100vw - 100vh * 16 / 9) / 2 + 20vh);
+	right: calc((100vw - 100vh * 16 / 9) / 2 + 20vh);
+	padding: 2vh;
+
+	border: solid 0.2vh #fff;
+	border-radius: 5vh;
+	background: #3939398e;
+	transition: opacity 0.3s;
+}
+
+#text__com {
+	color: #e7e7e7;
+	font-size: 3.5vh;
+	font-family: 'com';
+}
+
+#text__com span {
+	font-family: inherit;
+}
+
+#npc-name {
+	color: #ff1010;
+}
+/* npc-talk */
+/* Я не могу войти в эту дверь! */
+
+
+/* ОБЪЕКТЫ КОРИДОРОВ И КОМНАТ */
