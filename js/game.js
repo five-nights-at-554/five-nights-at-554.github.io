@@ -91,7 +91,7 @@ function movegg() {
 	const arrow_hint = document.getElementById('arrow_hint')
 
 	if (bg_number === 204) {
-		if (lef >= 14.5 && lef <= 75.5) {
+		if (lef >= 64 && lef <= 96) {
 			// isArrowRightPressed = false
 			// isArrowLeftPressed = false
 			arrow_hint.style.display = 'block'
@@ -148,16 +148,26 @@ function movegg() {
     }
 
 	if (lef <= 2) {
-		lef = 148.5
-		document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-		--bg_number
-		document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+		if (bg_number > 202) {
+			lef = 148.5
+			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+			--bg_number
+			document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+		} else {
+			lef = 2
+			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+		}
 	}
 	else if (lef >= 150) {
-		lef = 2
-		document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-		++bg_number
-		document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+		if (bg_number < 205) {
+			lef = 2
+			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+			++bg_number
+			document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+		} else {
+			lef = 148.5
+			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+		}
 	}
 	
     requestAnimationFrame(movegg)
@@ -188,12 +198,12 @@ document.addEventListener('keydown', function(event) {
     if (event.key === 'ArrowUp') {
         console.log('Нажата стрелочка вверх')
 		if (bg_number === 204) {
-			if (lef >= 14.5 && lef <= 75.5) {
+			if (lef >= 64 && lef <= 96) {
 				// isArrowRightPressed = false
 				// isArrowLeftPressed = false
 
 				if (dsn) {	
-					document.getElementById('npc-talk').textContent = 'Я не могу войти в эту дверь!'
+					document.getElementById('npc-talk').textContent = 'Красивое дерево...'
 					document.getElementById('text').style.display = 'block'
 					document.getElementById('text').style.opacity = 100
 					dsn = false
@@ -213,7 +223,7 @@ document.addEventListener('keydown', function(event) {
 				// isArrowLeftPressed = false
 
 				if (dsn) {	
-					document.getElementById('npc-talk').textContent = 'Я не могу войти в эту дверь!'
+					document.getElementById('npc-talk').textContent = 'Блин! Нужен ключ!'
 					document.getElementById('text').style.display = 'block'
 					document.getElementById('text').style.opacity = 100
 					dsn = false
