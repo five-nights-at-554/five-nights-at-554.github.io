@@ -21,6 +21,7 @@ function createSound(path) {
 }
 
 const AUDIO = {
+	wrong: createSound('/js/sounds/wrong.mp3'),
 	calm: createSound('/js/sounds/calm.mp3'),
 	mainMenu: createSound('/js/sounds/mainMenu.mp3')
 }
@@ -62,6 +63,7 @@ function discClose() {
 	else {
 		disc_pass_input.style.outline = 'solid 0.1rem #bd0707'
 		disc_pass_input.value = ''
+		AUDIO.wrong.play()
 	}
 }
 
