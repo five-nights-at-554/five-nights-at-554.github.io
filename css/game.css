@@ -292,8 +292,8 @@ body {
 #arrow_hint {
 	border-radius: 1vh;
 	padding: 1vh;
-	top: 2vh;
-	background: #f0f0f0a4;
+	top: 4vh;
+	background: #f0f0f070;
 	/* display: block; */
 	display: none;
 	position: fixed;

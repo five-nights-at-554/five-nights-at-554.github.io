@@ -82,7 +82,23 @@ window.addEventListener('click', () => {
 	let isArrowRightPressed = false 
 	
 	const gg = document.getElementById('gg')
-	
+
+let talk_timeout
+function npcTalk(npc__talk, time1 = 1500) {
+	document.getElementById('npc-talk').textContent = npc__talk
+	document.getElementById('text').style.display = 'block'
+	document.getElementById('text').style.opacity = 100
+
+	clearTimeout(talk_timeout)
+
+	talk_timeout = setTimeout(function() {
+		document.getElementById('text').style.opacity = 0
+		setTimeout(function() {
+			document.getElementById('text').style.display = 'none'
+		}, 300)
+	}, time1)
+
+}
 
 let lef = 3
 let bg_number = 202
@@ -92,9 +108,8 @@ function movegg() {
 
 	if (bg_number === 204) {
 		if (lef >= 64 && lef <= 96) {
-			// isArrowRightPressed = false
-			// isArrowLeftPressed = false
 			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Горшок с деревом'
 		}
 		else {
 			arrow_hint.style.display = 'none'
@@ -102,9 +117,8 @@ function movegg() {
 	}
 	else if (bg_number === 205) {
 		if (lef >= 91.5 && lef <= 155) {
-			// isArrowRightPressed = false
-			// isArrowLeftPressed = false
 			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Дверь в актовый зал'
 		}
 		else {
 			arrow_hint.style.display = 'none'
@@ -113,9 +127,8 @@ function movegg() {
 
 	else if (bg_number === 202) {
 		if (lef >= 56 && lef <= 98) {
-			// isArrowRightPressed = false
-			// isArrowLeftPressed = false
 			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Шкаф с наградами'
 		}
 		else {
 			arrow_hint.style.display = 'none'
@@ -124,9 +137,8 @@ function movegg() {
 
 	else if (bg_number === 203) {
 		if (lef >= 27 && lef <= 62) {
-			// isArrowRightPressed = false
-			// isArrowLeftPressed = false
 			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Окно на улицу'
 		}
 		else {
 			arrow_hint.style.display = 'none'
@@ -172,14 +184,17 @@ function movegg() {
 	
     requestAnimationFrame(movegg)
 }
-
+let right_pressedTF = false
+let left_pressedTF = false
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft' && !isArrowLeftPressed) {
 		document.getElementById('gg-img').src = 'images/fil-left.png'
         isArrowLeftPressed = true
+		isArrowRightPressed = false
     } else if (event.key === 'ArrowRight' && !isArrowRightPressed) {
 		document.getElementById('gg-img').src = 'images/fil-right.png'
         isArrowRightPressed = true
+		isArrowLeftPressed = false
     }
 })
 
@@ -199,84 +214,24 @@ document.addEventListener('keydown', function(event) {
         console.log('Нажата стрелочка вверх')
 		if (bg_number === 204) {
 			if (lef >= 64 && lef <= 96) {
-				// isArrowRightPressed = false
-				// isArrowLeftPressed = false
-
-				if (dsn) {	
-					document.getElementById('npc-talk').textContent = 'Красивое дерево...'
-					document.getElementById('text').style.display = 'block'
-					document.getElementById('text').style.opacity = 100
-					dsn = false
-					setTimeout(function() {
-						document.getElementById('text').style.opacity = 0
-					}, 1500)
-					setTimeout(function() {
-						document.getElementById('text').style.display = 'none'
-						dsn = true
-					}, 1800)
-				}
+				npcTalk('Красивое дерево...')
 			}
 		}
 		else if (bg_number === 205) {
 			if (lef >= 91.5 && lef <= 155) {
-				// isArrowRightPressed = false
-				// isArrowLeftPressed = false
-
-				if (dsn) {	
-					document.getElementById('npc-talk').textContent = 'Блин! Нужен ключ!'
-					document.getElementById('text').style.display = 'block'
-					document.getElementById('text').style.opacity = 100
-					dsn = false
-					setTimeout(function() {
-						document.getElementById('text').style.opacity = 0
-					}, 1500)
-					setTimeout(function() {
-						document.getElementById('text').style.display = 'none'
-						dsn = true
-					}, 1800)
-				}
+				npcTalk('Блин! Нужен ключ!')
 			}
 		}
 
 		else if (bg_number === 202) {
 			if (lef >= 56 && lef <= 98) {
-				// isArrowRightPressed = false
-				// isArrowLeftPressed = false
-
-				if (dsn) {	
-					document.getElementById('npc-talk').textContent = 'Этот шкаф закрыт!'
-					document.getElementById('text').style.display = 'block'
-					document.getElementById('text').style.opacity = 100
-					dsn = false
-					setTimeout(function() {
-						document.getElementById('text').style.opacity = 0
-					}, 1500)
-					setTimeout(function() {
-						document.getElementById('text').style.display = 'none'
-						dsn = true
-					}, 1800)
-				}
+				npcTalk('Этот шкаф закрыт!')
 			}
 		}
 
 		else if (bg_number === 203) {
 			if (lef >= 27 && lef <= 62) {
-				// isArrowRightPressed = false
-				// isArrowLeftPressed = false
-
-				if (dsn) {	
-					document.getElementById('npc-talk').textContent = 'Уже так темно...'
-					document.getElementById('text').style.display = 'block'
-					document.getElementById('text').style.opacity = 100
-					dsn = false
-					setTimeout(function() {
-						document.getElementById('text').style.opacity = 0
-					}, 1500)
-					setTimeout(function() {
-						document.getElementById('text').style.display = 'none'
-						dsn = true
-					}, 1800)
-				}
+				npcTalk('Уже так темно...')
 			}
 		}
     }
