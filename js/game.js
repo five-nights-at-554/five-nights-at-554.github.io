@@ -1,3 +1,4 @@
+let isGameStop = false
 var audTF = true
 let speed = 2
 
@@ -115,6 +116,7 @@ function movegg() {
 	const arrow_hint = document.getElementById('arrow_hint')
 
 	if (bg_number === 204) {
+		document.getElementById('item0').style.zIndex = -10
 		if (lef >= 64 && lef <= 96) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.textContent = 'Горшок с деревом'
@@ -123,7 +125,6 @@ function movegg() {
 		else {
 			arrow_hint.style.display = 'none'
 		}
-		document.getElementById('item0').style.zIndex = -10
 
 	}
 	else if (bg_number === 205) {
@@ -135,11 +136,21 @@ function movegg() {
 		else {
 			arrow_hint.style.display = 'none'
 		}
-		document.getElementById('item0').style.zIndex = -10
+	}
 
+	else if (bg_number === 206) {
+		if (lef >= 100 && lef <= 155) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Лестница'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
 	}
 
 	else if (bg_number === 202) {
+		document.getElementById('item0').style.zIndex = -10
 		if (lef >= 56 && lef <= 98) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.textContent = 'Шкаф с наградами'
@@ -148,13 +159,15 @@ function movegg() {
 		else {
 			arrow_hint.style.display = 'none'
 		}
-		document.getElementById('item0').style.zIndex = -10
 	}
 
 	else if (bg_number === 203) {
 
 		if (!INVENT[0].isOnInventory) {
 			document.getElementById('item0').style.zIndex = 3
+		}
+		else {
+			document.getElementById('item0').style.zIndex = -10
 		}
 
 
@@ -171,11 +184,21 @@ function movegg() {
 		else {
 			arrow_hint.style.display = 'none'
 		}
-
 	}
+
+	else if (bg_number === 306) {
+		if (lef >= 38 && lef <= 82) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Лестница'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
 	else {
 		arrow_hint.style.display = 'none'
-		document.getElementById('.style').style.zIndex = -10
 	}
 
     if (isArrowLeftPressed) {
@@ -190,7 +213,7 @@ function movegg() {
     }
 
 	if (lef <= 2) {
-		if (bg_number > 202) {
+		if (bg_number >= 203 && bg_number <= 250) {
 			lef = 148.5
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 			--bg_number
@@ -201,7 +224,7 @@ function movegg() {
 		}
 	}
 	else if (lef >= 150) {
-		if (bg_number < 205) {
+		if (bg_number <= 205 && bg_number >=150) {
 			lef = 2
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 			++bg_number
@@ -217,64 +240,171 @@ function movegg() {
 let right_pressedTF = false
 let left_pressedTF = false
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft' && !isArrowLeftPressed) {
-		document.getElementById('gg-img').src = 'images/fil-left.png'
-        isArrowLeftPressed = true
-		isArrowRightPressed = false
-    } else if (event.key === 'ArrowRight' && !isArrowRightPressed) {
-		document.getElementById('gg-img').src = 'images/fil-right.png'
-        isArrowRightPressed = true
-		isArrowLeftPressed = false
-    }
+    if (!isGameStop) {
+		if (event.key === 'ArrowLeft' && !isArrowLeftPressed) {
+			document.getElementById('gg-img').src = 'images/fil-left.png'
+			isArrowLeftPressed = true
+			isArrowRightPressed = false
+		} else if (event.key === 'ArrowRight' && !isArrowRightPressed) {
+			document.getElementById('gg-img').src = 'images/fil-right.png'
+			isArrowRightPressed = true
+			isArrowLeftPressed = false
+		}
+	}
 })
 
 document.addEventListener('keyup', (event) => {
-    if (event.key === 'ArrowLeft') {
-        isArrowLeftPressed = false
-    } else if (event.key === 'ArrowRight') {
-        isArrowRightPressed = false
-    }
-	
+    if (!isGameStop) {
+		if (event.key === 'ArrowLeft') {
+			isArrowLeftPressed = false
+		} else if (event.key === 'ArrowRight') {
+			isArrowRightPressed = false
+		}
+	}
 })
 requestAnimationFrame(movegg)
 
+
+let floorNow
+
+function openFloorMenu(a) {
+	isArrowLeftPressed = false
+	isArrowRightPressed = false
+    document.getElementById('choose-floor').style.display = 'block';
+    document.getElementById('choose-floor').style.opacity = 100;
+    document.getElementById('choose-floor').style.zIndex = 210;
+    isGameStop = true;
+
+    // Сброс состояния и активация второго этажа
+    floorNow = a;
+    updateActiveFloor();
+
+    document.addEventListener('keydown', handleKeyDown);
+}
+
+function closeFloorMenu() {
+    isGameStop = false;
+    document.getElementById('choose-floor').style.display = 'none';
+    document.getElementById('choose-floor').style.opacity = 0;
+    document.getElementById('choose-floor').style.zIndex = -210;
+
+    // Удаление обработчика событий
+    document.removeEventListener('keydown', handleKeyDown);
+}
+
+function handleKeyDown(event) {
+    if (isGameStop) {
+        if (event.key === 'ArrowUp') {
+            if (floorNow === 3) {
+                floorNow = 1;
+            } else if (floorNow === 2) {
+                floorNow = 3;
+            } else if (floorNow === 1) {
+                floorNow = 2;
+            }
+            updateActiveFloor();
+        } else if (event.key === 'ArrowDown') {
+            if (floorNow === 2) {
+                floorNow = 1;
+            } else if (floorNow === 1) {
+                floorNow = 3;
+            } else if (floorNow === 3) {
+                floorNow = 2;
+            }
+            updateActiveFloor();
+        } else if (event.key === 'Enter') {
+            if (floorNow === 3) {
+				lef = 62
+				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+				bg_number = 306
+				document.getElementById('game-bg').src = `images/306-game-bg.jpg`
+				document.getElementById('inventory').style.background = '#0000008c'
+				document.getElementById('settings-svg').style.background = '#0000008c'
+			}
+			else if (floorNow === 2) {
+				lef = 126
+				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+				bg_number = 206
+				document.getElementById('game-bg').src = `images/206-game-bg.jpg`
+				document.getElementById('inventory').style.background = '#00000000'
+				document.getElementById('settings-svg').style.background = '#00000000'
+			}
+            closeFloorMenu();
+        }
+    }
+}
+
+function updateActiveFloor() {
+    // Сначала удаляем активные классы у всех этажей
+    document.getElementById('floor1').classList.remove('floor-active');
+    document.getElementById('floor2').classList.remove('floor-active');
+    document.getElementById('floor3').classList.remove('floor-active');
+
+    // Добавляем активный класс только к текущему этажу
+    if (floorNow === 1) {
+        document.getElementById('floor1').classList.add('floor-active');
+    } else if (floorNow === 2) {
+        document.getElementById('floor2').classList.add('floor-active');
+    } else if (floorNow === 3) {
+        document.getElementById('floor3').classList.add('floor-active');
+    }
+}
+
+// Вызовите openFloorMenu(), чтобы открыть меню
+
+
+
 let dsn = true
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'ArrowUp') {
-        console.log('Нажата стрелочка вверх')
-		if (bg_number === 204) {
-			if (lef >= 64 && lef <= 96) {
-				npcTalk('Красивое дерево...')
+    if (!isGameStop) {
+		if (event.key === 'ArrowUp') {
+			console.log('Нажата стрелочка вверх')
+			if (bg_number === 204) {
+				if (lef >= 64 && lef <= 96) {
+					npcTalk('Красивое дерево...')
+				}
 			}
-		}
-		else if (bg_number === 205) {
-			if (lef >= 91.5 && lef <= 155) {
-				npcTalk('Блин! Нужен ключ!')
+			else if (bg_number === 205) {
+				if (lef >= 91.5 && lef <= 155) {
+					npcTalk('Блин! Нужен ключ!')
+				}
 			}
-		}
+			
+			else if (bg_number === 206) {
+				if (lef >= 100 && lef <= 155) {
+					openFloorMenu(2)
+				}
+			}
+	
+			else if (bg_number === 202) {
+				if (lef >= 56 && lef <= 98) {
+					npcTalk('Этот шкаф закрыт!')
+				}
+			}
+	
+			else if (bg_number === 203) {
+				if (lef >= 27 && lef <= 62) {
+					npcTalk('Уже так темно...')
+				}
+				else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory) {
+					npcTalk('Что? это ключ? Положу его в рюкзак, на всякий случай...', 3000)
+					document.getElementById('item0').style.zIndex = -10
+					INVENT[0].isOnInventory = true
+					ITEMS_ON_INVENT.push({
+						id: 0,
+						isUsed: false, 
+					})
+					console.log(ITEMS_ON_INVENT)
+				}
+			}
 
-		else if (bg_number === 202) {
-			if (lef >= 56 && lef <= 98) {
-				npcTalk('Этот шкаф закрыт!')
+			else if (bg_number === 306) {
+				if (lef >= 38 && lef <= 82) {
+					openFloorMenu(3)
+				}
 			}
 		}
-
-		else if (bg_number === 203) {
-			if (lef >= 27 && lef <= 62) {
-				npcTalk('Уже так темно...')
-			}
-			else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory) {
-				npcTalk('Что? это ключ? Положу его в свой рюкзак, на всякий случай...', 3000)
-				document.getElementById('item0').style.zIndex = -10
-				INVENT[0].isOnInventory = true
-				ITEMS_ON_INVENT.push({
-					id: 0,
-					isUsed: false, 
-				})
-				console.log(ITEMS_ON_INVENT)
-			}
-		}
-    }
+	}
 })
 
 document.addEventListener('visibilitychange', function() {
