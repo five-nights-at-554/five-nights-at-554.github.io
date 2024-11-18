@@ -1,9 +1,17 @@
 var audTF = true
 let speed = 2
 
-const BG = [
-
+const INVENT = [
+	{
+		id: 0,
+		name: 'РЖАВЫЙ КЛЮЧ',
+		description: 'Фу! Сколько лет этой железяке...',
+		isOnInventory: false,
+		isUsed: false
+	},
 ]
+
+const ITEMS_ON_INVENT = []
 
 document.addEventListener('visibilitychange', function() {
 	if (audTF) {
@@ -110,42 +118,64 @@ function movegg() {
 		if (lef >= 64 && lef <= 96) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.textContent = 'Горшок с деревом'
+			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
 			arrow_hint.style.display = 'none'
 		}
+		document.getElementById('item0').style.zIndex = -10
+
 	}
 	else if (bg_number === 205) {
 		if (lef >= 91.5 && lef <= 155) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.textContent = 'Дверь в актовый зал'
+			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
 			arrow_hint.style.display = 'none'
 		}
+		document.getElementById('item0').style.zIndex = -10
+
 	}
 
 	else if (bg_number === 202) {
 		if (lef >= 56 && lef <= 98) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.textContent = 'Шкаф с наградами'
+			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
 			arrow_hint.style.display = 'none'
 		}
+		document.getElementById('item0').style.zIndex = -10
 	}
 
 	else if (bg_number === 203) {
+
+		if (!INVENT[0].isOnInventory) {
+			document.getElementById('item0').style.zIndex = 3
+		}
+
+
 		if (lef >= 27 && lef <= 62) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.textContent = 'Окно на улицу'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Какой-то ключ...'
+			arrow_hint.style.color = '#3ad6c9'
 		}
 		else {
 			arrow_hint.style.display = 'none'
 		}
+
 	}
 	else {
 		arrow_hint.style.display = 'none'
+		document.getElementById('.style').style.zIndex = -10
 	}
 
     if (isArrowLeftPressed) {
@@ -233,6 +263,16 @@ document.addEventListener('keydown', function(event) {
 			if (lef >= 27 && lef <= 62) {
 				npcTalk('Уже так темно...')
 			}
+			else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory) {
+				npcTalk('Что? это ключ? Положу его в свой рюкзак, на всякий случай...', 3000)
+				document.getElementById('item0').style.zIndex = -10
+				INVENT[0].isOnInventory = true
+				ITEMS_ON_INVENT.push({
+					id: 0,
+					isUsed: false, 
+				})
+				console.log(ITEMS_ON_INVENT)
+			}
 		}
     }
 })
@@ -297,3 +337,72 @@ document.getElementById('settings-svg').addEventListener('click', () => {
 	settingsView()
 })
 
+
+// inventory
+
+
+
+let inventoryOn = false
+
+document.addEventListener('keydown', function(event) {
+    if (event.code === 'ShiftRight') {
+        console.log('Нажат правый Shift')
+		if (inventoryOn) {
+			document.querySelector('.inventoryView-box').style.opacity = 0
+			setTimeout(function() {
+				document.querySelector('.inventoryView-box').style.zIndex = -10
+			}, 200)
+			inventoryOn = false
+		} else if (!inventoryOn) {
+			inventoryView()
+		}
+    }
+})
+
+function inventoryView() {
+	document.querySelector('.inventoryView-box').style.zIndex = 849
+	document.querySelector('.inventoryView-box').style.opacity = 100
+	inventoryOn = true
+
+	if (ITEMS_ON_INVENT.length === 1) {
+		let a = ITEMS_ON_INVENT[0].id
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
+		document.getElementById('slot1').style.backgroundSize = 'cover'
+		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot1').style.backgroundPosition = 'center'
+		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
+		document.getElementById('slot2').style.borderColor = '#000'
+		document.getElementById('slot3').style.borderColor = '#000'
+		document.getElementById('slot4').style.borderColor = '#000'
+		document.getElementById('slot5').style.borderColor = '#000'
+		document.getElementById('slot6').style.borderColor = '#000'
+		document.getElementById('slot7').style.borderColor = '#000'
+
+
+		document.getElementById('slot2').style.background = '#b4b4b44d'
+		document.getElementById('slot3').style.background = '#b4b4b44d'
+		document.getElementById('slot4').style.background = '#b4b4b44d'
+		document.getElementById('slot5').style.background = '#b4b4b44d'
+		document.getElementById('slot6').style.background = '#b4b4b44d'
+		document.getElementById('slot7').style.background = '#b4b4b44d'
+	}
+}
+
+document.querySelector('#close_inventory').addEventListener('click', () => {
+	document.querySelector('.inventoryView-box').style.opacity = 0
+	setTimeout(function() {
+		document.querySelector('.inventoryView-box').style.zIndex = -10
+	}, 200)
+	inventoryOn = false
+})
+
+document.getElementById('settings-svg').addEventListener('click', () => {
+	settingsView()
+})
+
+document.getElementById('inventory').addEventListener('click', () => {
+	inventoryView()
+})

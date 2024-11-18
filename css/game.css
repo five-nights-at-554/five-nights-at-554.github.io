@@ -17,6 +17,10 @@ body {
 	justify-content: center;
 }
 
+h2 {
+	font-size: 3.5vh;
+}
+
 #context-menu {
 	border: solid 0.1vh black;
 	border-radius: 2vh;
@@ -80,13 +84,33 @@ body {
 	border-radius: 50%;
 	background: #00000000;
 	transition: background 0.5s;
+	margin-right: 0.5vh;
 }
 
 #settings-svg g {
-	fill: #4d4d4d;
+	fill: #666666;
 }
 
 #settings-svg:hover {
+	transition: background 0.5s;
+	background: #7575754b;
+	cursor: pointer;
+}
+
+#inventory {
+	aspect-ratio: 1/1;
+	height: 10vh;
+	border-radius: 10%;
+	padding: 0.6vh;
+	background: #ffffff00;
+	transition: background 0.5s;
+}
+
+#inventory g {
+	fill: #b64c4c;
+}
+
+#inventory:hover {
 	transition: background 0.5s;
 	background: #7575754b;
 	cursor: pointer;
@@ -113,10 +137,11 @@ body {
 	background: #dadada;
 	border: solid 0.3vh #000;
 	border-radius: 3vh;
+	font-size: 2.5vh;
 	min-height: 80vh;
-	-webkit-box-shadow: 0px 0px 16px -6px rgba(34, 60, 80, 0.6) inset;
-	-moz-box-shadow: 0px 0px 16px -6px rgba(34, 60, 80, 0.6) inset;
-	box-shadow: 0px 0px 16px -6px rgba(34, 60, 80, 0.6) inset;
+	-webkit-box-shadow: 0vh 0vh 1.6vh -0.6vh rgba(34, 60, 80, 0.6) inset;
+	-moz-box-shadow: 0vh 0vh 1.6vh -0.6vh rgba(34, 60, 80, 0.6) inset;
+	box-shadow: 0vh 0vh 1.6vh -0.6vh rgba(34, 60, 80, 0.6) inset;
 }
 
 .svg-box {
@@ -138,7 +163,14 @@ body {
 	fill:#bd0707;
 }
 
+#settings_title {
+	text-align: center;
+	font-size: 5vh;
+	padding-bottom: 3vh;
+}
+
 #volume {
+	cursor: pointer;
 	appearance: none;
 	-webkit-appearance: none; /* Убираем стандартный стиль для WebKit браузеров */
 	width: 80vh; /* Длина ползунка 80vh */
@@ -165,8 +197,8 @@ body {
 }
 
 #volume::-moz-range-thumb {
-	width: 20px; /* Ширина "ползунка" */
-	height: 20px; /* Высота "ползунка" */
+	width: 20vh; /* Ширина "ползунка" */
+	height: 20vh; /* Высота "ползунка" */
 	border-radius: 50%; /* Круглая форма "ползунка" */
 	background: #8f2929; /* Цвет "ползунка" */
 	cursor: pointer; /* Курсор в виде указателя */
@@ -186,6 +218,7 @@ body {
 }
 
 #speed-vaule {
+	cursor: pointer;
 	appearance: none;
 	-webkit-appearance: none; /* Убираем стандартный стиль для WebKit браузеров */
 	width: 80vh; /* Длина ползунка 80vh */
@@ -212,34 +245,11 @@ body {
 }
 
 #speed-vaule::-moz-range-thumb {
-	width: 20px; /* Ширина "ползунка" */
-	height: 20px; /* Высота "ползунка" */
+	width: 2vh; /* Ширина "ползунка" */
+	height: 2vh; /* Высота "ползунка" */
 	border-radius: 50%; /* Круглая форма "ползунка" */
 	background: #8f2929; /* Цвет "ползунка" */
 	cursor: pointer; /* Курсор в виде указателя */
-}
-
-.theme {
-	display: flex;
-	margin: 0 10vh 0 5vh;
-	justify-content: space-around;
-	align-items: center;
-}
-
-.theme_item {
-	aspect-ratio: 1920/1080;
-	max-height: 17vh;
-	border-radius: 3vh;
-	outline: solid 0.4vh #000000;
-	transition: outline 1s;
-	cursor: pointer;
-	transition: box-shadow 0.5s;
-}
-.theme_item:hover {
-	transition: box-shadow 0.3s;
-	-webkit-box-shadow: 0px 0px 13px 3px rgba(34, 60, 80, 0.2);
-	-moz-box-shadow: 0px 0px 13px 3px rgba(34, 60, 80, 0.2);
-	box-shadow: 0px 0px 13px 3px rgba(34, 60, 80, 0.2);
 }
 
 #gg {
@@ -267,7 +277,7 @@ body {
 	height: 25vh;
 	left: calc((100vw - 100vh * 16 / 9) / 2 + 20vh);
 	right: calc((100vw - 100vh * 16 / 9) / 2 + 20vh);
-	padding: 2vh;
+	padding: 2.5vh;
 
 	border: solid 0.2vh #fff;
 	border-radius: 5vh;
@@ -279,6 +289,7 @@ body {
 	color: #e7e7e7;
 	font-size: 3.5vh;
 	font-family: 'com';
+	display: block;
 }
 
 #text__com span {
@@ -293,13 +304,146 @@ body {
 	border-radius: 1vh;
 	padding: 1vh;
 	top: 4vh;
-	background: #f0f0f070;
 	/* display: block; */
+	background: #ffffff42;
 	display: none;
 	position: fixed;
 	z-index: 400;
-	color: #000000;
+	color: #3ad6c9;
+	text-shadow:
+        -0.1vh -0.1vh 0 #000,  
+         0.1vh -0.1vh 0 #000,
+        -0.1vh  0.1vh 0 #000,
+         0.1vh  0.1vh 0 #000;
 }
 
 
-/* ОБЪЕКТЫ КОРИДОРОВ И КОМНАТ */
+/* ИНВЕНТАРЬ */
+
+.inventoryView-box {
+	opacity: 0;
+	transition: opacity 0.2s;
+	aspect-ratio: 1920/1080;
+	min-height: 100vh;
+	max-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #00000098;
+	position: fixed;
+	z-index: -10;
+}
+
+.inventoryView {
+	aspect-ratio: 1920/1080;
+	display: block;
+	background: #dadada;
+	border: solid 0.3vh #000;
+	border-radius: 3vh;
+	min-height: 80vh;
+	max-height: 80vh;
+	-webkit-box-shadow: 0vh 0vh 1.6vh -0.6vh rgba(34, 60, 80, 0.6) inset;
+	-moz-box-shadow: 0vh 0vh 1.6vh -0.6vh rgba(34, 60, 80, 0.6) inset;
+	box-shadow: 0vh 0vh 1.6vh -0.6vh rgba(34, 60, 80, 0.6) inset;
+}
+
+.svg-box {
+	display: flex;
+	justify-content: flex-end;
+	height: 5vh;
+	margin: 2vh 2vh 2vh 2vh;
+}
+
+#close_inventory {
+	cursor: pointer;
+	aspect-ratio: 52/52;
+	max-height: 7vh;
+	fill:#e01010;
+	transition: fill 0.5s;
+}
+#close_inventory:hover {
+	transition: fill 0.3s;
+	fill:#bd0707;
+}
+
+.inventory_content {
+	padding: 0 5vh 5vh 5vh;
+}
+
+.inventory_menu {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.inventory_item {
+	aspect-ratio: 1/1;
+	margin: 2vh;
+	border: solid 0.3vh;
+	border-color: #000;
+	border-radius: 3vh;
+	cursor: pointer;
+	background: #b4b4b44d;
+	/* background: url('/images/close.svg'); */
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#slot1 {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#inventory_descript {
+	background: #c4c4c470;
+	border: solid 0.3vh;
+	border-color: #192f30;
+	border-radius: 5vh;
+	padding: 2.5vh;
+	margin-top: 4vh;
+	height: 40vh;
+	font-size: 4vh;
+}
+
+#descript_item-name {
+	display: block;
+	text-align: center;
+	color: #b41212;
+	font-size: 4.2vh;
+}
+
+#descript_item-descript {
+	display: block;
+	margin: 3vh;
+	text-wrap: wrap;
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+/* items */
+
+.items {
+	aspect-ratio: 1/1;
+	
+}
+
+#item0 {
+	background: url('/images/item0.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 10vh;
+	top: 85vh;
+	left: calc((100vw - 100vh * 16 / 9) / 2 + 90vh);
+
+	position: fixed;
+	z-index: -10;
+}
