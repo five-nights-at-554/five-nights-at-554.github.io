@@ -1,5 +1,5 @@
 let contextMenuTF = false
-let disc_check = localStorage.getItem('disc') || false
+let disc_check = sessionStorage.getItem('disc') || false
 var audTF = false
 
 document.addEventListener('visibilitychange', function() {
@@ -48,6 +48,8 @@ document.addEventListener('keydown', function(event) {
 	}
 })
 
+let discsound = true 
+
 function discClose() {
 	let disc_pass_input = document.getElementById('disc-pass')
 	disc_pass = disc_pass_input.value
@@ -58,17 +60,20 @@ function discClose() {
 		muz_first()
 		document.getElementById('disclaimer').style.display = 'none'
 		contextMenuTF = true
-		localStorage.setItem('disc', true)
+		sessionStorage.setItem('disc', true)
 	}
 	else {
 		disc_pass_input.style.outline = 'solid 0.1rem #bd0707'
 		disc_pass_input.value = ''
-		AUDIO.wrong.play()
+		if (discsound) {
+			AUDIO.wrong.play()
+		}
 	}
 }
 
 if (disc_check) {
 	document.getElementById('disc-pass').style.display = 'none'
+	discsound = false
 	document.getElementById('disc_accept').addEventListener('click', () => {
 		document.getElementById('disclaimer').style.display = 'none'
 		audTF = true
