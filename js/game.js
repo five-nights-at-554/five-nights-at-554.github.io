@@ -2,11 +2,25 @@ let isGameStop = false
 var audTF = true
 let speed = 2
 
+function pauseGame() {
+	isGameStop = true
+	isArrowLeftPressed = false
+	isArrowRightPressed = false
+}
+
 const INVENT = [
 	{
 		id: 0,
-		name: 'РЖАВЫЙ КЛЮЧ',
-		description: 'Фу! Сколько лет этой железяке...',
+		name: 'КАКОЙ-ТО КЛЮЧ',
+		description: 'Ого! Это ключ? Может пригодится...',
+		isOnInventory: false,
+		isUsed: false
+	},
+
+	{
+		id: 1,
+		name: 'СИНЯЯ СТЕКЛЯШКА',
+		description: 'Бесполезный кусок стекла! Но он будто притягивает меня...',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -163,7 +177,7 @@ function movegg() {
 
 	else if (bg_number === 203) {
 
-		if (!INVENT[0].isOnInventory) {
+		if (!INVENT[0].isOnInventory && !INVENT[0].isUsed) {
 			document.getElementById('item0').style.zIndex = 3
 		}
 		else {
@@ -176,7 +190,7 @@ function movegg() {
 			arrow_hint.textContent = 'Окно на улицу'
 			arrow_hint.style.color = '#d63a3a'
 		}
-		else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory) {
+		else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory && !INVENT[0].isUsed) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.textContent = 'Какой-то ключ...'
 			arrow_hint.style.color = '#3ad6c9'
@@ -335,12 +349,10 @@ function handleKeyDown(event) {
 }
 
 function updateActiveFloor() {
-    // Сначала удаляем активные классы у всех этажей
     document.getElementById('floor1').classList.remove('floor-active');
     document.getElementById('floor2').classList.remove('floor-active');
     document.getElementById('floor3').classList.remove('floor-active');
 
-    // Добавляем активный класс только к текущему этажу
     if (floorNow === 1) {
         document.getElementById('floor1').classList.add('floor-active');
     } else if (floorNow === 2) {
@@ -350,10 +362,9 @@ function updateActiveFloor() {
     }
 }
 
-// Вызовите openFloorMenu(), чтобы открыть меню
 
 
-
+let isSkafOpened = false
 let dsn = true
 document.addEventListener('keydown', function(event) {
     if (!isGameStop) {
@@ -378,7 +389,19 @@ document.addEventListener('keydown', function(event) {
 	
 			else if (bg_number === 202) {
 				if (lef >= 56 && lef <= 98) {
-					npcTalk('Этот шкаф закрыт!')
+					if (INVENT[0].isOnInventory) {
+						INVENT[0].isOnInventory = false
+						INVENT[0].isUsed = true
+						isSkafOpened = true
+						let indexToRemove = ITEMS_ON_INVENT.findIndex(item => item.id === 1)
+						ITEMS_ON_INVENT.splice(indexToRemove, 1)
+					}
+
+					if (isSkafOpened) {
+						openMiniGame1()
+					} else {
+						npcTalk('Этот шкаф закрыт!')
+					}
 				}
 			}
 	
@@ -386,13 +409,12 @@ document.addEventListener('keydown', function(event) {
 				if (lef >= 27 && lef <= 62) {
 					npcTalk('Уже так темно...')
 				}
-				else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory) {
+				else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory && !INVENT[0].isUsed) {
 					npcTalk('Что? это ключ? Положу его в рюкзак, на всякий случай...', 3000)
 					document.getElementById('item0').style.zIndex = -10
 					INVENT[0].isOnInventory = true
 					ITEMS_ON_INVENT.push({
 						id: 0,
-						isUsed: false, 
 					})
 					console.log(ITEMS_ON_INVENT)
 				}
@@ -417,7 +439,41 @@ document.addEventListener('visibilitychange', function() {
 
 
 
+// MINI-GAMES
 
+let miniGame1On = false
+function openMiniGame1() {
+	if (!mg1_win) {
+		mg1_restart()
+		document.querySelector('#mini-game1').style.zIndex = 850
+		document.querySelector('#mini-game1').style.opacity = 100
+		miniGame1On = true
+		pauseGame()
+	}
+	else {
+		npcTalk('Я уже взял отсюда всё, что хотел')
+	}
+}
+
+// document.addEventListener('keydown', function(event) {
+// 	if (isGameStop && miniGame1On && event.key === 'ArrowUp') {
+// 		document.querySelector('#mini-game1').style.opacity = 0
+// 		setTimeout(function() {
+// 			document.querySelector('#mini-game1').style.zIndex = -10
+// 		}, 200)
+// 		miniGame1On = false
+// 		isGameStop = false
+// 	}
+// })
+
+document.querySelector('#close_mini-game-1').addEventListener('click', () => {
+	document.querySelector('#mini-game1').style.opacity = 0
+	setTimeout(function() {
+		document.querySelector('#mini-game1').style.zIndex = -10
+	}, 200)
+	miniGame1On = false
+	isGameStop = false
+})
 
 
 
@@ -489,11 +545,92 @@ document.addEventListener('keydown', function(event) {
     }
 })
 
-function inventoryView() {
-	document.querySelector('.inventoryView-box').style.zIndex = 849
-	document.querySelector('.inventoryView-box').style.opacity = 100
-	inventoryOn = true
+let i_count = 1
 
+function itemBorderColor(i) {
+	document.getElementById('slot1').style.borderColor = '#000'
+	document.getElementById('slot2').style.borderColor = '#000'
+	document.getElementById('slot3').style.borderColor = '#000'
+	document.getElementById('slot4').style.borderColor = '#000'
+	document.getElementById('slot5').style.borderColor = '#000'
+	document.getElementById('slot6').style.borderColor = '#000'
+	document.getElementById('slot7').style.borderColor = '#000'
+
+	document.getElementById(`slot${i}`).style.borderColor = '#1fbd00'
+	
+}
+
+document.getElementById('slot1').addEventListener('click', () => {
+	if (ITEMS_ON_INVENT.length >= 1) {
+		let a = ITEMS_ON_INVENT[0].id
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		i_count = 1
+		itemBorderColor(i_count)
+	}
+})
+
+document.getElementById('slot2').addEventListener('click', () => {
+	if (ITEMS_ON_INVENT.length >= 2) {
+		let a = ITEMS_ON_INVENT[1].id
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		i_count = 2
+		itemBorderColor(i_count)
+	}
+})
+
+document.getElementById('slot3').addEventListener('click', () => {
+	if (ITEMS_ON_INVENT.length >= 3) {
+		let a = ITEMS_ON_INVENT[2].id
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		i_count = 3
+		itemBorderColor(i_count)
+	}
+})
+
+document.getElementById('slot4').addEventListener('click', () => {
+	if (ITEMS_ON_INVENT.length >= 4) {
+		let a = ITEMS_ON_INVENT[3].id
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		i_count = 4
+		itemBorderColor(i_count)
+	}
+})
+
+document.getElementById('slot5').addEventListener('click', () => {
+	if (ITEMS_ON_INVENT.length >= 5) {
+		let a = ITEMS_ON_INVENT[4].id
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		i_count = 5
+		itemBorderColor(i_count)
+	}
+})
+
+document.getElementById('slot6').addEventListener('click', () => {
+	if (ITEMS_ON_INVENT.length >= 6) {
+		let a = ITEMS_ON_INVENT[5].id
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		i_count = 6
+		itemBorderColor(i_count)
+	}
+})
+
+document.getElementById('slot7').addEventListener('click', () => {
+	if (ITEMS_ON_INVENT.length >= 7) {
+		let a = ITEMS_ON_INVENT[6].id
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		i_count = 7
+		itemBorderColor(i_count)
+	}
+})
+
+function checkItemsCount() {
 	if (ITEMS_ON_INVENT.length === 1) {
 		let a = ITEMS_ON_INVENT[0].id
 		document.getElementById('descript_item-name').textContent = INVENT[a].name
@@ -518,7 +655,237 @@ function inventoryView() {
 		document.getElementById('slot5').style.background = '#b4b4b44d'
 		document.getElementById('slot6').style.background = '#b4b4b44d'
 		document.getElementById('slot7').style.background = '#b4b4b44d'
+	} else if (ITEMS_ON_INVENT.length === 2) {
+		let a = ITEMS_ON_INVENT[0].id
+		let b = ITEMS_ON_INVENT[1].id
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
+		document.getElementById('slot1').style.backgroundSize = 'cover'
+		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot1').style.backgroundPosition = 'center'
+		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
+		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
+		document.getElementById('slot2').style.backgroundSize = 'cover'
+		document.getElementById('slot2').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot2').style.backgroundPosition = 'center'
+
+		document.getElementById('slot3').style.background = '#b4b4b44d'
+		document.getElementById('slot4').style.background = '#b4b4b44d'
+		document.getElementById('slot5').style.background = '#b4b4b44d'
+		document.getElementById('slot6').style.background = '#b4b4b44d'
+		document.getElementById('slot7').style.background = '#b4b4b44d'
+	} else if (ITEMS_ON_INVENT.length === 3) {
+		let a = ITEMS_ON_INVENT[0].id
+		let b = ITEMS_ON_INVENT[1].id
+		let c = ITEMS_ON_INVENT[2].id
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
+		document.getElementById('slot1').style.backgroundSize = 'cover'
+		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot1').style.backgroundPosition = 'center'
+		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
+		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
+		document.getElementById('slot2').style.backgroundSize = 'cover'
+		document.getElementById('slot2').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot2').style.backgroundPosition = 'center'
+
+		document.getElementById('slot3').style.background = `#b4b4b44d url('/images/item${c}.png')`
+		document.getElementById('slot3').style.backgroundSize = 'cover'
+		document.getElementById('slot3').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot3').style.backgroundPosition = 'center'
+
+		document.getElementById('slot4').style.background = '#b4b4b44d'
+		document.getElementById('slot5').style.background = '#b4b4b44d'
+		document.getElementById('slot6').style.background = '#b4b4b44d'
+		document.getElementById('slot7').style.background = '#b4b4b44d'
+	} else if (ITEMS_ON_INVENT.length === 4) {
+		let a = ITEMS_ON_INVENT[0].id
+		let b = ITEMS_ON_INVENT[1].id
+		let c = ITEMS_ON_INVENT[2].id
+		let d = ITEMS_ON_INVENT[3].id
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
+		document.getElementById('slot1').style.backgroundSize = 'cover'
+		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot1').style.backgroundPosition = 'center'
+		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
+		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
+		document.getElementById('slot2').style.backgroundSize = 'cover'
+		document.getElementById('slot2').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot2').style.backgroundPosition = 'center'
+
+		document.getElementById('slot3').style.background = `#b4b4b44d url('/images/item${c}.png')`
+		document.getElementById('slot3').style.backgroundSize = 'cover'
+		document.getElementById('slot3').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot3').style.backgroundPosition = 'center'
+
+		document.getElementById('slot4').style.background = `#b4b4b44d url('/images/item${d}.png')`
+		document.getElementById('slot4').style.backgroundSize = 'cover'
+		document.getElementById('slot4').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot4').style.backgroundPosition = 'center'
+
+		document.getElementById('slot5').style.background = '#b4b4b44d'
+		document.getElementById('slot6').style.background = '#b4b4b44d'
+		document.getElementById('slot7').style.background = '#b4b4b44d'
+	} else if (ITEMS_ON_INVENT.length === 5) {
+		let a = ITEMS_ON_INVENT[0].id
+		let b = ITEMS_ON_INVENT[1].id
+		let c = ITEMS_ON_INVENT[2].id
+		let d = ITEMS_ON_INVENT[3].id
+		let e = ITEMS_ON_INVENT[4].id
+
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
+		document.getElementById('slot1').style.backgroundSize = 'cover'
+		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot1').style.backgroundPosition = 'center'
+		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
+		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
+		document.getElementById('slot2').style.backgroundSize = 'cover'
+		document.getElementById('slot2').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot2').style.backgroundPosition = 'center'
+
+		document.getElementById('slot3').style.background = `#b4b4b44d url('/images/item${c}.png')`
+		document.getElementById('slot3').style.backgroundSize = 'cover'
+		document.getElementById('slot3').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot3').style.backgroundPosition = 'center'
+
+		document.getElementById('slot4').style.background = `#b4b4b44d url('/images/item${d}.png')`
+		document.getElementById('slot4').style.backgroundSize = 'cover'
+		document.getElementById('slot4').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot4').style.backgroundPosition = 'center'
+
+		document.getElementById('slot5').style.background = `#b4b4b44d url('/images/item${e}.png')`
+		document.getElementById('slot5').style.backgroundSize = 'cover'
+		document.getElementById('slot5').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot5').style.backgroundPosition = 'center'
+
+		document.getElementById('slot6').style.background = '#b4b4b44d'
+		document.getElementById('slot7').style.background = '#b4b4b44d'
+	} else if (ITEMS_ON_INVENT.length === 6) {
+		let a = ITEMS_ON_INVENT[0].id
+		let b = ITEMS_ON_INVENT[1].id
+		let c = ITEMS_ON_INVENT[2].id
+		let d = ITEMS_ON_INVENT[3].id
+		let e = ITEMS_ON_INVENT[4].id
+		let f = ITEMS_ON_INVENT[5].id
+
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
+		document.getElementById('slot1').style.backgroundSize = 'cover'
+		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot1').style.backgroundPosition = 'center'
+		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
+		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
+		document.getElementById('slot2').style.backgroundSize = 'cover'
+		document.getElementById('slot2').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot2').style.backgroundPosition = 'center'
+
+		document.getElementById('slot3').style.background = `#b4b4b44d url('/images/item${c}.png')`
+		document.getElementById('slot3').style.backgroundSize = 'cover'
+		document.getElementById('slot3').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot3').style.backgroundPosition = 'center'
+
+		document.getElementById('slot4').style.background = `#b4b4b44d url('/images/item${d}.png')`
+		document.getElementById('slot4').style.backgroundSize = 'cover'
+		document.getElementById('slot4').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot4').style.backgroundPosition = 'center'
+
+		document.getElementById('slot5').style.background = `#b4b4b44d url('/images/item${e}.png')`
+		document.getElementById('slot5').style.backgroundSize = 'cover'
+		document.getElementById('slot5').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot5').style.backgroundPosition = 'center'
+
+		document.getElementById('slot6').style.background = `#b4b4b44d url('/images/item${f}.png')`
+		document.getElementById('slot6').style.backgroundSize = 'cover'
+		document.getElementById('slot6').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot6').style.backgroundPosition = 'center'
+
+		document.getElementById('slot7').style.background = '#b4b4b44d'
+	} else if (ITEMS_ON_INVENT.length === 7) {
+		let a = ITEMS_ON_INVENT[0].id
+		let b = ITEMS_ON_INVENT[1].id
+		let c = ITEMS_ON_INVENT[2].id
+		let d = ITEMS_ON_INVENT[3].id
+		let e = ITEMS_ON_INVENT[4].id
+		let f = ITEMS_ON_INVENT[5].id
+		let g = ITEMS_ON_INVENT[6].id
+
+		document.getElementById('descript_item-name').textContent = INVENT[a].name
+		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
+		document.getElementById('slot1').style.backgroundSize = 'cover'
+		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot1').style.backgroundPosition = 'center'
+		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
+		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
+		document.getElementById('slot2').style.backgroundSize = 'cover'
+		document.getElementById('slot2').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot2').style.backgroundPosition = 'center'
+
+		document.getElementById('slot3').style.background = `#b4b4b44d url('/images/item${c}.png')`
+		document.getElementById('slot3').style.backgroundSize = 'cover'
+		document.getElementById('slot3').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot3').style.backgroundPosition = 'center'
+
+		document.getElementById('slot4').style.background = `#b4b4b44d url('/images/item${d}.png')`
+		document.getElementById('slot4').style.backgroundSize = 'cover'
+		document.getElementById('slot4').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot4').style.backgroundPosition = 'center'
+
+		document.getElementById('slot5').style.background = `#b4b4b44d url('/images/item${e}.png')`
+		document.getElementById('slot5').style.backgroundSize = 'cover'
+		document.getElementById('slot5').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot5').style.backgroundPosition = 'center'
+
+		document.getElementById('slot6').style.background = `#b4b4b44d url('/images/item${f}.png')`
+		document.getElementById('slot6').style.backgroundSize = 'cover'
+		document.getElementById('slot6').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot6').style.backgroundPosition = 'center'
+
+		document.getElementById('slot7').style.background = `#b4b4b44d url('/images/item${g}.png')`
+		document.getElementById('slot7').style.backgroundSize = 'cover'
+		document.getElementById('slot7').style.backgroundRepeat = 'no-repeat'
+		document.getElementById('slot7').style.backgroundPosition = 'center'
+	} else if (ITEMS_ON_INVENT.length === 0) {
+		document.getElementById('descript_item-name').textContent = ''
+		document.getElementById('descript_item-descript').textContent = ''
+
+		document.getElementById('slot1').style.borderColor = '#000'
+		document.getElementById('slot2').style.borderColor = '#000'
+		document.getElementById('slot3').style.borderColor = '#000'
+		document.getElementById('slot4').style.borderColor = '#000'
+		document.getElementById('slot5').style.borderColor = '#000'
+		document.getElementById('slot6').style.borderColor = '#000'
+		document.getElementById('slot7').style.borderColor = '#000'
+
+		document.getElementById('slot1').style.background = '#b4b4b44d'
+		document.getElementById('slot2').style.background = '#b4b4b44d'
+		document.getElementById('slot3').style.background = '#b4b4b44d'
+		document.getElementById('slot4').style.background = '#b4b4b44d'
+		document.getElementById('slot5').style.background = '#b4b4b44d'
+		document.getElementById('slot6').style.background = '#b4b4b44d'
+		document.getElementById('slot7').style.background = '#b4b4b44d'
 	}
+}
+
+function inventoryView() {
+	document.querySelector('.inventoryView-box').style.zIndex = 849
+	document.querySelector('.inventoryView-box').style.opacity = 100
+	inventoryOn = true
+	itemBorderColor(1)
+	checkItemsCount()
 }
 
 document.querySelector('#close_inventory').addEventListener('click', () => {

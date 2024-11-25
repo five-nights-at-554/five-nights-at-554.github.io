@@ -380,18 +380,12 @@ h2 {
 .inventory_item {
 	aspect-ratio: 1/1;
 	margin: 2vh;
-	border: solid 0.3vh;
+	border: solid 0.4vh;
 	border-color: #000;
 	border-radius: 3vh;
 	cursor: pointer;
 	background: #b4b4b44d;
 	/* background: url('/images/close.svg'); */
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center;
-}
-
-#slot1 {
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -503,4 +497,109 @@ h2 {
 
 	position: fixed;
 	z-index: -10;
+}
+
+
+
+/* MINI-GAMES */
+
+/* #mini-game1 {
+	opacity: 100;
+	position: fixed;
+	z-index: 1000;
+} */
+
+#close_mini-game-1 {
+	cursor: pointer;
+	aspect-ratio: 52/52;
+	max-height: 7vh;
+	fill:#e01010;
+	transition: fill 0.5s;
+}
+#close_mini-game-1:hover {
+	transition: fill 0.3s;
+	fill:#bd0707;
+}
+
+#mg1_title {
+	text-align: center;
+	font-size: 4.5vh;
+}
+
+#mg1_box {
+	width: 100%;
+	margin-top: 5vh;
+	height: 40vh;
+	padding: 0 10vh 0 10vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+}
+
+#mg1_input {
+	text-align: center;
+	font-size: 4vh;
+	padding: 1vh;
+	background: #d3d3d342;
+	border: solid 0.5vh;
+	border-color: #000;
+	border-radius: 3vh;
+	transition: border-color 0.4s;
+}
+
+#mg1_input:focus {
+	border-color: #0c941e;
+	outline: none;
+	transition: border-color 0.2s;
+}
+
+.redSpan {
+	color: #911111;
+}
+
+#mg1_button {
+	text-align: center;
+	font-size: 4vh;
+	padding: 2vh;
+	background: #29be6742;
+	border: solid 0.5vh;
+	border-color: #000;
+	border-radius: 3vh;
+	cursor: pointer;
+	transition: background 0.5s;
+}
+#mg1_button:hover {
+	transition: background 0.2s;
+	background: #29be6788;
+}
+#mg1_button:hover:active {
+	background: #ffffff88;
+}
+
+#mg1_button2 {
+	display: none;
+	text-align: center;
+	font-size: 4vh;
+	padding: 2vh;
+	background: #29be6742;
+	border: solid 0.5vh;
+	border-color: #000;
+	border-radius: 3vh;
+	cursor: pointer;
+	transition: background 0.5s;
+}
+#mg1_button2:hover {
+	transition: background 0.2s;
+	background: #29be6788;
+}
+#mg1_button2:hover:active {
+	background: #ffffff88;
+}
+
+#mg1_hint {
+	text-align: center;
+	color: #7a0f0f;
+	font-size: 5vh;
+	min-height: 6vh;
 }
