@@ -126,6 +126,8 @@ function npcTalk(npc__talk, time1 = 1500) {
 let lef = 3
 let bg_number = 202
 
+// document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+
 function movegg() {
 	const arrow_hint = document.getElementById('arrow_hint')
 
@@ -168,6 +170,39 @@ function movegg() {
 		if (lef >= 56 && lef <= 98) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.textContent = 'Шкаф с наградами'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 207) {
+		if (lef >= 58 && lef <= 82) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Свечи'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 208) {
+		if (lef >= 102.5 && lef <= 150) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Мужской туалет'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 311) {
+		if (lef >= 88.5 && lef <= 132.5) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Лестница'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -227,7 +262,7 @@ function movegg() {
     }
 
 	if (lef <= 2) {
-		if (bg_number >= 203 && bg_number <= 250) {
+		if ((bg_number >= 203 && bg_number <= 250) || (bg_number >= 307 && bg_number <= 350)) {
 			lef = 148.5
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 			--bg_number
@@ -238,7 +273,7 @@ function movegg() {
 		}
 	}
 	else if (lef >= 150) {
-		if (bg_number <= 205 && bg_number >=150) {
+		if ((bg_number <= 207 && bg_number >=150) || (bg_number < 311 && bg_number >= 260)) {
 			lef = 2
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 			++bg_number
@@ -306,6 +341,31 @@ function closeFloorMenu() {
     document.removeEventListener('keydown', handleKeyDown);
 }
 
+function openFloorMenu1(a) {
+	isArrowLeftPressed = false
+	isArrowRightPressed = false
+    document.getElementById('choose-floor').style.display = 'block';
+    document.getElementById('choose-floor').style.opacity = 100;
+    document.getElementById('choose-floor').style.zIndex = 210;
+    isGameStop = true;
+
+    // Сброс состояния и активация второго этажа
+    floorNow = a;
+    updateActiveFloor();
+
+    document.addEventListener('keydown', handleKeyDown2);
+}
+
+function closeFloorMenu1() {
+    isGameStop = false;
+    document.getElementById('choose-floor').style.display = 'none';
+    document.getElementById('choose-floor').style.opacity = 0;
+    document.getElementById('choose-floor').style.zIndex = -210;
+
+    // Удаление обработчика событий
+    document.removeEventListener('keydown', handleKeyDown2);
+}
+
 function handleKeyDown(event) {
     if (isGameStop) {
         if (event.key === 'ArrowUp') {
@@ -348,6 +408,48 @@ function handleKeyDown(event) {
     }
 }
 
+function handleKeyDown2(event) {
+    if (isGameStop) {
+        if (event.key === 'ArrowUp') {
+            if (floorNow === 3) {
+                floorNow = 1;
+            } else if (floorNow === 2) {
+                floorNow = 3;
+            } else if (floorNow === 1) {
+                floorNow = 2;
+            }
+            updateActiveFloor();
+        } else if (event.key === 'ArrowDown') {
+            if (floorNow === 2) {
+                floorNow = 1;
+            } else if (floorNow === 1) {
+                floorNow = 3;
+            } else if (floorNow === 3) {
+                floorNow = 2;
+            }
+            updateActiveFloor();
+        } else if (event.key === 'Enter') {
+            if (floorNow === 3) {
+				lef = 112
+				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+				bg_number = 311
+				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+				document.getElementById('inventory').style.background = '#0000008c'
+				document.getElementById('settings-svg').style.background = '#0000008c'
+			}
+			else if (floorNow === 2) {
+				lef = 126
+				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+				bg_number = 206
+				document.getElementById('game-bg').src = `images/206-game-bg.jpg`
+				document.getElementById('inventory').style.background = '#00000000'
+				document.getElementById('settings-svg').style.background = '#00000000'
+			}
+            closeFloorMenu1();
+        }
+    }
+}
+
 function updateActiveFloor() {
     document.getElementById('floor1').classList.remove('floor-active');
     document.getElementById('floor2').classList.remove('floor-active');
@@ -386,6 +488,24 @@ document.addEventListener('keydown', function(event) {
 					openFloorMenu(2)
 				}
 			}
+
+			else if (bg_number === 207) {
+				if (lef >= 58 && lef <= 82) {
+					npcTalk('Свечи? Откуда они здесь...')
+				}
+			}
+
+			else if (bg_number === 208) {
+				if (lef >= 102.5 && lef <= 150) {
+					npcTalk('Оттуда так воняет...')
+				}
+			}
+
+			else if (bg_number === 311) {
+				if (lef >= 88.5 && lef <= 132.5) {
+					openFloorMenu1(3)
+				}
+			}
 	
 			else if (bg_number === 202) {
 				if (lef >= 56 && lef <= 98) {
@@ -393,6 +513,7 @@ document.addEventListener('keydown', function(event) {
 						INVENT[0].isOnInventory = false
 						INVENT[0].isUsed = true
 						isSkafOpened = true
+						document.getElementById('item0').style.display = 'none'
 						let indexToRemove = ITEMS_ON_INVENT.findIndex(item => item.id === 1)
 						ITEMS_ON_INVENT.splice(indexToRemove, 1)
 					}
