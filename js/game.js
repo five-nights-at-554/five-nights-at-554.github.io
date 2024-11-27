@@ -369,6 +369,7 @@ function movegg() {
 	
     requestAnimationFrame(movegg)
 }
+let slotnow = 1
 let right_pressedTF = false
 let left_pressedTF = false
 document.addEventListener('keydown', (event) => {
@@ -381,6 +382,39 @@ document.addEventListener('keydown', (event) => {
 			document.getElementById('gg-img').src = 'images/fil-right.png'
 			isArrowRightPressed = true
 			isArrowLeftPressed = false
+		}
+	}
+	else if (isGameStop) {
+		if (event.key === 'ArrowLeft') {
+			if (inventoryOn) {
+				let len = ITEMS_ON_INVENT.length
+				--slotnow
+				if (slotnow < 1) {
+					slotnow = len
+				}
+				if (slotnow === 1) {slot1Click()}
+				if (slotnow === 2) {slot2Click()}
+				if (slotnow === 3) {slot3Click()}
+				if (slotnow === 4) {slot4Click()}
+				if (slotnow === 5) {slot5Click()}
+				if (slotnow === 6) {slot6Click()}
+				if (slotnow === 7) {slot7Click()}
+			}
+		} else if (event.key === 'ArrowRight') {
+			if (inventoryOn) {
+				let len = ITEMS_ON_INVENT.length
+				++slotnow
+				if (slotnow > len) {
+					slotnow = 1
+				}
+				if (slotnow === 1) {slot1Click()}
+				if (slotnow === 2) {slot2Click()}
+				if (slotnow === 3) {slot3Click()}
+				if (slotnow === 4) {slot4Click()}
+				if (slotnow === 5) {slot5Click()}
+				if (slotnow === 6) {slot6Click()}
+				if (slotnow === 7) {slot7Click()}
+			}
 		}
 	}
 })
@@ -832,7 +866,7 @@ document.getElementById('settings-svg').addEventListener('click', () => {
 let inventoryOn = false
 
 document.addEventListener('keydown', function(event) {
-    if (event.code === 'ShiftRight' && !isGameStop) {
+    if (event.code === 'ShiftRight') {
         console.log('Нажат правый Shift')
 		if (inventoryOn) {
 			document.querySelector('.inventoryView-box').style.opacity = 0
@@ -840,7 +874,8 @@ document.addEventListener('keydown', function(event) {
 				document.querySelector('.inventoryView-box').style.zIndex = -10
 			}, 200)
 			inventoryOn = false
-		} else if (!inventoryOn) {
+			isGameStop = false
+		} else if (!inventoryOn && !isGameStop && !settingsOn) {
 			inventoryView()
 		}
     }
@@ -861,75 +896,90 @@ function itemBorderColor(i) {
 	
 }
 
-document.getElementById('slot1').addEventListener('click', () => {
+function slot1Click() {
 	if (ITEMS_ON_INVENT.length >= 1) {
 		let a = ITEMS_ON_INVENT[0].id
 		document.getElementById('descript_item-name').textContent = INVENT[a].name
 		document.getElementById('descript_item-descript').textContent = INVENT[a].description
 		i_count = 1
 		itemBorderColor(i_count)
+		slotnow = 1
 	}
-})
-
-document.getElementById('slot2').addEventListener('click', () => {
+}
+function slot2Click() {
 	if (ITEMS_ON_INVENT.length >= 2) {
 		let a = ITEMS_ON_INVENT[1].id
 		document.getElementById('descript_item-name').textContent = INVENT[a].name
 		document.getElementById('descript_item-descript').textContent = INVENT[a].description
 		i_count = 2
 		itemBorderColor(i_count)
+		slotnow = 2
 	}
-})
-
-document.getElementById('slot3').addEventListener('click', () => {
+}
+function slot3Click() {
 	if (ITEMS_ON_INVENT.length >= 3) {
 		let a = ITEMS_ON_INVENT[2].id
 		document.getElementById('descript_item-name').textContent = INVENT[a].name
 		document.getElementById('descript_item-descript').textContent = INVENT[a].description
 		i_count = 3
 		itemBorderColor(i_count)
+		slotnow = 3
 	}
-})
-
-document.getElementById('slot4').addEventListener('click', () => {
+}
+function slot4Click() {
 	if (ITEMS_ON_INVENT.length >= 4) {
 		let a = ITEMS_ON_INVENT[3].id
 		document.getElementById('descript_item-name').textContent = INVENT[a].name
 		document.getElementById('descript_item-descript').textContent = INVENT[a].description
 		i_count = 4
 		itemBorderColor(i_count)
+		slotnow = 4
 	}
-})
-
-document.getElementById('slot5').addEventListener('click', () => {
+}
+function slot5Click() {
 	if (ITEMS_ON_INVENT.length >= 5) {
 		let a = ITEMS_ON_INVENT[4].id
 		document.getElementById('descript_item-name').textContent = INVENT[a].name
 		document.getElementById('descript_item-descript').textContent = INVENT[a].description
 		i_count = 5
 		itemBorderColor(i_count)
+		slotnow = 5
 	}
-})
-
-document.getElementById('slot6').addEventListener('click', () => {
+}
+function slot6Click() {
 	if (ITEMS_ON_INVENT.length >= 6) {
 		let a = ITEMS_ON_INVENT[5].id
 		document.getElementById('descript_item-name').textContent = INVENT[a].name
 		document.getElementById('descript_item-descript').textContent = INVENT[a].description
 		i_count = 6
 		itemBorderColor(i_count)
+		slotnow = 6
 	}
-})
-
-document.getElementById('slot7').addEventListener('click', () => {
+}
+function slot7Click() {
 	if (ITEMS_ON_INVENT.length >= 7) {
 		let a = ITEMS_ON_INVENT[6].id
 		document.getElementById('descript_item-name').textContent = INVENT[a].name
 		document.getElementById('descript_item-descript').textContent = INVENT[a].description
 		i_count = 7
 		itemBorderColor(i_count)
+		slotnow = 7
 	}
-})
+}
+
+document.getElementById('slot1').addEventListener('click', slot1Click)
+
+document.getElementById('slot2').addEventListener('click', slot2Click)
+
+document.getElementById('slot3').addEventListener('click', slot3Click)
+
+document.getElementById('slot4').addEventListener('click', slot4Click)
+
+document.getElementById('slot5').addEventListener('click', slot5Click)
+
+document.getElementById('slot6').addEventListener('click', slot6Click)
+
+document.getElementById('slot7').addEventListener('click', slot7Click)
 
 function checkItemsCount() {
 	if (ITEMS_ON_INVENT.length === 1) {
@@ -1185,6 +1235,7 @@ function inventoryView() {
 	document.querySelector('.inventoryView-box').style.zIndex = 849
 	document.querySelector('.inventoryView-box').style.opacity = 100
 	inventoryOn = true
+	pauseGame()
 	itemBorderColor(1)
 	checkItemsCount()
 }
@@ -1195,6 +1246,7 @@ document.querySelector('#close_inventory').addEventListener('click', () => {
 		document.querySelector('.inventoryView-box').style.zIndex = -10
 	}, 200)
 	inventoryOn = false
+	isGameStop = false
 })
 
 document.getElementById('settings-svg').addEventListener('click', () => {
