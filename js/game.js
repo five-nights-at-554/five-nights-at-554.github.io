@@ -159,7 +159,7 @@ function npcTalk(npc__talk, time1 = 1500) {
 }
 
 let lef = 3
-let bg_number = 207
+let bg_number = 202
 
 document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
 
