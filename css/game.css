@@ -46,6 +46,16 @@ h2 {
 	background: #e2e2e2;
 }
 
+#black-screen {
+	aspect-ratio: 1920/1080;
+	height: 100vh;
+	position: fixed;
+	z-index: 1;
+	background: #000;
+	opacity: 0;
+	transition: opacity 1s;
+}
+
 #press-f11 {
 	display: none;
 	position: fixed;
@@ -68,14 +78,14 @@ h2 {
 	aspect-ratio: 1920/1080;
 	height: 100vh;
 	position: fixed;
-	z-index: 1;
+	z-index: 2;
 }
 
 .settings-svg-box {
 	top: 2vh;
 	left: calc((100vw - 100vh * 16 / 9) / 2 + 2vh);
 	position: fixed;
-	z-index: 2;
+	z-index: 5;
 }
 
 #settings-svg {
@@ -300,6 +310,12 @@ h2 {
 
 #npc-name {
 	color: #ff1010;
+}
+
+#hint-box {
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 #arrow_hint {

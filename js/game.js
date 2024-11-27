@@ -2,6 +2,9 @@ let isGameStop = false
 var audTF = true
 let speed = 2
 
+let blackScreen = document.getElementById('black-screen')
+
+
 function pauseGame() {
 	isGameStop = true
 	isArrowLeftPressed = false
@@ -49,6 +52,8 @@ const AUDIO = {
 	calm: createSound('/js/sounds/calm.mp3'),
 	mainMenu: createSound('/js/sounds/mainMenu.mp3'),
 	game_bg: createSound('/js/sounds/game_bg.mp3'),
+	monster: createSound('/js/sounds/monster.mp3'),
+	mainMenu: createSound('/js/sounds/mainMenu.mp3'),
 }
 
 function muz_game() {
@@ -56,6 +61,22 @@ function muz_game() {
 	AUDIO.game_bg.loop = true
 	AUDIO.game_bg.autoplay = true
 }
+
+function fadeOutAudio(audioElement, duration) {
+    let volume = 1.0
+    const interval = 50
+
+    const fadeOutInterval = setInterval(() => {
+        volume -= interval / (duration * 1000)
+        audioElement.volume = Math.max(0, volume)
+
+        if (volume <= 0) {
+            clearInterval(fadeOutInterval)
+            audioElement.pause()
+        }
+    }, interval);
+}
+
 
 muz_game()
 
@@ -124,9 +145,9 @@ function npcTalk(npc__talk, time1 = 1500) {
 }
 
 let lef = 3
-let bg_number = 202
+let bg_number = 311
 
-// document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
 
 function movegg() {
 	const arrow_hint = document.getElementById('arrow_hint')
@@ -199,10 +220,37 @@ function movegg() {
 		}
 	}
 
+	else if (bg_number === 307) {
+		if (lef >= 44 && lef <= 102) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Скамейка'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 308) {
+		if (lef >= 94 && lef <= 148.5) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Дверь на лестницу'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
 	else if (bg_number === 311) {
 		if (lef >= 88.5 && lef <= 132.5) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.textContent = 'Лестница'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else if (lef >= 2 && lef <= 40) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Мужской туалет'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -465,7 +513,7 @@ function updateActiveFloor() {
 }
 
 
-
+let monster_on_toilet_voice = false
 let isSkafOpened = false
 let dsn = true
 document.addEventListener('keydown', function(event) {
@@ -497,13 +545,59 @@ document.addEventListener('keydown', function(event) {
 
 			else if (bg_number === 208) {
 				if (lef >= 102.5 && lef <= 150) {
-					npcTalk('Оттуда так воняет...')
+					npcTalk('Фу! Почему оттуда так воняет?!')
+				}
+			}
+
+			else if (bg_number === 307) {
+				if (lef >= 44 && lef <= 102) {
+					npcTalk('Сейчас не лучшее время для отдыха...')
+				}
+			}
+
+			else if (bg_number === 308) {
+				if (lef >= 94 && lef <= 148.5) {
+					npcTalk('Заперто...')
 				}
 			}
 
 			else if (bg_number === 311) {
 				if (lef >= 88.5 && lef <= 132.5) {
 					openFloorMenu1(3)
+				}
+				else if (lef >= 2 && lef <= 40) {
+					if (!monster_on_toilet_voice) {
+						
+						pauseGame()
+						blackScreen.style.zIndex = 1000
+						blackScreen.style.opacity = 100
+						
+						setTimeout(() => {
+							AUDIO.mainMenu.play()
+							AUDIO.mainMenu.loop = true
+							AUDIO.mainMenu.autoplay = true
+							fadeOutAudio(AUDIO.game_bg, 3)
+							setTimeout(() => {
+								AUDIO.game_bg.currentTime = 0
+							}, 3000);
+							monster_on_toilet_voice = true
+							AUDIO.monster.play()
+
+							setTimeout(() => {
+								blackScreen.style.opacity = 0
+								setTimeout(() => {
+									blackScreen.style.zIndex = 1
+									setTimeout(() => {
+										npcTalk('Вот блин! Надо скорее валить отсюда!')
+										isGameStop = false
+									}, 30);
+								}, 1000);
+							}, 4000);
+						}, 1000);
+					}
+					else {
+						npcTalk('Ну уж нет! Без оружия я туда не пойду!')
+					}
 				}
 			}
 	

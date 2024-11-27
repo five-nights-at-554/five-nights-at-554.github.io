@@ -23,7 +23,7 @@ function createSound(path) {
 const AUDIO = {
 	wrong: createSound('/js/sounds/wrong.mp3'),
 	calm: createSound('/js/sounds/calm.mp3'),
-	mainMenu: createSound('/js/sounds/mainMenu.mp3')
+	mainMenu: createSound('/js/sounds/mainMenu.mp3'),
 }
 
 function muz_first() {
