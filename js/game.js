@@ -22,8 +22,16 @@ const INVENT = [
 
 	{
 		id: 1,
-		name: 'СИНЯЯ СТЕКЛЯШКА',
-		description: 'Бесполезный кусок стекла! Но он будто притягивает меня...',
+		name: 'СИНИЙ КАМЕШЕК',
+		description: 'Он такой... Красивый?',
+		isOnInventory: false,
+		isUsed: false
+	},
+
+	{
+		id: 2,
+		name: 'КУСОК ШВАБРЫ',
+		description: 'В руках бойца даже обычная деревянная палка - грозное оружие (но я не боец)',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -35,9 +43,14 @@ document.addEventListener('visibilitychange', function() {
 	if (audTF) {
 		if (document.visibilityState === 'hidden') {
 			AUDIO.game_bg.pause()
+			AUDIO.mainMenu.pause()
 		}
 		else {
 			AUDIO.game_bg.play()
+			if (monster_on_toilet_voice) {
+				AUDIO.mainMenu.play()
+				
+			}
 		}
 	}
 })
@@ -54,6 +67,7 @@ const AUDIO = {
 	game_bg: createSound('/js/sounds/game_bg.mp3'),
 	monster: createSound('/js/sounds/monster.mp3'),
 	mainMenu: createSound('/js/sounds/mainMenu.mp3'),
+	toilet: createSound('/js/sounds/toilet.mp3'),
 }
 
 function muz_game() {
@@ -145,7 +159,7 @@ function npcTalk(npc__talk, time1 = 1500) {
 }
 
 let lef = 3
-let bg_number = 311
+let bg_number = 207
 
 document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
 
@@ -242,6 +256,17 @@ function movegg() {
 		}
 	}
 
+	else if (bg_number === 310) {
+		if (lef >= 72.5 && lef <= 102.5 && monster_on_toilet_voice) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.textContent = 'Надпись на стене'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
 	else if (bg_number === 311) {
 		if (lef >= 88.5 && lef <= 132.5) {
 			arrow_hint.style.display = 'block'
@@ -314,7 +339,12 @@ function movegg() {
 			lef = 148.5
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 			--bg_number
-			document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+			if (bg_number === 310 && monster_on_toilet_voice) {
+				document.getElementById('game-bg').src = `images/310-help-game-bg.jpg`	
+			}
+			else {
+				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+			}
 		} else {
 			lef = 2
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
@@ -325,7 +355,12 @@ function movegg() {
 			lef = 2
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 			++bg_number
-			document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+			if (bg_number === 310 && monster_on_toilet_voice) {
+				document.getElementById('game-bg').src = `images/310-help-game-bg.jpg`	
+			}
+			else {
+				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+			}
 		} else {
 			lef = 148.5
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
@@ -365,6 +400,10 @@ requestAnimationFrame(movegg)
 let floorNow
 
 function openFloorMenu(a) {
+	document.getElementById('text').style.opacity = 0
+		setTimeout(function() {
+			document.getElementById('text').style.display = 'none'
+		}, 300)
 	isArrowLeftPressed = false
 	isArrowRightPressed = false
     document.getElementById('choose-floor').style.display = 'block';
@@ -390,6 +429,10 @@ function closeFloorMenu() {
 }
 
 function openFloorMenu1(a) {
+	document.getElementById('text').style.opacity = 0
+		setTimeout(function() {
+			document.getElementById('text').style.display = 'none'
+		}, 300)
 	isArrowLeftPressed = false
 	isArrowRightPressed = false
     document.getElementById('choose-floor').style.display = 'block';
@@ -440,16 +483,16 @@ function handleKeyDown(event) {
 				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 				bg_number = 306
 				document.getElementById('game-bg').src = `images/306-game-bg.jpg`
-				document.getElementById('inventory').style.background = '#0000008c'
-				document.getElementById('settings-svg').style.background = '#0000008c'
+				// document.getElementById('inventory').style.background = '#0000008c'
+				// document.getElementById('settings-svg').style.background = '#0000008c'
 			}
 			else if (floorNow === 2) {
 				lef = 126
 				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 				bg_number = 206
 				document.getElementById('game-bg').src = `images/206-game-bg.jpg`
-				document.getElementById('inventory').style.background = '#00000000'
-				document.getElementById('settings-svg').style.background = '#00000000'
+				// document.getElementById('inventory').style.background = '#00000000'
+				// document.getElementById('settings-svg').style.background = '#00000000'
 			}
             closeFloorMenu();
         }
@@ -482,16 +525,16 @@ function handleKeyDown2(event) {
 				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 				bg_number = 311
 				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
-				document.getElementById('inventory').style.background = '#0000008c'
-				document.getElementById('settings-svg').style.background = '#0000008c'
+				// document.getElementById('inventory').style.background = '#0000008c'
+				// document.getElementById('settings-svg').style.background = '#0000008c'
 			}
 			else if (floorNow === 2) {
 				lef = 126
 				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 				bg_number = 206
 				document.getElementById('game-bg').src = `images/206-game-bg.jpg`
-				document.getElementById('inventory').style.background = '#00000000'
-				document.getElementById('settings-svg').style.background = '#00000000'
+				// document.getElementById('inventory').style.background = '#00000000'
+				// document.getElementById('settings-svg').style.background = '#00000000'
 			}
             closeFloorMenu1();
         }
@@ -514,6 +557,7 @@ function updateActiveFloor() {
 
 
 let monster_on_toilet_voice = false
+let toilet_check = false
 let isSkafOpened = false
 let dsn = true
 document.addEventListener('keydown', function(event) {
@@ -545,7 +589,43 @@ document.addEventListener('keydown', function(event) {
 
 			else if (bg_number === 208) {
 				if (lef >= 102.5 && lef <= 150) {
-					npcTalk('Фу! Почему оттуда так воняет?!')
+					if (toilet_check) {
+						npcTalk('Я уже всё там обыскал')
+					}
+					else {
+						pauseGame()
+						blackScreen.style.zIndex = 1000
+						blackScreen.style.opacity = 100
+						
+						setTimeout(() => {
+							AUDIO.toilet.play()
+							toilet_check = true
+
+							setTimeout(() => {
+								setTimeout(() => {
+									AUDIO.toilet.pause()
+									AUDIO.toilet.currentTime = 0
+
+									INVENT[2].isOnInventory = true
+									ITEMS_ON_INVENT.push({
+										id: 2,
+									})
+									console.log(ITEMS_ON_INVENT)
+
+								}, 100);
+								setTimeout(() => {
+									blackScreen.style.opacity = 0
+									setTimeout(() => {
+										blackScreen.style.zIndex = 1
+										npcTalk('О! деревянная палка! Возьму с собой!', 3000)
+										setTimeout(() => {
+											isGameStop = false
+										}, 200);
+									}, 1000);
+								}, 200);
+							}, 4000);
+						}, 1000);
+					}
 				}
 			}
 
@@ -558,6 +638,12 @@ document.addEventListener('keydown', function(event) {
 			else if (bg_number === 308) {
 				if (lef >= 94 && lef <= 148.5) {
 					npcTalk('Заперто...')
+				}
+			}
+
+			else if (bg_number === 310) {
+				if (lef >= 72.5 && lef <= 102.5 && monster_on_toilet_voice) {
+					npcTalk('HELP? Этой надписи здесь точно не было...')
 				}
 			}
 
@@ -746,7 +832,7 @@ document.getElementById('settings-svg').addEventListener('click', () => {
 let inventoryOn = false
 
 document.addEventListener('keydown', function(event) {
-    if (event.code === 'ShiftRight') {
+    if (event.code === 'ShiftRight' && !isGameStop) {
         console.log('Нажат правый Shift')
 		if (inventoryOn) {
 			document.querySelector('.inventoryView-box').style.opacity = 0
