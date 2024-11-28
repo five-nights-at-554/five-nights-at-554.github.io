@@ -1,6 +1,8 @@
 let isGameStop = false
 var audTF = true
 let speed = 2
+let isAnyActivityOpen = false
+let candles = 0
 
 let blackScreen = document.getElementById('black-screen')
 
@@ -68,6 +70,8 @@ const AUDIO = {
 	monster: createSound('/js/sounds/monster.mp3'),
 	mainMenu: createSound('/js/sounds/mainMenu.mp3'),
 	toilet: createSound('/js/sounds/toilet.mp3'),
+	skaf_open: createSound('/js/sounds/skaf_open.mp3'),
+	take_key: createSound('/js/sounds/take_key.mp3'),
 }
 
 function muz_game() {
@@ -339,8 +343,19 @@ function movegg() {
 			lef = 148.5
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 			--bg_number
-			if (bg_number === 310 && monster_on_toilet_voice) {
+			if (monster_on_toilet_voice && bg_number === 310) {
 				document.getElementById('game-bg').src = `images/310-help-game-bg.jpg`	
+			}
+			else if (candles > 0 && bg_number === 207) {
+				if (candles === 1) {
+					document.getElementById('game-bg').src = `images/207-1-game-bg.jpg`	
+				}
+				else if (candles === 2) {
+					document.getElementById('game-bg').src = `images/207-2-game-bg.jpg`	
+				}
+				else if (candles === 3) {
+					document.getElementById('game-bg').src = `images/207-3-game-bg.jpg`	
+				}
 			}
 			else {
 				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
@@ -355,8 +370,19 @@ function movegg() {
 			lef = 2
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 			++bg_number
-			if (bg_number === 310 && monster_on_toilet_voice) {
+			if (monster_on_toilet_voice && bg_number === 310) {
 				document.getElementById('game-bg').src = `images/310-help-game-bg.jpg`	
+			}
+			else if (candles > 0 && bg_number === 207) {
+				if (candles === 1) {
+					document.getElementById('game-bg').src = `images/207-1-game-bg.jpg`	
+				} 
+				else if (candles === 2) {
+					document.getElementById('game-bg').src = `images/207-2-game-bg.jpg`	
+				}
+				else if (candles === 3) {
+					document.getElementById('game-bg').src = `images/207-3-game-bg.jpg`	
+				}
 			}
 			else {
 				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
@@ -598,6 +624,7 @@ document.addEventListener('keydown', function(event) {
     if (!isGameStop) {
 		if (event.key === 'ArrowUp') {
 			console.log('Нажата стрелочка вверх')
+
 			if (bg_number === 204) {
 				if (lef >= 64 && lef <= 96) {
 					npcTalk('Красивое дерево...')
@@ -701,6 +728,7 @@ document.addEventListener('keydown', function(event) {
 								AUDIO.game_bg.currentTime = 0
 							}, 3000);
 							monster_on_toilet_voice = true
+							++candles
 							AUDIO.monster.play()
 
 							setTimeout(() => {
@@ -728,13 +756,34 @@ document.addEventListener('keydown', function(event) {
 						INVENT[0].isUsed = true
 						isSkafOpened = true
 						document.getElementById('item0').style.display = 'none'
-						let indexToRemove = ITEMS_ON_INVENT.findIndex(item => item.id === 1)
+						let indexToRemove = ITEMS_ON_INVENT.findIndex(item => item.id === 0)
 						ITEMS_ON_INVENT.splice(indexToRemove, 1)
+
+						pauseGame()
+						blackScreen.style.zIndex = 1000
+						blackScreen.style.opacity = 100
+						
+						setTimeout(() => {
+							AUDIO.skaf_open.play()
+							setTimeout(() => {
+								blackScreen.style.opacity = 0
+								npcTalk('Отлично! ключ подошел!', 3000)
+								setTimeout(() => {
+									blackScreen.style.zIndex = 1
+									setTimeout(() => {
+										isGameStop = false
+									}, 100);
+								}, 1000);
+							}, 4000);
+						}, 1000);
 					}
 
-					if (isSkafOpened) {
+					else if (isSkafOpened) {
 						openMiniGame1()
-					} else {
+						isAnyActivityOpen = true
+					} 
+					
+					else {
 						npcTalk('Этот шкаф закрыт!')
 					}
 				}
@@ -745,6 +794,8 @@ document.addEventListener('keydown', function(event) {
 					npcTalk('Уже так темно...')
 				}
 				else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory && !INVENT[0].isUsed) {
+					AUDIO.take_key.currentTime = 0
+					AUDIO.take_key.play()
 					npcTalk('Что? это ключ? Положу его в рюкзак, на всякий случай...', 3000)
 					document.getElementById('item0').style.zIndex = -10
 					INVENT[0].isOnInventory = true
@@ -761,6 +812,9 @@ document.addEventListener('keydown', function(event) {
 				}
 			}
 		}
+	}
+	else if (isAnyActivityOpen && event.key === 'ArrowUp') {
+		CloseMiniGame1()
 	}
 })
 
@@ -801,14 +855,16 @@ function openMiniGame1() {
 // 	}
 // })
 
-document.querySelector('#close_mini-game-1').addEventListener('click', () => {
+function CloseMiniGame1() {
 	document.querySelector('#mini-game1').style.opacity = 0
 	setTimeout(function() {
 		document.querySelector('#mini-game1').style.zIndex = -10
 	}, 200)
 	miniGame1On = false
 	isGameStop = false
-})
+	isAnyActivityOpen = false
+}
+document.querySelector('#close_mini-game-1').addEventListener('click', CloseMiniGame1)
 
 
 
@@ -877,6 +933,10 @@ document.addEventListener('keydown', function(event) {
 			isGameStop = false
 		} else if (!inventoryOn && !isGameStop && !settingsOn) {
 			inventoryView()
+		}
+
+		if (isAnyActivityOpen) {
+			CloseMiniGame1()
 		}
     }
 })
