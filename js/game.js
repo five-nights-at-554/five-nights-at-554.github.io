@@ -74,6 +74,8 @@ const AUDIO = {
 	take_key: createSound('/js/sounds/take_key.mp3'),
 }
 
+// AUDIO.monster.volume = 0.5
+
 function muz_game() {
 	AUDIO.game_bg.play()
 	AUDIO.game_bg.loop = true

@@ -10,6 +10,10 @@
 	font-family: 'com';
 	src: url('fonts/RobotoSlab-Medium.ttf');
 }
+@font-face {
+	font-family: 'mg1';
+	src: url('fonts/MarckScript-Regular.ttf');
+}
 
 body {
 	background: #000000;
@@ -519,11 +523,19 @@ h2 {
 
 /* MINI-GAMES */
 
-/* #mini-game1 {
-	opacity: 100;
-	position: fixed;
-	z-index: 1000;
-} */
+#mini-game1 {
+	background: url('/images/1-mini-game-bg-bg.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+#mini-game-1-view {
+	background: url('/images/mg1.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
 
 #close_mini-game-1 {
 	cursor: pointer;
@@ -538,8 +550,12 @@ h2 {
 }
 
 #mg1_title {
+	font-family: 'mg1';
 	text-align: center;
 	font-size: 4.5vh;
+}
+#mg1_title span {
+	font-family: 'mg1';
 }
 
 #mg1_box {
@@ -554,6 +570,7 @@ h2 {
 }
 
 #mg1_input {
+	font-family: 'mg1';
 	text-align: center;
 	font-size: 4vh;
 	padding: 1vh;
@@ -575,11 +592,12 @@ h2 {
 }
 
 #mg1_button {
+	font-family: 'mg1';
 	text-align: center;
 	font-size: 4vh;
 	padding: 2vh;
 	background: #29be6742;
-	border: solid 0.5vh;
+	border: solid 0.4vh;
 	border-color: #000;
 	border-radius: 3vh;
 	cursor: pointer;
@@ -594,12 +612,13 @@ h2 {
 }
 
 #mg1_button2 {
+	font-family: 'mg1';
 	display: none;
 	text-align: center;
 	font-size: 4vh;
 	padding: 2vh;
 	background: #29be6742;
-	border: solid 0.5vh;
+	border: solid 0.4vh;
 	border-color: #000;
 	border-radius: 3vh;
 	cursor: pointer;
@@ -614,6 +633,7 @@ h2 {
 }
 
 #mg1_hint {
+	font-family: 'mg1';
 	text-align: center;
 	color: #7a0f0f;
 	font-size: 5vh;

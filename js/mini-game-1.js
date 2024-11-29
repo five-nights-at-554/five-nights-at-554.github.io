@@ -10,6 +10,24 @@ let mg1_hint = document.getElementById('mg1_hint')
 let mg1_button = document.getElementById('mg1_button')
 let mg1_button2 = document.getElementById('mg1_button2')
 let mg1_win = false
+mg1_input.addEventListener('input', () => {
+	mg1_input.value = mg1_input.value.replace(/[^0-9]/g, '')
+	if (parseInt(mg1_input.value) === 0) {
+		mg1_input.maxLength = 1
+	}
+	else if (parseInt(mg1_input.value) > 0 && parseInt(mg1_input.value) === 10) {
+		mg1_input.maxLength = 3
+	}
+	else {
+		mg1_input.maxLength = 2
+	}
+	if (mg1_input.value.length >= 3) {
+			if (mg1_input.value[2] !== '0') {
+				mg1_input.value = mg1_input.value.slice(0, 2) + '' + mg1_input.value.slice(3);
+			}
+			mg1_input.maxLength = 3
+		}
+})
 
 function mg1_checkAnswer() {
 	if (mg1_input.value.trim() !== '' && mg1_attempts > 0 && parseInt(mg1_input.value) >= 0 && parseInt(mg1_input.value) <= 100) {
