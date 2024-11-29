@@ -3,12 +3,14 @@
 	user-select: none;
 	margin: 0;
 	padding: 0;
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	font-family: 'com';
+	/* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
 }
 
 @font-face {
 	font-family: 'com';
-	src: url('fonts/RobotoSlab-Medium.ttf');
+	src: url('fonts/Pangolin-Regular.ttf');
+	/* src: url('fonts/RobotoSlab-Medium.ttf'); */
 }
 @font-face {
 	font-family: 'mg1';
@@ -359,7 +361,8 @@ h2 {
 .inventoryView {
 	aspect-ratio: 1920/1080;
 	display: block;
-	background: #dadada;
+	background: url('/images/invent-bg.jpg');
+	background-size: cover;
 	border: solid 0.3vh #000;
 	border-radius: 3vh;
 	min-height: 80vh;
@@ -376,11 +379,24 @@ h2 {
 	margin: 2vh 2vh 2vh 2vh;
 }
 
+#invent-header {
+	display: grid;
+	grid-template-columns: 1fr 10fr 1fr;
+}
+
+#inv_title {
+	text-align: center;
+	padding-top: 2vh;
+	font-size: 5vh;
+	color: #b41212;
+	letter-spacing: 0.5vh;
+}
+
 #close_inventory {
 	cursor: pointer;
 	aspect-ratio: 52/52;
 	max-height: 7vh;
-	fill:#e01010;
+	fill:#ce1d1d;
 	transition: fill 0.5s;
 }
 #close_inventory:hover {

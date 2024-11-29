@@ -3,9 +3,9 @@ var audTF = true
 let speed = 2
 let isAnyActivityOpen = false
 let candles = 0
+let ReallyFloorNow = 2
 
 let blackScreen = document.getElementById('black-screen')
-
 
 function pauseGame() {
 	isGameStop = true
@@ -72,6 +72,7 @@ const AUDIO = {
 	toilet: createSound('/js/sounds/toilet.mp3'),
 	skaf_open: createSound('/js/sounds/skaf_open.mp3'),
 	take_key: createSound('/js/sounds/take_key.mp3'),
+	steps: createSound('/js/sounds/steps.mp3'),
 }
 
 // AUDIO.monster.volume = 0.5
@@ -94,7 +95,7 @@ function fadeOutAudio(audioElement, duration) {
             clearInterval(fadeOutInterval)
             audioElement.pause()
         }
-    }, interval);
+    }, interval)
 }
 
 
@@ -148,7 +149,7 @@ window.addEventListener('click', () => {
 	const gg = document.getElementById('gg')
 
 let talk_timeout
-function npcTalk(npc__talk, time1 = 1500) {
+function npcTalk(npc__talk, time1 = 2000) {
 	document.getElementById('npc-talk').textContent = npc__talk
 	document.getElementById('text').style.display = 'block'
 	document.getElementById('text').style.opacity = 100
@@ -468,26 +469,25 @@ function openFloorMenu(a) {
 		}, 300)
 	isArrowLeftPressed = false
 	isArrowRightPressed = false
-    document.getElementById('choose-floor').style.display = 'block';
-    document.getElementById('choose-floor').style.opacity = 100;
-    document.getElementById('choose-floor').style.zIndex = 210;
-    isGameStop = true;
+    document.getElementById('choose-floor').style.display = 'block'
+    document.getElementById('choose-floor').style.opacity = 100
+    document.getElementById('choose-floor').style.zIndex = 210
+    isGameStop = true
 
     // Сброс состояния и активация второго этажа
-    floorNow = a;
-    updateActiveFloor();
+    floorNow = a
+    updateActiveFloor()
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown)
 }
 
 function closeFloorMenu() {
-    isGameStop = false;
-    document.getElementById('choose-floor').style.display = 'none';
-    document.getElementById('choose-floor').style.opacity = 0;
-    document.getElementById('choose-floor').style.zIndex = -210;
+    document.getElementById('choose-floor').style.display = 'none'
+    document.getElementById('choose-floor').style.opacity = 0
+    document.getElementById('choose-floor').style.zIndex = -210
 
     // Удаление обработчика событий
-    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('keydown', handleKeyDown)
 }
 
 function openFloorMenu1(a) {
@@ -497,66 +497,103 @@ function openFloorMenu1(a) {
 		}, 300)
 	isArrowLeftPressed = false
 	isArrowRightPressed = false
-    document.getElementById('choose-floor').style.display = 'block';
-    document.getElementById('choose-floor').style.opacity = 100;
-    document.getElementById('choose-floor').style.zIndex = 210;
-    isGameStop = true;
+    document.getElementById('choose-floor').style.display = 'block'
+    document.getElementById('choose-floor').style.opacity = 100
+    document.getElementById('choose-floor').style.zIndex = 210
+    isGameStop = true
 
     // Сброс состояния и активация второго этажа
-    floorNow = a;
-    updateActiveFloor();
+    floorNow = a
+    updateActiveFloor()
 
-    document.addEventListener('keydown', handleKeyDown2);
+    document.addEventListener('keydown', handleKeyDown2)
 }
 
 function closeFloorMenu1() {
-    isGameStop = false;
-    document.getElementById('choose-floor').style.display = 'none';
-    document.getElementById('choose-floor').style.opacity = 0;
-    document.getElementById('choose-floor').style.zIndex = -210;
+    isGameStop = false
+    document.getElementById('choose-floor').style.display = 'none'
+    document.getElementById('choose-floor').style.opacity = 0
+    document.getElementById('choose-floor').style.zIndex = -210
 
     // Удаление обработчика событий
-    document.removeEventListener('keydown', handleKeyDown2);
+    document.removeEventListener('keydown', handleKeyDown2)
 }
 
 function handleKeyDown(event) {
     if (isGameStop) {
         if (event.key === 'ArrowUp') {
             if (floorNow === 3) {
-                floorNow = 1;
+                floorNow = 1
             } else if (floorNow === 2) {
-                floorNow = 3;
+                floorNow = 3
             } else if (floorNow === 1) {
-                floorNow = 2;
+                floorNow = 2
             }
-            updateActiveFloor();
+            updateActiveFloor()
         } else if (event.key === 'ArrowDown') {
             if (floorNow === 2) {
-                floorNow = 1;
+                floorNow = 1
             } else if (floorNow === 1) {
-                floorNow = 3;
+                floorNow = 3
             } else if (floorNow === 3) {
-                floorNow = 2;
+                floorNow = 2
             }
-            updateActiveFloor();
+            updateActiveFloor()
         } else if (event.key === 'Enter') {
             if (floorNow === 3) {
-				lef = 62
-				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-				bg_number = 306
-				document.getElementById('game-bg').src = `images/306-game-bg.jpg`
-				// document.getElementById('inventory').style.background = '#0000008c'
-				// document.getElementById('settings-svg').style.background = '#0000008c'
+				if (ReallyFloorNow != 3) {
+					pauseGame()
+					blackScreen.style.zIndex = 1000
+					blackScreen.style.opacity = 100
+					AUDIO.steps.play()
+					setTimeout(() => {
+						lef = 62
+						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+						bg_number = 306
+						document.getElementById('game-bg').src = `images/306-game-bg.jpg`
+						ReallyFloorNow = 3
+						setTimeout(() => {
+							blackScreen.style.opacity = 0
+							setTimeout(() => {
+								blackScreen.style.zIndex = 1
+								isGameStop = false
+							}, 1000)
+						}, 2500)
+					}, 1000)
+				}
+				else {
+					isGameStop = false
+				}
 			}
 			else if (floorNow === 2) {
-				lef = 126
-				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-				bg_number = 206
-				document.getElementById('game-bg').src = `images/206-game-bg.jpg`
-				// document.getElementById('inventory').style.background = '#00000000'
-				// document.getElementById('settings-svg').style.background = '#00000000'
+				if (ReallyFloorNow != 2) {
+					pauseGame()
+					blackScreen.style.zIndex = 1000
+					blackScreen.style.opacity = 100
+					AUDIO.steps.play()
+					setTimeout(() => {
+						ReallyFloorNow = 2
+						lef = 126
+						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+						bg_number = 206
+						document.getElementById('game-bg').src = `images/206-game-bg.jpg`
+						setTimeout(() => {
+							blackScreen.style.opacity = 0
+							setTimeout(() => {
+								blackScreen.style.zIndex = 1
+								isGameStop = false
+							}, 1000)
+						}, 2500)
+					}, 1000)
+				}
+				else {
+					isGameStop = false
+				}
 			}
-            closeFloorMenu();
+			else {
+				isGameStop = false
+			}
+            closeFloorMenu()
         }
     }
 }
@@ -565,55 +602,56 @@ function handleKeyDown2(event) {
     if (isGameStop) {
         if (event.key === 'ArrowUp') {
             if (floorNow === 3) {
-                floorNow = 1;
+                floorNow = 1
             } else if (floorNow === 2) {
-                floorNow = 3;
+                floorNow = 3
             } else if (floorNow === 1) {
-                floorNow = 2;
+                floorNow = 2
             }
-            updateActiveFloor();
+            updateActiveFloor()
         } else if (event.key === 'ArrowDown') {
             if (floorNow === 2) {
-                floorNow = 1;
+                floorNow = 1
             } else if (floorNow === 1) {
-                floorNow = 3;
+                floorNow = 3
             } else if (floorNow === 3) {
-                floorNow = 2;
+                floorNow = 2
             }
-            updateActiveFloor();
+            updateActiveFloor()
         } else if (event.key === 'Enter') {
             if (floorNow === 3) {
 				lef = 112
 				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 				bg_number = 311
 				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
-				// document.getElementById('inventory').style.background = '#0000008c'
-				// document.getElementById('settings-svg').style.background = '#0000008c'
+				ReallyFloorNow = 3
 			}
 			else if (floorNow === 2) {
 				lef = 126
 				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 				bg_number = 206
 				document.getElementById('game-bg').src = `images/206-game-bg.jpg`
-				// document.getElementById('inventory').style.background = '#00000000'
-				// document.getElementById('settings-svg').style.background = '#00000000'
+				ReallyFloorNow = 2
 			}
-            closeFloorMenu1();
+			else {
+				isGameStop = false
+			}
+            closeFloorMenu1()
         }
     }
 }
 
 function updateActiveFloor() {
-    document.getElementById('floor1').classList.remove('floor-active');
-    document.getElementById('floor2').classList.remove('floor-active');
-    document.getElementById('floor3').classList.remove('floor-active');
+    document.getElementById('floor1').classList.remove('floor-active')
+    document.getElementById('floor2').classList.remove('floor-active')
+    document.getElementById('floor3').classList.remove('floor-active')
 
     if (floorNow === 1) {
-        document.getElementById('floor1').classList.add('floor-active');
+        document.getElementById('floor1').classList.add('floor-active')
     } else if (floorNow === 2) {
-        document.getElementById('floor2').classList.add('floor-active');
+        document.getElementById('floor2').classList.add('floor-active')
     } else if (floorNow === 3) {
-        document.getElementById('floor3').classList.add('floor-active');
+        document.getElementById('floor3').classList.add('floor-active')
     }
 }
 
@@ -686,7 +724,7 @@ document.addEventListener('keydown', function(event) {
 									})
 									console.log(ITEMS_ON_INVENT)
 
-								}, 100);
+								}, 100)
 								setTimeout(() => {
 									blackScreen.style.opacity = 0
 									setTimeout(() => {
@@ -694,11 +732,11 @@ document.addEventListener('keydown', function(event) {
 										npcTalk('О! деревянная палка! Возьму с собой!', 3000)
 										setTimeout(() => {
 											isGameStop = false
-										}, 200);
-									}, 1000);
-								}, 200);
-							}, 4000);
-						}, 1000);
+										}, 200)
+									}, 1000)
+								}, 200)
+							}, 4000)
+						}, 1000)
 					}
 				}
 			}
@@ -739,7 +777,7 @@ document.addEventListener('keydown', function(event) {
 							fadeOutAudio(AUDIO.game_bg, 3)
 							setTimeout(() => {
 								AUDIO.game_bg.currentTime = 0
-							}, 3000);
+							}, 3000)
 							monster_on_toilet_voice = true
 							++candles
 							AUDIO.monster.play()
@@ -751,10 +789,10 @@ document.addEventListener('keydown', function(event) {
 									setTimeout(() => {
 										npcTalk('Вот блин! Надо скорее валить отсюда!')
 										isGameStop = false
-									}, 30);
-								}, 1000);
-							}, 4000);
-						}, 1000);
+									}, 30)
+								}, 1000)
+							}, 4000)
+						}, 1000)
 					}
 					else {
 						npcTalk('Ну уж нет! Без оружия я туда не пойду!')
@@ -785,10 +823,10 @@ document.addEventListener('keydown', function(event) {
 									blackScreen.style.zIndex = 1
 									setTimeout(() => {
 										isGameStop = false
-									}, 100);
-								}, 1000);
-							}, 4000);
-						}, 1000);
+									}, 100)
+								}, 1000)
+							}, 4000)
+						}, 1000)
 					}
 
 					else if (isSkafOpened) {
@@ -902,6 +940,9 @@ function settingsView() {
 document.getElementById('volume').addEventListener('input', () => {
 	let volume_value = document.getElementById('volume').value
 	AUDIO.game_bg.volume = volume_value / 100
+	Object.values(AUDIO).forEach(audio => {
+		audio.volume = volume_value / 100
+	})
 	document.getElementById('volume-span').textContent = volume_value
 
 	muz_game()
@@ -965,7 +1006,16 @@ function itemBorderColor(i) {
 	document.getElementById('slot6').style.borderColor = '#000'
 	document.getElementById('slot7').style.borderColor = '#000'
 
+	document.getElementById('slot1').style.backgroundColor = '#b4b4b44d'
+	document.getElementById('slot2').style.backgroundColor = '#b4b4b44d'
+	document.getElementById('slot3').style.backgroundColor = '#b4b4b44d'
+	document.getElementById('slot4').style.backgroundColor = '#b4b4b44d'
+	document.getElementById('slot5').style.backgroundColor = '#b4b4b44d'
+	document.getElementById('slot6').style.backgroundColor = '#b4b4b44d'
+	document.getElementById('slot7').style.backgroundColor = '#b4b4b44d'
+
 	document.getElementById(`slot${i}`).style.borderColor = '#1fbd00'
+	document.getElementById(`slot${i}`).style.backgroundColor = '#a1a1a186'
 	
 }
 
@@ -1311,6 +1361,9 @@ function inventoryView() {
 	pauseGame()
 	itemBorderColor(1)
 	checkItemsCount()
+	if (ITEMS_ON_INVENT.length > 0) {
+		document.getElementById(`slot1`).style.backgroundColor = '#a1a1a186'
+	}
 }
 
 document.querySelector('#close_inventory').addEventListener('click', () => {
