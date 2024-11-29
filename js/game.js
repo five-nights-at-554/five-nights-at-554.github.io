@@ -644,7 +644,18 @@ document.addEventListener('keydown', function(event) {
 
 			else if (bg_number === 207) {
 				if (lef >= 58 && lef <= 82) {
-					npcTalk('Свечи? Откуда они здесь...')
+					if (candles === 1) {
+						npcTalk('Стоп... Эта свеча разве горела?')
+					}
+					else if (candles === 2) {
+						npcTalk('Что за бред?! Горела же всего одна свеча')
+					}
+					else if (candles === 3) {
+						npcTalk('...')
+					}
+					else {
+						npcTalk('Свечи? Откуда они здесь...')
+					}
 				}
 			}
 
