@@ -1,5 +1,5 @@
 let isGameStop = false
-var audTF = true
+let audTF = true
 let speed = 2
 let isAnyActivityOpen = false
 let candles = 0
@@ -11,6 +11,8 @@ let FourthPassNum = Math.floor(Math.random() * 10)
 let randomPassword = `${firstPassNum}${secondPassNum}${ThirdPassNum}${FourthPassNum}`
 
 let blackScreen = document.getElementById('black-screen')
+let invisibleScreen = document.getElementById('invisible-screen')
+
 
 function pauseGame() {
 	isGameStop = true
@@ -434,18 +436,18 @@ let right_pressedTF = false
 let left_pressedTF = false
 document.addEventListener('keydown', (event) => {
     if (!isGameStop) {
-		if (event.key === 'ArrowLeft' && !isArrowLeftPressed) {
+		if (event.key === MoveLeftKey && !isArrowLeftPressed) {
 			document.getElementById('gg-img').src = 'images/fil-left.png'
 			isArrowLeftPressed = true
 			isArrowRightPressed = false
-		} else if (event.key === 'ArrowRight' && !isArrowRightPressed) {
+		} else if (event.key === MoveRightKey && !isArrowRightPressed) {
 			document.getElementById('gg-img').src = 'images/fil-right.png'
 			isArrowRightPressed = true
 			isArrowLeftPressed = false
 		}
 	}
 	else if (isGameStop) {
-		if (event.key === 'ArrowLeft') {
+		if (event.key === MoveLeftKey) {
 			if (inventoryOn) {
 				let len = ITEMS_ON_INVENT.length
 				--slotnow
@@ -460,7 +462,7 @@ document.addEventListener('keydown', (event) => {
 				if (slotnow === 6) {slot6Click()}
 				if (slotnow === 7) {slot7Click()}
 			}
-		} else if (event.key === 'ArrowRight') {
+		} else if (event.key === MoveRightKey) {
 			if (inventoryOn) {
 				let len = ITEMS_ON_INVENT.length
 				++slotnow
@@ -481,9 +483,9 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('keyup', (event) => {
     if (!isGameStop) {
-		if (event.key === 'ArrowLeft') {
+		if (event.key === MoveLeftKey) {
 			isArrowLeftPressed = false
-		} else if (event.key === 'ArrowRight') {
+		} else if (event.key === MoveRightKey) {
 			isArrowRightPressed = false
 		}
 	}
@@ -552,7 +554,7 @@ function closeFloorMenu1() {
 
 function handleKeyDown(event) {
     if (isGameStop) {
-        if (event.key === 'ArrowUp') {
+        if (event.key === InteractKey) {
             if (floorNow === 3) {
                 floorNow = 1
             } else if (floorNow === 2) {
@@ -631,7 +633,7 @@ function handleKeyDown(event) {
 
 function handleKeyDown2(event) {
     if (isGameStop) {
-        if (event.key === 'ArrowUp') {
+        if (event.key === InteractKey) {
             if (floorNow === 3) {
                 floorNow = 1
             } else if (floorNow === 2) {
@@ -693,7 +695,7 @@ let isSkafOpened = false
 let dsn = true
 document.addEventListener('keydown', function(event) {
     if (!isGameStop) {
-		if (event.key === 'ArrowUp') {
+		if (event.key === InteractKey) {
 			console.log('Нажата стрелочка вверх')
 
 			if (bg_number === 204) {
@@ -901,7 +903,7 @@ document.addEventListener('keydown', function(event) {
 			}
 		}
 	}
-	else if (isAnyActivityOpen && event.key === 'ArrowUp') {
+	else if (isAnyActivityOpen && event.key === InteractKey) {
 		CloseMiniGame1()
 	}
 })
@@ -995,6 +997,27 @@ document.getElementById('settings-svg').addEventListener('click', () => {
 	settingsView()
 })
 
+document.addEventListener('keydown', function(event) {
+	if (event.key === SettingsKey) {
+		if (settingsOn) {
+			volume_val = document.getElementById('volume').value
+			localStorage.setItem('volume_value', volume_val)
+			document.querySelector('.settingsView-box').style.opacity = 0
+			setTimeout(function() {
+				document.querySelector('.settingsView-box').style.zIndex = -10
+			}, 200)
+			settingsOn = false
+		} else if (!settingsOn && !isGameStop && !inventoryOn) {
+			settingsView()
+		}
+		if (isAnyActivityOpen) {
+			CloseMiniGame1()
+		}
+    }
+})
+
+
+
 
 // inventory
 
@@ -1003,8 +1026,7 @@ document.getElementById('settings-svg').addEventListener('click', () => {
 let inventoryOn = false
 
 document.addEventListener('keydown', function(event) {
-    if (event.code === 'ShiftRight') {
-        console.log('Нажат правый Shift')
+    if (event.key === InventoryKey) {
 		if (inventoryOn) {
 			document.querySelector('.inventoryView-box').style.opacity = 0
 			setTimeout(function() {

@@ -23,6 +23,7 @@
 		</div>
 		<img draggable="false" id="game-bg" src="images/202-game-bg.jpg" alt="none">
 		<div id="black-screen"></div>
+		<div id="invisible-screen"></div>
 		
 		<div id="gg">
 			<img id="gg-img" draggable="false" src="images/fil-right.png" alt="">
@@ -124,7 +125,7 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 				</g>
 			</svg>
 		</div>
-		<div class="settingsView-box">
+		<div id="settingsView-box-original" class="settingsView-box">
 			<div class="settingsView">
 				<div class="svg-box">
 					<svg id="close_settings" version="1.0" xmlns="http://www.w3.org/2000/svg"
@@ -153,6 +154,41 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 				<div class="speed">
 					<h2>Скорость персонажа: <span id="speed-span">200</span>%</h2>
 					<input type="range" id="speed-vaule" min="5" max="20" value="20">
+				</div>
+
+				<h2 class="control-title">НАСТРОЙКИ УПРАВЛЕНИЯ</h2>
+				<div id="control-box">
+
+					<div id="control-box-left" class="control-box-children">
+						<div class="key-choose">
+							<h2 class="key-choose-key" id="choose-key-left"></h2>
+							<h2 class="key-choose-title" id="choose-key-leftT">Влево</h2>
+						</div>
+
+						<div class="key-choose">
+							<h2 class="key-choose-key" id="choose-key-right"></h2>
+							<h2 class="key-choose-title" id="choose-key-rightT">Вправо</h2>
+						</div>
+
+						<div class="key-choose">
+							<h2 class="key-choose-key" id="choose-key-interact"></h2>
+							<h2 class="key-choose-title" id="choose-key-interactT">Взаимодействие</h2>
+						</div>
+						
+					</div>
+
+					<div id="control-box-right" class="control-box-children">
+						<div class="key-choose">
+							<h2 class="key-choose-key" id="choose-key-inventory"></h2>
+							<h2 class="key-choose-title" id="choose-key-inventoryT">Инвентарь</h2>
+						</div>
+
+						<div class="key-choose">
+							<h2 class="key-choose-key" id="choose-key-settings"></h2>
+							<h2 class="key-choose-title" id="choose-key-settingsT">Настройки</h2>
+						</div>
+					</div>
+
 				</div>
 
 			</div>
@@ -259,6 +295,7 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 	</div>
 
 	<script src="js/game.js"></script>
+	<script src="js/controls.js"></script>
 	<script src="js/mini-game-1.js"></script>
 	<!-- <script src="js/settings.js"></script> -->
 </body>
