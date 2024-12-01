@@ -381,7 +381,7 @@ h2 {
 
 #invent-header {
 	display: grid;
-	grid-template-columns: 1fr 10fr 1fr;
+	grid-template-columns: 1fr 1.8fr 1fr;
 }
 
 #inv_title {
@@ -513,6 +513,27 @@ h2 {
 .floors-menu li.floor-active {
 	background: #ffffff36;
 	color: #65bb15;
+}
+
+.secretNumbers-box {
+	display: flex;
+	justify-content: start;
+	padding-top: 2vh;
+	padding-left: 5vh;
+}
+
+.secretNumbers {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 0.5vh;
+	min-width: 5vh;
+	max-height: 6vh;
+	background: #8a8a8a5d;
+	font-size: 5vh;
+	color: #b41212;
+	border: solid 0.2vh #000;
+	border-radius: 1vh;
 }
 
 /* items */

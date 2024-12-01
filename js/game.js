@@ -4,6 +4,11 @@ let speed = 2
 let isAnyActivityOpen = false
 let candles = 0
 let ReallyFloorNow = 2
+let firstPassNum = Math.floor(Math.random() * 10)
+let secondPassNum = Math.floor(Math.random() * 10)
+let ThirdPassNum = Math.floor(Math.random() * 10)
+let FourthPassNum = Math.floor(Math.random() * 10)
+let randomPassword = `${firstPassNum}${secondPassNum}${ThirdPassNum}${FourthPassNum}`
 
 let blackScreen = document.getElementById('black-screen')
 
@@ -33,7 +38,23 @@ const INVENT = [
 	{
 		id: 2,
 		name: 'КУСОК ШВАБРЫ',
-		description: 'В руках бойца даже обычная деревянная палка - грозное оружие (но я не боец)',
+		description: 'В руках бойца даже обычная деревянная палка - грозное оружие <br> (но я не боец)',
+		isOnInventory: false,
+		isUsed: false
+	},
+
+	{
+		id: 3,
+		name: 'СПИЧКИ',
+		description: 'Думаю они еще пригодятся...',
+		isOnInventory: false,
+		isUsed: false
+	},
+
+	{
+		id: 4,
+		name: 'ЗАПИСКА',
+		description: 'Какие-то странные цифры... 8427?',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -150,7 +171,7 @@ window.addEventListener('click', () => {
 
 let talk_timeout
 function npcTalk(npc__talk, time1 = 2000) {
-	document.getElementById('npc-talk').textContent = npc__talk
+	document.getElementById('npc-talk').innerHTML = npc__talk
 	document.getElementById('text').style.display = 'block'
 	document.getElementById('text').style.opacity = 100
 
@@ -162,7 +183,6 @@ function npcTalk(npc__talk, time1 = 2000) {
 			document.getElementById('text').style.display = 'none'
 		}, 300)
 	}, time1)
-
 }
 
 let lef = 3
@@ -177,7 +197,7 @@ function movegg() {
 		document.getElementById('item0').style.zIndex = -10
 		if (lef >= 64 && lef <= 96) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Горшок с деревом'
+			arrow_hint.innerHTML = 'Горшок с деревом'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -188,7 +208,7 @@ function movegg() {
 	else if (bg_number === 205) {
 		if (lef >= 91.5 && lef <= 155) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Дверь в актовый зал'
+			arrow_hint.innerHTML = 'Дверь в актовый зал'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -199,7 +219,7 @@ function movegg() {
 	else if (bg_number === 206) {
 		if (lef >= 100 && lef <= 155) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Лестница'
+			arrow_hint.innerHTML = 'Лестница'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -211,7 +231,7 @@ function movegg() {
 		document.getElementById('item0').style.zIndex = -10
 		if (lef >= 56 && lef <= 98) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Шкаф с наградами'
+			arrow_hint.innerHTML = 'Шкаф с наградами'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -222,7 +242,7 @@ function movegg() {
 	else if (bg_number === 207) {
 		if (lef >= 58 && lef <= 82) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Свечи'
+			arrow_hint.innerHTML = 'Свечи'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -233,7 +253,7 @@ function movegg() {
 	else if (bg_number === 208) {
 		if (lef >= 102.5 && lef <= 150) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Мужской туалет'
+			arrow_hint.innerHTML = 'Мужской туалет'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -244,7 +264,7 @@ function movegg() {
 	else if (bg_number === 307) {
 		if (lef >= 44 && lef <= 102) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Скамейка'
+			arrow_hint.innerHTML = 'Скамейка'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -255,7 +275,7 @@ function movegg() {
 	else if (bg_number === 308) {
 		if (lef >= 94 && lef <= 148.5) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Дверь на лестницу'
+			arrow_hint.innerHTML = 'Дверь на лестницу'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -266,7 +286,7 @@ function movegg() {
 	else if (bg_number === 310) {
 		if (lef >= 72.5 && lef <= 102.5 && monster_on_toilet_voice) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Надпись на стене'
+			arrow_hint.innerHTML = 'Надпись на стене'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -277,12 +297,12 @@ function movegg() {
 	else if (bg_number === 311) {
 		if (lef >= 88.5 && lef <= 132.5) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Лестница'
+			arrow_hint.innerHTML = 'Лестница'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else if (lef >= 2 && lef <= 40) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Мужской туалет'
+			arrow_hint.innerHTML = 'Мужской туалет'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -302,12 +322,12 @@ function movegg() {
 
 		if (lef >= 27 && lef <= 62) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Окно на улицу'
+			arrow_hint.innerHTML = 'Окно на улицу'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory && !INVENT[0].isUsed) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Какой-то ключ...'
+			arrow_hint.innerHTML = 'Какой-то ключ...'
 			arrow_hint.style.color = '#3ad6c9'
 		}
 		else {
@@ -318,7 +338,18 @@ function movegg() {
 	else if (bg_number === 306) {
 		if (lef >= 38 && lef <= 82) {
 			arrow_hint.style.display = 'block'
-			arrow_hint.textContent = 'Лестница'
+			arrow_hint.innerHTML = 'Лестница'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 309) {
+		if (lef >= 118 && lef <= 150) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Женский туалет'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -343,8 +374,6 @@ function movegg() {
 
 	if (lef <= 2) {
 		if ((bg_number >= 203 && bg_number <= 250) || (bg_number >= 307 && bg_number <= 350)) {
-			lef = 148.5
-			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 			--bg_number
 			if (monster_on_toilet_voice && bg_number === 310) {
 				document.getElementById('game-bg').src = `images/310-help-game-bg.jpg`	
@@ -363,6 +392,8 @@ function movegg() {
 			else {
 				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
 			}
+			lef = 148.5
+			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 		} else {
 			lef = 2
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
@@ -370,8 +401,6 @@ function movegg() {
 	}
 	else if (lef >= 150) {
 		if ((bg_number <= 207 && bg_number >=150) || (bg_number < 311 && bg_number >= 260)) {
-			lef = 2
-			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 			++bg_number
 			if (monster_on_toilet_voice && bg_number === 310) {
 				document.getElementById('game-bg').src = `images/310-help-game-bg.jpg`	
@@ -390,6 +419,8 @@ function movegg() {
 			else {
 				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
 			}
+			lef = 2
+			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 		} else {
 			lef = 148.5
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
@@ -699,6 +730,7 @@ document.addEventListener('keydown', function(event) {
 				}
 			}
 
+
 			else if (bg_number === 208) {
 				if (lef >= 102.5 && lef <= 150) {
 					if (toilet_check) {
@@ -831,7 +863,6 @@ document.addEventListener('keydown', function(event) {
 
 					else if (isSkafOpened) {
 						openMiniGame1()
-						isAnyActivityOpen = true
 					} 
 					
 					else {
@@ -862,6 +893,12 @@ document.addEventListener('keydown', function(event) {
 					openFloorMenu(3)
 				}
 			}
+
+			else if (bg_number === 309) {
+				if (lef >= 118 && lef <= 150) {
+					npcTalk('Ну уж нет... Туда я не пойду!')
+				}
+			}
 		}
 	}
 	else if (isAnyActivityOpen && event.key === 'ArrowUp') {
@@ -889,22 +926,12 @@ function openMiniGame1() {
 		document.querySelector('#mini-game1').style.opacity = 100
 		miniGame1On = true
 		pauseGame()
+		isAnyActivityOpen = true
 	}
 	else {
 		npcTalk('Я уже взял отсюда всё, что хотел')
 	}
 }
-
-// document.addEventListener('keydown', function(event) {
-// 	if (isGameStop && miniGame1On && event.key === 'ArrowUp') {
-// 		document.querySelector('#mini-game1').style.opacity = 0
-// 		setTimeout(function() {
-// 			document.querySelector('#mini-game1').style.zIndex = -10
-// 		}, 200)
-// 		miniGame1On = false
-// 		isGameStop = false
-// 	}
-// })
 
 function CloseMiniGame1() {
 	document.querySelector('#mini-game1').style.opacity = 0
@@ -929,7 +956,7 @@ console.log(volume_val)
 	
 document.getElementById('volume').value = volume_val
 AUDIO.game_bg.volume = volume_val / 100
-document.getElementById('volume-span').textContent = volume_val
+document.getElementById('volume-span').innerHTML = volume_val
 
 function settingsView() {
 	document.querySelector('.settingsView-box').style.zIndex = 850
@@ -943,7 +970,7 @@ document.getElementById('volume').addEventListener('input', () => {
 	Object.values(AUDIO).forEach(audio => {
 		audio.volume = volume_value / 100
 	})
-	document.getElementById('volume-span').textContent = volume_value
+	document.getElementById('volume-span').innerHTML = volume_value
 
 	muz_game()
 })
@@ -951,7 +978,7 @@ document.getElementById('volume').addEventListener('input', () => {
 document.getElementById('speed-vaule').addEventListener('input', () => {
 	let speed_value = document.getElementById('speed-vaule').value
 	speed = speed_value / 10
-	document.getElementById('speed-span').textContent = speed_value * 10
+	document.getElementById('speed-span').innerHTML = speed_value * 10
 })
 
 document.querySelector('#close_settings').addEventListener('click', () => {
@@ -1022,8 +1049,8 @@ function itemBorderColor(i) {
 function slot1Click() {
 	if (ITEMS_ON_INVENT.length >= 1) {
 		let a = ITEMS_ON_INVENT[0].id
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		i_count = 1
 		itemBorderColor(i_count)
 		slotnow = 1
@@ -1032,8 +1059,8 @@ function slot1Click() {
 function slot2Click() {
 	if (ITEMS_ON_INVENT.length >= 2) {
 		let a = ITEMS_ON_INVENT[1].id
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		i_count = 2
 		itemBorderColor(i_count)
 		slotnow = 2
@@ -1042,8 +1069,8 @@ function slot2Click() {
 function slot3Click() {
 	if (ITEMS_ON_INVENT.length >= 3) {
 		let a = ITEMS_ON_INVENT[2].id
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		i_count = 3
 		itemBorderColor(i_count)
 		slotnow = 3
@@ -1052,8 +1079,8 @@ function slot3Click() {
 function slot4Click() {
 	if (ITEMS_ON_INVENT.length >= 4) {
 		let a = ITEMS_ON_INVENT[3].id
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		i_count = 4
 		itemBorderColor(i_count)
 		slotnow = 4
@@ -1062,8 +1089,8 @@ function slot4Click() {
 function slot5Click() {
 	if (ITEMS_ON_INVENT.length >= 5) {
 		let a = ITEMS_ON_INVENT[4].id
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		i_count = 5
 		itemBorderColor(i_count)
 		slotnow = 5
@@ -1072,8 +1099,8 @@ function slot5Click() {
 function slot6Click() {
 	if (ITEMS_ON_INVENT.length >= 6) {
 		let a = ITEMS_ON_INVENT[5].id
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		i_count = 6
 		itemBorderColor(i_count)
 		slotnow = 6
@@ -1082,8 +1109,8 @@ function slot6Click() {
 function slot7Click() {
 	if (ITEMS_ON_INVENT.length >= 7) {
 		let a = ITEMS_ON_INVENT[6].id
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		i_count = 7
 		itemBorderColor(i_count)
 		slotnow = 7
@@ -1107,8 +1134,8 @@ document.getElementById('slot7').addEventListener('click', slot7Click)
 function checkItemsCount() {
 	if (ITEMS_ON_INVENT.length === 1) {
 		let a = ITEMS_ON_INVENT[0].id
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
@@ -1132,8 +1159,8 @@ function checkItemsCount() {
 	} else if (ITEMS_ON_INVENT.length === 2) {
 		let a = ITEMS_ON_INVENT[0].id
 		let b = ITEMS_ON_INVENT[1].id
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
@@ -1154,8 +1181,8 @@ function checkItemsCount() {
 		let a = ITEMS_ON_INVENT[0].id
 		let b = ITEMS_ON_INVENT[1].id
 		let c = ITEMS_ON_INVENT[2].id
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
@@ -1181,8 +1208,8 @@ function checkItemsCount() {
 		let b = ITEMS_ON_INVENT[1].id
 		let c = ITEMS_ON_INVENT[2].id
 		let d = ITEMS_ON_INVENT[3].id
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
@@ -1214,8 +1241,8 @@ function checkItemsCount() {
 		let d = ITEMS_ON_INVENT[3].id
 		let e = ITEMS_ON_INVENT[4].id
 
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
@@ -1252,8 +1279,8 @@ function checkItemsCount() {
 		let e = ITEMS_ON_INVENT[4].id
 		let f = ITEMS_ON_INVENT[5].id
 
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
@@ -1295,8 +1322,8 @@ function checkItemsCount() {
 		let f = ITEMS_ON_INVENT[5].id
 		let g = ITEMS_ON_INVENT[6].id
 
-		document.getElementById('descript_item-name').textContent = INVENT[a].name
-		document.getElementById('descript_item-descript').textContent = INVENT[a].description
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 		document.getElementById('slot1').style.background = `#b4b4b44d url('/images/item${a}.png')`
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
@@ -1333,8 +1360,8 @@ function checkItemsCount() {
 		document.getElementById('slot7').style.backgroundRepeat = 'no-repeat'
 		document.getElementById('slot7').style.backgroundPosition = 'center'
 	} else if (ITEMS_ON_INVENT.length === 0) {
-		document.getElementById('descript_item-name').textContent = ''
-		document.getElementById('descript_item-descript').textContent = ''
+		document.getElementById('descript_item-name').innerHTML = ''
+		document.getElementById('descript_item-descript').innerHTML = ''
 
 		document.getElementById('slot1').style.borderColor = '#000'
 		document.getElementById('slot2').style.borderColor = '#000'
