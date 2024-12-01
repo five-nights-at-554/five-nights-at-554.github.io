@@ -51,7 +51,7 @@ function mg1_checkAnswer() {
 			}, 200)
 			miniGame1On = false
 			isGameStop = false
-			npcTalk('Какая красивая стекляшка! Положу её в рюкзак')
+			npcTalk('Какой красивый камешек! Положу его в рюкзак')
 			INVENT[1].isOnInventory = true
 			ITEMS_ON_INVENT.push({
 				id: 1,
