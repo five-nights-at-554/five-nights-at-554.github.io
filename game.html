@@ -34,7 +34,7 @@
 		</div>
 		
 		<div id="choose-floor">
-			<h2>ВЫБЕРИТЕ ЭТАЖ: (Enter)</h2>
+			<h2>ВЫБЕРИТЕ ЭТАЖ: (🡹🡻 Enter)</h2>
 			<ul class="floors-menu">
 				<li id="floor3">Третий</li>
 				<li id="floor2">Второй</li>
@@ -187,6 +187,11 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 							<h2 class="key-choose-key" id="choose-key-settings"></h2>
 							<h2 class="key-choose-title" id="choose-key-settingsT">Настройки</h2>
 						</div>
+
+						<div class="key-choose"	id="dev-console-inset">
+							<h2 class="key-choose-key" id="choose-key-console">/</h2>
+							<h2 class="key-choose-title" id="choose-key-consoleT">Консоль разработчика</h2>
+						</div>
 					</div>
 
 				</div>
@@ -245,7 +250,11 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 		</div>
 
 
-
+		<div id="command-console-box"></div>
+		<div id="command-console">
+			<h2 id="cc-history">Введите команду</h2>
+			<input maxlength="15" autocomplete="off" type="text" id="cc-input">
+		</div>
 
 		<!-- ОБЪЕКТЫ КОМНАТ И КОРИДОРОВ -->
 
@@ -297,6 +306,7 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 	<script src="js/game.js"></script>
 	<script src="js/controls.js"></script>
 	<script src="js/mini-game-1.js"></script>
+	<script src="js/developer-console.js"></script>
 	<!-- <script src="js/settings.js"></script> -->
 </body>
 

@@ -12,11 +12,11 @@ let chooseKeyInteractT = document.getElementById('choose-key-interactT')
 
 let isKeyChoosing = false
 
-let MoveLeftKey = 'ArrowLeft'
-let MoveRightKey = 'ArrowRight'
-let SettingsKey = 's'
-let InventoryKey = 'Shift'
-let InteractKey = 'ArrowUp'
+let MoveLeftKey = localStorage.getItem('MoveLeftKey') || 'ArrowLeft'
+let MoveRightKey = localStorage.getItem('MoveRightKey') || 'ArrowRight'
+let SettingsKey = localStorage.getItem('SettingsKey') || 's'
+let InventoryKey = localStorage.getItem('InventoryKey') || 'Shift'
+let InteractKey = localStorage.getItem('InteractKey') || 'ArrowUp'
 
 
 let keyNow
@@ -44,7 +44,7 @@ chooseKeyRightT = document.getElementById('choose-key-right').textContent = keyM
 chooseKeyInteractT = document.getElementById('choose-key-interact').textContent = keyMap[InteractKey] || InteractKey.toUpperCase()
 
 function abc(event) {
-	if (isKeyChoosing) {
+	if (isKeyChoosing && event.key !== '/' && event.key !== 'Enter') {
 		let key_text = keyMap[event.key] || event.key.toUpperCase()
 		let keyReal = event.key
 		console.log(key_text)
@@ -52,26 +52,32 @@ function abc(event) {
 		if (keyNow === 'settings') {
 			chooseKeySettings.textContent = key_text
 			SettingsKey = keyReal
+			localStorage.setItem('SettingsKey', SettingsKey)
 		}
 	
 		else if (keyNow === 'inventory') {
 			chooseKeyInventory.textContent = key_text
 			InventoryKey = keyReal
+			localStorage.setItem('InventoryKey', InventoryKey)
 		}
 	
 		else if (keyNow === 'left') {
 			chooseKeyLeft.textContent = key_text
 			MoveLeftKey = keyReal
+			localStorage.setItem('MoveLeftKey', MoveLeftKey)
+
 		}
 	
 		else if (keyNow === 'right') {
 			chooseKeyRight.textContent = key_text
 			MoveRightKey = keyReal
+			localStorage.setItem('MoveRightKey', MoveRightKey)
 		}
 	
 		else if (keyNow === 'interact') {
 			chooseKeyInteract.textContent = key_text
 			InteractKey = keyReal
+			localStorage.setItem('InteractKey', InteractKey)
 		}
 		chooseKeyCancel()
 	}
@@ -120,27 +126,22 @@ function chooseKeyOnClick(a) {
 	keyNow = a
 	if (!isKeyChoosing) {
 		if (keyNow === 'settings') {
-			console.log(a)
 			chooseKeySettingsT.textContent = 'Выберите клавишу'
 		}
 	
 		else if (keyNow === 'inventory') {
-			console.log(a)
 			chooseKeyInventoryT.textContent = 'Выберите клавишу'
 		}
 		
 		else if (keyNow === 'left') {
-			console.log(a)
 			chooseKeyLeftT.textContent = 'Выберите клавишу'
 		}
 	
 		else if (keyNow === 'right') {
-			console.log(a)
 			chooseKeyRightT.textContent = 'Выберите клавишу'
 		}
 		
 		else if (keyNow === 'interact') {
-			console.log(a)
 			chooseKeyInteractT.textContent = 'Выберите клавишу'
 		}
 		chooseKey()

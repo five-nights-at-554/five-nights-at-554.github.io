@@ -55,8 +55,8 @@ const INVENT = [
 
 	{
 		id: 4,
-		name: 'ЗАПИСКА',
-		description: 'Какие-то странные цифры... 8427?',
+		name: 'НОВОГОДНЯЯ ШЛЯПА',
+		description: 'Всех с наступающим! <br> Нажмите "Enter" чтобы надеть',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -65,7 +65,7 @@ const INVENT = [
 const ITEMS_ON_INVENT = []
 
 document.addEventListener('visibilitychange', function() {
-	if (audTF) {
+	if (audTF && !ng_2024) {
 		if (document.visibilityState === 'hidden') {
 			AUDIO.game_bg.pause()
 			AUDIO.mainMenu.pause()
@@ -74,7 +74,6 @@ document.addEventListener('visibilitychange', function() {
 			AUDIO.game_bg.play()
 			if (monster_on_toilet_voice) {
 				AUDIO.mainMenu.play()
-				
 			}
 		}
 	}
@@ -96,6 +95,7 @@ const AUDIO = {
 	skaf_open: createSound('/js/sounds/skaf_open.mp3'),
 	take_key: createSound('/js/sounds/take_key.mp3'),
 	steps: createSound('/js/sounds/steps.mp3'),
+	ng2024: createSound('/js/sounds/ng2024.mp3'),
 }
 
 // AUDIO.monster.volume = 0.5
@@ -437,11 +437,21 @@ let left_pressedTF = false
 document.addEventListener('keydown', (event) => {
     if (!isGameStop) {
 		if (event.key === MoveLeftKey && !isArrowLeftPressed) {
-			document.getElementById('gg-img').src = 'images/fil-left.png'
+			if (ng_2024) {
+				document.getElementById('gg-img').src = 'images/fil-left-ng.png'
+			}
+			else {
+				document.getElementById('gg-img').src = 'images/fil-left.png'
+			}
 			isArrowLeftPressed = true
 			isArrowRightPressed = false
 		} else if (event.key === MoveRightKey && !isArrowRightPressed) {
-			document.getElementById('gg-img').src = 'images/fil-right.png'
+			if (ng_2024) {
+				document.getElementById('gg-img').src = 'images/fil-right-ng.png'
+			}
+			else {
+				document.getElementById('gg-img').src = 'images/fil-right.png'
+			}
 			isArrowRightPressed = true
 			isArrowLeftPressed = false
 		}
@@ -554,7 +564,7 @@ function closeFloorMenu1() {
 
 function handleKeyDown(event) {
     if (isGameStop) {
-        if (event.key === InteractKey) {
+        if (event.key === 'ArrowUp') {
             if (floorNow === 3) {
                 floorNow = 1
             } else if (floorNow === 2) {
@@ -633,7 +643,7 @@ function handleKeyDown(event) {
 
 function handleKeyDown2(event) {
     if (isGameStop) {
-        if (event.key === InteractKey) {
+        if (event.key === 'ArrowUp') {
             if (floorNow === 3) {
                 floorNow = 1
             } else if (floorNow === 2) {
@@ -798,8 +808,7 @@ document.addEventListener('keydown', function(event) {
 					openFloorMenu1(3)
 				}
 				else if (lef >= 2 && lef <= 40) {
-					if (!monster_on_toilet_voice) {
-						
+					if (!monster_on_toilet_voice && !ng_2024) {
 						pauseGame()
 						blackScreen.style.zIndex = 1000
 						blackScreen.style.opacity = 100
@@ -827,6 +836,9 @@ document.addEventListener('keydown', function(event) {
 								}, 1000)
 							}, 4000)
 						}, 1000)
+					}
+					else if (!monster_on_toilet_voice && ng_2024) {
+						npcTalk('Нее, я туда не хочу... Я ХОЧУ ПРАЗДНОВАТЬ')
 					}
 					else {
 						npcTalk('Ну уж нет! Без оружия я туда не пойду!')
@@ -929,6 +941,7 @@ function openMiniGame1() {
 		miniGame1On = true
 		pauseGame()
 		isAnyActivityOpen = true
+		mg1_input.focus()
 	}
 	else {
 		npcTalk('Я уже взял отсюда всё, что хотел')
@@ -943,6 +956,7 @@ function CloseMiniGame1() {
 	miniGame1On = false
 	isGameStop = false
 	isAnyActivityOpen = false
+	mg1_input.blur()
 }
 document.querySelector('#close_mini-game-1').addEventListener('click', CloseMiniGame1)
 

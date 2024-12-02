@@ -4,7 +4,8 @@
 	margin: 0;
 	padding: 0;
 	font-family: 'com';
-	/* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+	/* cursor: url('/images/cursor-default.svg'), auto;
+	cursor: url('/images/cursor-pointer.svg'), auto; */
 }
 
 @font-face {
@@ -67,8 +68,8 @@ h2 {
 	height: 100vh;
 	position: fixed;
 	z-index: -100;
-	background: #00000000;
-	opacity: 0;
+	background: #4444442d;
+	opacity: 10;
 }
 
 #press-f11 {
@@ -297,10 +298,10 @@ h2 {
 }
 
 #control-box-left {
-	width: 55vh;
+	width: 57vh;
 }
 #control-box-right {
-	width: 55vh;
+	width: 57vh;
 }
 
 .key-choose {
@@ -337,6 +338,20 @@ h2 {
 	letter-spacing: 0.5vh;
 }
 
+#choose-key-console {
+	padding: 1vh 1.4vh;
+	cursor: default;
+}
+#choose-key-console:hover {
+	background: none;
+}
+#choose-key-consoleT {
+	color: #113f17;
+}
+
+#dev-console-inset {
+	display: none;
+}
 
 #gg {
 	position: fixed;
@@ -744,3 +759,68 @@ h2 {
 	font-size: 5vh;
 	min-height: 6vh;
 }
+
+
+/* КОМАНДНАЯ КОНСОЛЬ */
+
+#command-console-box {
+	aspect-ratio: 1920/1080;
+	height: 100vh;
+	position: fixed;
+	z-index: -100;
+	background: #00000000;
+	opacity: 0;
+}
+
+#command-console {
+	aspect-ratio: 3 / 1;
+	height: 25vh;
+	position: fixed;
+	right: calc((100vw - 100vh * 16 / 9 + 4vh) / 2);
+	top: 74vh;
+	z-index: -100;
+	background: #0000007c;
+	opacity: 0;
+	transition: opacity 0.2s;
+	padding: 0.3vh;
+
+	border: solid 0.3vh #57ad10;
+	border-radius: 2vh;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+}
+
+#cc-input {
+	background: #79797918;
+	outline: none;
+	padding: 1vh;
+	color: #0c941e;
+	font-size: 3vh;
+	width: 90%;
+	margin: 0 5%;
+	border: solid 0.2vh;
+	border-color: #69696988;
+	border-radius: 1vh;
+}
+
+#cc-history {
+	width: 90%;
+	margin: 1vh 5%;
+	background: #79797918;
+	height: 14vh;
+	border: solid 0.2vh;
+	border-color: #69696988;
+	border-radius: 1vh;
+	padding: 1vh;
+	color: #0c941e;
+	font-size: 3vh;
+	letter-spacing: 0.3vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+654 2340
+720 2574
