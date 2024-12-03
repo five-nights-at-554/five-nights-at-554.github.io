@@ -9,6 +9,16 @@ let secondPassNum = Math.floor(Math.random() * 10)
 let ThirdPassNum = Math.floor(Math.random() * 10)
 let FourthPassNum = Math.floor(Math.random() * 10)
 let randomPassword = `${firstPassNum}${secondPassNum}${ThirdPassNum}${FourthPassNum}`
+let secretNumber1 = document.getElementById('secretNumber1')
+let secretNumber2 = document.getElementById('secretNumber2')
+let secretNumber3 = document.getElementById('secretNumber3')
+let secretNumber4 = document.getElementById('secretNumber4')
+secretNumber1.textContent = '*'
+secretNumber2.textContent = '*'
+secretNumber3.textContent = '*'
+secretNumber4.textContent = '*'
+let isPasswordUnlocked = false
+let ngHat = false
 
 let blackScreen = document.getElementById('black-screen')
 let invisibleScreen = document.getElementById('invisible-screen')
@@ -42,12 +52,27 @@ const BG = [
 	'310-help',
 ]
 
+const GG = [
+	'left',
+	'right',
+	'left-ng',
+	'right-ng',
+]
+
 function changeBG(bgnum) {
 	BG.forEach((bgn) => {
 		document.getElementById(`game-bg-${bgn}`).style.zIndex = -10
 		console.log(bgn)
 	})
 	document.getElementById(`game-bg-${bgnum}`).style.zIndex = 2
+}
+changeGG('right')
+
+function changeGG(ggnum) {
+	GG.forEach((ggn) => {
+		document.getElementById(`gg-${ggn}`).style.display = 'none'
+	})
+	document.getElementById(`gg-${ggnum}`).style.display = 'block'
 }
 
 const INVENT = [
@@ -70,7 +95,7 @@ const INVENT = [
 	{
 		id: 2,
 		name: 'КУСОК ШВАБРЫ',
-		description: 'В руках бойца даже обычная деревянная палка - грозное оружие <br> (но я не боец)',
+		description: 'В руках бойца даже обычная палка - грозное оружие <br> (но я не боец)',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -200,6 +225,10 @@ let isArrowLeftPressed = false
 let isArrowRightPressed = false 
 	
 const gg = document.getElementById('gg')
+const ggLeft = document.getElementById('gg-left')
+const ggRight = document.getElementById('gg-right')
+const ggLeftNg = document.getElementById('gg-left-ng')
+const ggRightNg = document.getElementById('gg-right-ng')
 
 let talk_timeout
 function npcTalk(npc__talk, time1 = 2000) {
@@ -469,20 +498,20 @@ let left_pressedTF = false
 document.addEventListener('keydown', (event) => {
     if (!isGameStop) {
 		if (event.key === MoveLeftKey && !isArrowLeftPressed) {
-			if (ng_2024) {
-				document.getElementById('gg-img').src = 'images/fil-left-ng.png'
+			if (ng_2024 || ngHat) {
+				changeGG('left-ng')
 			}
 			else {
-				document.getElementById('gg-img').src = 'images/fil-left.png'
+				changeGG('left')
 			}
 			isArrowLeftPressed = true
 			isArrowRightPressed = false
 		} else if (event.key === MoveRightKey && !isArrowRightPressed) {
-			if (ng_2024) {
-				document.getElementById('gg-img').src = 'images/fil-right-ng.png'
+			if (ng_2024 || ngHat) {
+				changeGG('right-ng')
 			}
 			else {
-				document.getElementById('gg-img').src = 'images/fil-right.png'
+				changeGG('right')
 			}
 			isArrowRightPressed = true
 			isArrowLeftPressed = false
@@ -1442,8 +1471,38 @@ function checkItemsCount() {
 		document.getElementById('slot5').style.background = '#b4b4b44d'
 		document.getElementById('slot6').style.background = '#b4b4b44d'
 		document.getElementById('slot7').style.background = '#b4b4b44d'
+	} else if (ITEMS_ON_INVENT.length >= 8) {
+		let a = ITEMS_ON_INVENT[0].id
+		INVENT[a].isOnInventory = false
+		for (let i = ITEMS_ON_INVENT.length - 1; i >= 0; i--) {
+			if (ITEMS_ON_INVENT[i].id === a) {
+				ITEMS_ON_INVENT.splice(i, 1)
+			}
+		}
+		checkItemsCount()
 	}
 }
+
+document.addEventListener('keydown', function(event) {
+	if (event.key === 'Enter' && inventoryOn) {
+		if (ITEMS_ON_INVENT[i_count - 1].id === 4) {
+			INVENT[4].isOnInventory = false
+			changeGG('right-ng')
+			document.querySelector('.inventoryView-box').style.opacity = 0
+			setTimeout(function() {
+				document.querySelector('.inventoryView-box').style.zIndex = -10
+			}, 200)
+			inventoryOn = false
+			isGameStop = false
+			ngHat = true
+			for (let i = ITEMS_ON_INVENT.length - 1; i >= 0; i--) {
+				if (ITEMS_ON_INVENT[i].id === 4) {
+					ITEMS_ON_INVENT.splice(i, 1)
+				}
+			}
+		}
+	}	
+})
 
 function inventoryView() {
 	document.querySelector('.inventoryView-box').style.zIndex = 849

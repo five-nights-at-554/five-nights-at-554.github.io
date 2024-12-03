@@ -47,13 +47,20 @@ document.addEventListener('keydown', function(event) {
 commandConsoleBox.addEventListener('click', closeCC)
 
 ccInput.addEventListener("input", function(event) {
-    let value = event.target.value;
+    let value = event.target.value
     if (value.includes("/")) {
-        event.target.value = value.replace("/", '');
+        event.target.value = value.replace("/", '')
     }
 })
 
+function checkItemCommandFormat(s) {
+    let pattern = /^item (0|1|2|3|4)$/
+    return pattern.test(s)
+}
+
+
 let CCvalue 
+let aTime
 function checkCommand() {
 	CCvalue = ccInput.value.toLowerCase().trim()
 	ccInput.value = ''
@@ -63,31 +70,77 @@ function checkCommand() {
 		speed = parseFloat(CCvalue.slice(6))
 		closeCC()
 	}
-	else if (CCvalue === 'ng2025') {
-		// ITEMS_ON_INVENT.push({id:4})
-		AUDIO.ng2024.play()
-		setTimeout(() => {
-			AUDIO.mainMenu.pause()
-			AUDIO.game_bg.pause()
-		}, 50);
-		closeCC()
-		npcTalk('Ого! Новогодняя шапочка!')
-		ng_2024 = true
-		document.getElementById('gg-img').src = 'images/fil-right-ng.png'
-		setTimeout(() => {
-			if (monster_on_toilet_voice) {
-				AUDIO.mainMenu.play()
-				AUDIO.mainMenu.loop = true
-			}
-			else {
-				AUDIO.game_bg.play()
-				AUDIO.game_bg.loop = true
-			}
-			ng_2024 = false
-		}, 265000);
+	else if (CCvalue === 'ng 2025') {
+		if (!ng_2024) {
+			closeCC()
+			// ITEMS_ON_INVENT.push({id:4})
+			AUDIO.ng2024.play()
+			setTimeout(() => {
+				AUDIO.mainMenu.pause()
+				AUDIO.game_bg.pause()
+			}, 50)
+			npcTalk('Ого! Новогодняя шапочка!')
+			ng_2024 = true
+			changeGG('right-ng')
+			aTime = setTimeout(() => {
+				if (monster_on_toilet_voice) {
+					AUDIO.mainMenu.play()
+					AUDIO.mainMenu.loop = true
+				}
+				else {
+					AUDIO.game_bg.play()
+					AUDIO.game_bg.loop = true
+				}
+				if (!ngHat) {
+					changeGG('right')
+				}
+				npcTalk('Все, новый год закончился :(')
+				ng_2024 = false
+			}, 265000)
+		}
+		else {
+			ccHistory.innerHTML = `Новый год уже идёт! Наслаждайся`
+			ccHistory.style.color = '#0c941e'
+			ccHistory.style.borderColor = '#69696988'
+		}
 	}
 	else if (CCvalue === 'password unlock') {
-
+		secretNumber1.textContent = firstPassNum
+		secretNumber2.textContent = secondPassNum
+		secretNumber3.textContent = ThirdPassNum
+		secretNumber4.textContent = FourthPassNum
+		if (!isPasswordUnlocked) {
+			npcTalk(`${randomPassword}... Это... Пароль?`)
+		}
+		else {
+			npcTalk('...')
+		}
+		isPasswordUnlocked = true
+		closeCC()
+	}
+	else if (CCvalue === 'ng stop') {
+		clearTimeout(aTime)
+		if (monster_on_toilet_voice) {
+			AUDIO.mainMenu.play()
+			AUDIO.mainMenu.loop = true
+		}
+		else {
+			AUDIO.game_bg.play()
+			AUDIO.game_bg.loop = true
+		}
+		AUDIO.ng2024.pause()
+		AUDIO.ng2024.currentTime = 0
+		changeGG('right')
+		npcTalk('Все, новый год закончился :(')
+		ng_2024 = false
+		ngHat = false
+		closeCC()
+	}
+	else if (checkItemCommandFormat(CCvalue)) {
+		let itemid = parseInt(CCvalue.slice(5))
+		ITEMS_ON_INVENT.push({id: itemid})
+		INVENT[itemid].isOnInventory = true
+		closeCC()
 	}
 	else {
 		ccHistory.innerHTML = `Команда ${CCvalue} не существует или введена неправильно`

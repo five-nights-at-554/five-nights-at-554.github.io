@@ -361,10 +361,11 @@ h2 {
 	left: calc((100vw - 100vh * 16 / 9) / 2 + 3vh);
 }
 
-#gg-img {
+.gg-img {
 	position: fixed;
 	z-index: 200;
 	height: 80vh;
+	display: none;
 	top: 14vh;
 }
 
