@@ -52,7 +52,7 @@
 		</div>
 		
 		<div id="choose-floor">
-			<h2>ВЫБЕРИТЕ ЭТАЖ: (🡹🡻 Enter)</h2>
+			<h2>ВЫБЕРИТЕ ЭТАЖ: (Enter)</h2>
 			<ul class="floors-menu">
 				<li id="floor3">Третий</li>
 				<li id="floor2">Второй</li>
@@ -169,10 +169,10 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 					<h2>Громкость музыки: <span id="volume-span">80</span>%</h2>
 					<input type="range" id="volume" min="0" max="100">
 				</div>
-				<div class="speed">
+				<!-- <div class="speed">
 					<h2>Скорость персонажа: <span id="speed-span">200</span>%</h2>
 					<input type="range" id="speed-vaule" min="5" max="20" value="20">
-				</div>
+				</div> -->
 
 				<h2 class="control-title">НАСТРОЙКИ УПРАВЛЕНИЯ</h2>
 				<div id="control-box">
@@ -189,13 +189,24 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 						</div>
 
 						<div class="key-choose">
+							<h2 class="key-choose-key" id="choose-key-up"></h2>
+							<h2 class="key-choose-title" id="choose-key-upT">Вверх</h2>
+						</div>
+
+						<div class="key-choose">
+							<h2 class="key-choose-key" id="choose-key-down"></h2>
+							<h2 class="key-choose-title" id="choose-key-downT">Вниз</h2>
+						</div>
+
+						
+					</div>
+					
+					<div id="control-box-right" class="control-box-children">
+						<div class="key-choose">
 							<h2 class="key-choose-key" id="choose-key-interact"></h2>
 							<h2 class="key-choose-title" id="choose-key-interactT">Взаимодействие</h2>
 						</div>
 						
-					</div>
-
-					<div id="control-box-right" class="control-box-children">
 						<div class="key-choose">
 							<h2 class="key-choose-key" id="choose-key-inventory"></h2>
 							<h2 class="key-choose-title" id="choose-key-inventoryT">Инвентарь</h2>

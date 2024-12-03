@@ -196,10 +196,10 @@ window.addEventListener('click', () => {
     contextMenu.style.display = 'none'
 })
 	
-	let isArrowLeftPressed = false 
-	let isArrowRightPressed = false 
+let isArrowLeftPressed = false 
+let isArrowRightPressed = false 
 	
-	const gg = document.getElementById('gg')
+const gg = document.getElementById('gg')
 
 let talk_timeout
 function npcTalk(npc__talk, time1 = 2000) {
@@ -217,7 +217,8 @@ function npcTalk(npc__talk, time1 = 2000) {
 	}, time1)
 }
 
-let lef = 3
+let lef = 40
+gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 let bg_number = 202
 
 changeBG(bg_number)
@@ -595,7 +596,7 @@ function closeFloorMenu1() {
 
 function handleKeyDown(event) {
     if (isGameStop) {
-        if (event.key === 'ArrowUp') {
+        if (event.key === UpKey) {
             if (floorNow === 3) {
                 floorNow = 1
             } else if (floorNow === 2) {
@@ -604,7 +605,7 @@ function handleKeyDown(event) {
                 floorNow = 2
             }
             updateActiveFloor()
-        } else if (event.key === 'ArrowDown') {
+        } else if (event.key === DownKey) {
             if (floorNow === 2) {
                 floorNow = 1
             } else if (floorNow === 1) {
@@ -674,7 +675,7 @@ function handleKeyDown(event) {
 
 function handleKeyDown2(event) {
     if (isGameStop) {
-        if (event.key === 'ArrowUp') {
+        if (event.key === UpKey) {
             if (floorNow === 3) {
                 floorNow = 1
             } else if (floorNow === 2) {
@@ -683,7 +684,7 @@ function handleKeyDown2(event) {
                 floorNow = 2
             }
             updateActiveFloor()
-        } else if (event.key === 'ArrowDown') {
+        } else if (event.key === DownKey) {
             if (floorNow === 2) {
                 floorNow = 1
             } else if (floorNow === 1) {
@@ -992,10 +993,6 @@ function CloseMiniGame1() {
 document.querySelector('#close_mini-game-1').addEventListener('click', CloseMiniGame1)
 
 
-
-
-
-
 // settings
 let settingsOn = false
 var volume_val = localStorage.getItem('volume_value') || 80
@@ -1022,11 +1019,11 @@ document.getElementById('volume').addEventListener('input', () => {
 	muz_game()
 })
 
-document.getElementById('speed-vaule').addEventListener('input', () => {
-	let speed_value = document.getElementById('speed-vaule').value
-	speed = speed_value / 10
-	document.getElementById('speed-span').innerHTML = speed_value * 10
-})
+// document.getElementById('speed-vaule').addEventListener('input', () => {
+// 	let speed_value = document.getElementById('speed-vaule').value
+// 	speed = speed_value / 10
+// 	document.getElementById('speed-span').innerHTML = speed_value * 10
+// })
 
 document.querySelector('#close_settings').addEventListener('click', () => {
 	volume_val = document.getElementById('volume').value

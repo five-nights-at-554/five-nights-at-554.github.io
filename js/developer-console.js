@@ -86,6 +86,9 @@ function checkCommand() {
 			ng_2024 = false
 		}, 265000);
 	}
+	else if (CCvalue === 'password unlock') {
+		
+	}
 	else {
 		ccHistory.innerHTML = `Команда ${CCvalue} не существует или введена неправильно`
 		ccHistory.style.color = '#b80e0e'

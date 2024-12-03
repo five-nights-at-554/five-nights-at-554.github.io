@@ -2,18 +2,24 @@ let chooseKeySettings = document.getElementById('choose-key-settings')
 let chooseKeyInventory = document.getElementById('choose-key-inventory')
 let chooseKeyLeft = document.getElementById('choose-key-left')
 let chooseKeyRight = document.getElementById('choose-key-right')
+let chooseKeyUp = document.getElementById('choose-key-up')
+let chooseKeyDown = document.getElementById('choose-key-down')
 let chooseKeyInteract = document.getElementById('choose-key-interact')
 
 let chooseKeySettingsT = document.getElementById('choose-key-settingsT')
 let chooseKeyInventoryT = document.getElementById('choose-key-inventoryT')
 let chooseKeyLeftT = document.getElementById('choose-key-leftT')
 let chooseKeyRightT = document.getElementById('choose-key-rightT')
+let chooseKeyUpT = document.getElementById('choose-key-upT')
+let chooseKeyDownT = document.getElementById('choose-key-downT')
 let chooseKeyInteractT = document.getElementById('choose-key-interactT')
 
 let isKeyChoosing = false
 
 let MoveLeftKey = localStorage.getItem('MoveLeftKey') || 'ArrowLeft'
 let MoveRightKey = localStorage.getItem('MoveRightKey') || 'ArrowRight'
+let UpKey = localStorage.getItem('UpKey') || 'ArrowUp'
+let DownKey = localStorage.getItem('DownKey') || 'ArrowDown'
 let SettingsKey = localStorage.getItem('SettingsKey') || 's'
 let InventoryKey = localStorage.getItem('InventoryKey') || 'Shift'
 let InteractKey = localStorage.getItem('InteractKey') || 'ArrowUp'
@@ -41,6 +47,8 @@ chooseKeySettingsT = document.getElementById('choose-key-settings').textContent 
 chooseKeyInventoryT = document.getElementById('choose-key-inventory').textContent = keyMap[InventoryKey] || InventoryKey.toUpperCase()
 chooseKeyLeftT = document.getElementById('choose-key-left').textContent = keyMap[MoveLeftKey] || MoveLeftKey.toUpperCase()
 chooseKeyRightT = document.getElementById('choose-key-right').textContent = keyMap[MoveRightKey] || MoveRightKey.toUpperCase()
+chooseKeyUpT = document.getElementById('choose-key-up').textContent = keyMap[UpKey] || UpKey.toUpperCase()
+chooseKeyDownT = document.getElementById('choose-key-down').textContent = keyMap[DownKey] || DownKey.toUpperCase()
 chooseKeyInteractT = document.getElementById('choose-key-interact').textContent = keyMap[InteractKey] || InteractKey.toUpperCase()
 
 function abc(event) {
@@ -78,6 +86,18 @@ function abc(event) {
 			chooseKeyInteract.textContent = key_text
 			InteractKey = keyReal
 			localStorage.setItem('InteractKey', InteractKey)
+		}
+
+		else if (keyNow === 'up') {
+			chooseKeyUp.textContent = key_text
+			UpKey = keyReal
+			localStorage.setItem('UpKey', UpKey)
+		}
+	
+		else if (keyNow === 'down') {
+			chooseKeyDown.textContent = key_text
+			DownKey = keyReal
+			localStorage.setItem('DownKey', DownKey)
 		}
 		chooseKeyCancel()
 	}
@@ -120,6 +140,14 @@ function chooseKeyCancel() {
 	else if (keyNow === 'interact') {
 		chooseKeyInteractT.textContent = 'Взаимодействие'
 	}
+
+	else if (keyNow === 'down') {
+		chooseKeyDownT.textContent = 'Вниз'
+	}
+	
+	else if (keyNow === 'up') {
+		chooseKeyUpT.textContent = 'Вверх'
+	}
 }
 
 function chooseKeyOnClick(a) {
@@ -144,6 +172,14 @@ function chooseKeyOnClick(a) {
 		else if (keyNow === 'interact') {
 			chooseKeyInteractT.textContent = 'Выберите клавишу'
 		}
+
+		else if (keyNow === 'down') {
+			chooseKeyDownT.textContent = 'Выберите клавишу'
+		}
+		
+		else if (keyNow === 'up') {
+			chooseKeyUpT.textContent = 'Выберите клавишу'
+		}
 		chooseKey()
 	}
 }
@@ -153,6 +189,8 @@ chooseKeySettings.addEventListener('click', () => {chooseKeyOnClick('settings')}
 chooseKeyInventory.addEventListener('click', () => {chooseKeyOnClick('inventory')})
 chooseKeyLeft.addEventListener('click', () => {chooseKeyOnClick('left')})
 chooseKeyRight.addEventListener('click', () => {chooseKeyOnClick('right')})
+chooseKeyUp.addEventListener('click', () => {chooseKeyOnClick('up')})
+chooseKeyDown.addEventListener('click', () => {chooseKeyOnClick('down')})
 chooseKeyInteract.addEventListener('click', () => {chooseKeyOnClick('interact')})
 
 
