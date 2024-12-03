@@ -63,7 +63,7 @@ function checkCommand() {
 		speed = parseFloat(CCvalue.slice(6))
 		closeCC()
 	}
-	else if (CCvalue === 'ng2024') {
+	else if (CCvalue === 'ng2025') {
 		// ITEMS_ON_INVENT.push({id:4})
 		AUDIO.ng2024.play()
 		setTimeout(() => {
@@ -87,7 +87,7 @@ function checkCommand() {
 		}, 265000);
 	}
 	else if (CCvalue === 'password unlock') {
-		
+
 	}
 	else {
 		ccHistory.innerHTML = `Команда ${CCvalue} не существует или введена неправильно`
