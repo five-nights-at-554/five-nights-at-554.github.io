@@ -90,11 +90,11 @@ h2 {
 	min-height: 100vh;
 }
 
-#game-bg {
+.game-bg {
 	aspect-ratio: 1920/1080;
 	height: 100vh;
 	position: fixed;
-	z-index: 2;
+	z-index: -10;
 }
 
 .settings-svg-box {
@@ -822,5 +822,3 @@ h2 {
 	align-items: center;
 	text-align: center;
 }
-654 2340
-720 2574

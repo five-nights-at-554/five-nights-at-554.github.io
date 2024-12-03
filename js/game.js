@@ -20,6 +20,36 @@ function pauseGame() {
 	isArrowRightPressed = false
 }
 
+const BG = [
+	'202',
+	'203',
+	'204',
+	'205',
+	'206',
+	'207',
+	'208',
+
+	'306',
+	'307',
+	'308',
+	'309',
+	'310',
+	'311',
+
+	'207-1',
+	'207-2',
+	'207-3',
+	'310-help',
+]
+
+function changeBG(bgnum) {
+	BG.forEach((bgn) => {
+		document.getElementById(`game-bg-${bgn}`).style.zIndex = -10
+		console.log(bgn)
+	})
+	document.getElementById(`game-bg-${bgnum}`).style.zIndex = 2
+}
+
 const INVENT = [
 	{
 		id: 0,
@@ -190,7 +220,7 @@ function npcTalk(npc__talk, time1 = 2000) {
 let lef = 3
 let bg_number = 202
 
-document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+changeBG(bg_number)
 
 function movegg() {
 	const arrow_hint = document.getElementById('arrow_hint')
@@ -378,21 +408,22 @@ function movegg() {
 		if ((bg_number >= 203 && bg_number <= 250) || (bg_number >= 307 && bg_number <= 350)) {
 			--bg_number
 			if (monster_on_toilet_voice && bg_number === 310) {
-				document.getElementById('game-bg').src = `images/310-help-game-bg.jpg`	
+				changeBG('310-help')
+	
 			}
 			else if (candles > 0 && bg_number === 207) {
 				if (candles === 1) {
-					document.getElementById('game-bg').src = `images/207-1-game-bg.jpg`	
+					changeBG('207-1')
 				}
 				else if (candles === 2) {
-					document.getElementById('game-bg').src = `images/207-2-game-bg.jpg`	
+					changeBG('207-2')
 				}
 				else if (candles === 3) {
-					document.getElementById('game-bg').src = `images/207-3-game-bg.jpg`	
+					changeBG('207-3')
 				}
 			}
 			else {
-				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+				changeBG(bg_number)
 			}
 			lef = 148.5
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
@@ -405,21 +436,21 @@ function movegg() {
 		if ((bg_number <= 207 && bg_number >=150) || (bg_number < 311 && bg_number >= 260)) {
 			++bg_number
 			if (monster_on_toilet_voice && bg_number === 310) {
-				document.getElementById('game-bg').src = `images/310-help-game-bg.jpg`	
+				changeBG('310-help')	
 			}
 			else if (candles > 0 && bg_number === 207) {
 				if (candles === 1) {
-					document.getElementById('game-bg').src = `images/207-1-game-bg.jpg`	
+					changeBG('207-1')
 				} 
 				else if (candles === 2) {
-					document.getElementById('game-bg').src = `images/207-2-game-bg.jpg`	
+					changeBG('207-2')
 				}
 				else if (candles === 3) {
-					document.getElementById('game-bg').src = `images/207-3-game-bg.jpg`	
+					changeBG('207-3')
 				}
 			}
 			else {
-				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+				changeBG(bg_number)
 			}
 			lef = 2
 			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
@@ -593,7 +624,7 @@ function handleKeyDown(event) {
 						lef = 62
 						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 						bg_number = 306
-						document.getElementById('game-bg').src = `images/306-game-bg.jpg`
+						changeBG('306')
 						ReallyFloorNow = 3
 						setTimeout(() => {
 							blackScreen.style.opacity = 0
@@ -619,7 +650,7 @@ function handleKeyDown(event) {
 						lef = 126
 						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 						bg_number = 206
-						document.getElementById('game-bg').src = `images/206-game-bg.jpg`
+						changeBG('206')
 						setTimeout(() => {
 							blackScreen.style.opacity = 0
 							setTimeout(() => {
@@ -666,14 +697,14 @@ function handleKeyDown2(event) {
 				lef = 112
 				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 				bg_number = 311
-				document.getElementById('game-bg').src = `images/${bg_number}-game-bg.jpg`
+				changeBG(bg_number)
 				ReallyFloorNow = 3
 			}
 			else if (floorNow === 2) {
 				lef = 126
 				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 				bg_number = 206
-				document.getElementById('game-bg').src = `images/206-game-bg.jpg`
+				changeBG('206')
 				ReallyFloorNow = 2
 			}
 			else {
