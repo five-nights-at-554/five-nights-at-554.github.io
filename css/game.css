@@ -634,7 +634,7 @@ h2 {
 	background-position: center;
 	height: 10vh;
 	top: 85vh;
-	left: calc((100vw - 100vh * 16 / 9) / 2 + 90vh);
+	left: calc((100vw - 100vh * 16 / 9) / 2 + 120vh);
 
 	position: fixed;
 	z-index: -10;
@@ -644,12 +644,12 @@ h2 {
 
 /* MINI-GAMES */
 
-#mini-game1 {
+/* #mini-game1 {
 	background: url('/images/1-mini-game-bg-bg.jpg');
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
-}
+} */
 
 #mini-game-1-view {
 	background: url('/images/mg1.jpg');
@@ -674,6 +674,7 @@ h2 {
 	font-family: 'mg1';
 	text-align: center;
 	font-size: 4.5vh;
+	line-height: 4vh;
 }
 #mg1_title span {
 	font-family: 'mg1';

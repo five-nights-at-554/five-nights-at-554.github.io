@@ -255,7 +255,6 @@ function movegg() {
 	const arrow_hint = document.getElementById('arrow_hint')
 
 	if (bg_number === 204) {
-		document.getElementById('item0').style.zIndex = -10
 		if (lef >= 64 && lef <= 96) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.innerHTML = 'Горшок с деревом'
@@ -286,10 +285,10 @@ function movegg() {
 		else {
 			arrow_hint.style.display = 'none'
 		}
+		document.getElementById('item0').style.zIndex = -10
 	}
 
 	else if (bg_number === 202) {
-		document.getElementById('item0').style.zIndex = -10
 		if (lef >= 56 && lef <= 98) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.innerHTML = 'Шкаф с наградами'
@@ -301,10 +300,22 @@ function movegg() {
 	}
 
 	else if (bg_number === 207) {
+		if (!INVENT[0].isOnInventory && !INVENT[0].isUsed && candles === 1) {
+			document.getElementById('item0').style.zIndex = 3
+		}
+		else {
+			document.getElementById('item0').style.zIndex = -10
+		}
+
 		if (lef >= 58 && lef <= 82) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.innerHTML = 'Свечи'
 			arrow_hint.style.color = '#d63a3a'
+		}
+		else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles === 1) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Какой-то ключ...'
+			arrow_hint.style.color = '#3ad6c9'
 		}
 		else {
 			arrow_hint.style.display = 'none'
@@ -312,6 +323,7 @@ function movegg() {
 	}
 
 	else if (bg_number === 208) {
+		document.getElementById('item0').style.zIndex = -10
 		if (lef >= 102.5 && lef <= 150) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.innerHTML = 'Мужской туалет'
@@ -372,25 +384,12 @@ function movegg() {
 	}
 
 	else if (bg_number === 203) {
-
-		if (!INVENT[0].isOnInventory && !INVENT[0].isUsed) {
-			document.getElementById('item0').style.zIndex = 3
-		}
-		else {
-			document.getElementById('item0').style.zIndex = -10
-		}
-
-
 		if (lef >= 27 && lef <= 62) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.innerHTML = 'Окно на улицу'
 			arrow_hint.style.color = '#d63a3a'
 		}
-		else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory && !INVENT[0].isUsed) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Какой-то ключ...'
-			arrow_hint.style.color = '#3ad6c9'
-		}
+		
 		else {
 			arrow_hint.style.display = 'none'
 		}
@@ -401,6 +400,9 @@ function movegg() {
 			arrow_hint.style.display = 'block'
 			arrow_hint.innerHTML = 'Лестница'
 			arrow_hint.style.color = '#d63a3a'
+		}
+		else if (lef <= 4) {
+			npcTalk('Эта дверь такая большая... Но я не могу пройти туда...')
 		}
 		else {
 			arrow_hint.style.display = 'none'
@@ -693,8 +695,9 @@ function handleKeyDown(event) {
 					isGameStop = false
 				}
 			}
-			else {
+			else if (floorNow === 1) {
 				isGameStop = false
+				npcTalk('Блин! Дверь на первый этаж закрыта!', 3000)
 			}
             closeFloorMenu()
         }
@@ -774,7 +777,13 @@ document.addEventListener('keydown', function(event) {
 			}
 			else if (bg_number === 205) {
 				if (lef >= 91.5 && lef <= 155) {
-					npcTalk('Блин! Нужен ключ!')
+					if (INVENT[0].isOnInventory) {
+						npcTalk('Этот ключ не подходит...')
+					
+					}
+					else {
+						npcTalk('Не открывается!')
+					}
 				}
 			}
 			
@@ -790,7 +799,7 @@ document.addEventListener('keydown', function(event) {
 						npcTalk('Стоп... Эта свеча разве горела?')
 					}
 					else if (candles === 2) {
-						npcTalk('Что за бред?! Горела же всего одна свеча')
+						npcTalk('Что за бред?! Горела же всего одна свеча!')
 					}
 					else if (candles === 3) {
 						npcTalk('...')
@@ -798,6 +807,16 @@ document.addEventListener('keydown', function(event) {
 					else {
 						npcTalk('Свечи? Откуда они здесь...')
 					}
+				}
+				else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles === 1) {
+					AUDIO.take_key.currentTime = 0
+					AUDIO.take_key.play()
+					npcTalk('Что?! Откуда здесь ключ? Надеюсь, он поможет мне выбраться...', 3000)
+					document.getElementById('item0').style.zIndex = -10
+					INVENT[0].isOnInventory = true
+					ITEMS_ON_INVENT.push({
+						id: 0,
+					})
 				}
 			}
 
@@ -938,7 +957,7 @@ document.addEventListener('keydown', function(event) {
 					} 
 					
 					else {
-						npcTalk('Этот шкаф закрыт!')
+						npcTalk('Шкаф закрыт... Нужен ключ!')
 					}
 				}
 			}
@@ -946,16 +965,6 @@ document.addEventListener('keydown', function(event) {
 			else if (bg_number === 203) {
 				if (lef >= 27 && lef <= 62) {
 					npcTalk('Уже так темно...')
-				}
-				else if (lef >= 72 && lef <= 92 && !INVENT[0].isOnInventory && !INVENT[0].isUsed) {
-					AUDIO.take_key.currentTime = 0
-					AUDIO.take_key.play()
-					npcTalk('Что? это ключ? Положу его в рюкзак, на всякий случай...', 3000)
-					document.getElementById('item0').style.zIndex = -10
-					INVENT[0].isOnInventory = true
-					ITEMS_ON_INVENT.push({
-						id: 0,
-					})
 				}
 			}
 
@@ -1065,7 +1074,7 @@ document.getElementById('settings-svg').addEventListener('click', () => {
 })
 
 document.addEventListener('keydown', function(event) {
-	if (event.key === SettingsKey) {
+	if (event.key === SettingsKey && !isKeyChoosing) {
 		if (settingsOn) {
 			volume_val = document.getElementById('volume').value
 			localStorage.setItem('volume_value', volume_val)

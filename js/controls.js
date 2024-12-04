@@ -16,13 +16,13 @@ let chooseKeyInteractT = document.getElementById('choose-key-interactT')
 
 let isKeyChoosing = false
 
-let MoveLeftKey = localStorage.getItem('MoveLeftKey') || 'ArrowLeft'
-let MoveRightKey = localStorage.getItem('MoveRightKey') || 'ArrowRight'
-let UpKey = localStorage.getItem('UpKey') || 'ArrowUp'
-let DownKey = localStorage.getItem('DownKey') || 'ArrowDown'
-let SettingsKey = localStorage.getItem('SettingsKey') || 's'
-let InventoryKey = localStorage.getItem('InventoryKey') || 'Shift'
-let InteractKey = localStorage.getItem('InteractKey') || 'ArrowUp'
+let MoveLeftKey = localStorage.getItem('MoveLeftKey') || 'a'
+let MoveRightKey = localStorage.getItem('MoveRightKey') || 'd'
+let UpKey = localStorage.getItem('UpKey') || 'w'
+let DownKey = localStorage.getItem('DownKey') || 's'
+let SettingsKey = localStorage.getItem('SettingsKey') || 'r'
+let InventoryKey = localStorage.getItem('InventoryKey') || 'e'
+let InteractKey = localStorage.getItem('InteractKey') || 'w'
 
 
 let keyNow
@@ -43,13 +43,13 @@ const keyMap = {
 	'CapsLock': 'CAPS',
 }
 
-chooseKeySettingsT = document.getElementById('choose-key-settings').textContent = keyMap[SettingsKey] || SettingsKey.toUpperCase()
-chooseKeyInventoryT = document.getElementById('choose-key-inventory').textContent = keyMap[InventoryKey] || InventoryKey.toUpperCase()
-chooseKeyLeftT = document.getElementById('choose-key-left').textContent = keyMap[MoveLeftKey] || MoveLeftKey.toUpperCase()
-chooseKeyRightT = document.getElementById('choose-key-right').textContent = keyMap[MoveRightKey] || MoveRightKey.toUpperCase()
-chooseKeyUpT = document.getElementById('choose-key-up').textContent = keyMap[UpKey] || UpKey.toUpperCase()
-chooseKeyDownT = document.getElementById('choose-key-down').textContent = keyMap[DownKey] || DownKey.toUpperCase()
-chooseKeyInteractT = document.getElementById('choose-key-interact').textContent = keyMap[InteractKey] || InteractKey.toUpperCase()
+chooseKeySettings.innerHTML = keyMap[SettingsKey] || SettingsKey.toUpperCase()
+chooseKeyInventory.innerHTML = keyMap[InventoryKey] || InventoryKey.toUpperCase()
+chooseKeyLeft.innerHTML = keyMap[MoveLeftKey] || MoveLeftKey.toUpperCase()
+chooseKeyRight.innerHTML = keyMap[MoveRightKey] || MoveRightKey.toUpperCase()
+chooseKeyUp.innerHTML = keyMap[UpKey] || UpKey.toUpperCase()
+chooseKeyDown.innerHTML = keyMap[DownKey] || DownKey.toUpperCase()
+chooseKeyInteract.innerHTML = keyMap[InteractKey] || InteractKey.toUpperCase()
 
 function abc(event) {
 	if (isKeyChoosing && event.key !== '/' && event.key !== 'Enter') {
@@ -58,44 +58,44 @@ function abc(event) {
 		console.log(key_text)
 	
 		if (keyNow === 'settings') {
-			chooseKeySettings.textContent = key_text
+			chooseKeySettings.innerHTML = key_text
 			SettingsKey = keyReal
 			localStorage.setItem('SettingsKey', SettingsKey)
 		}
 	
 		else if (keyNow === 'inventory') {
-			chooseKeyInventory.textContent = key_text
+			chooseKeyInventory.innerHTML = key_text
 			InventoryKey = keyReal
 			localStorage.setItem('InventoryKey', InventoryKey)
 		}
 	
 		else if (keyNow === 'left') {
-			chooseKeyLeft.textContent = key_text
+			chooseKeyLeft.innerHTML = key_text
 			MoveLeftKey = keyReal
 			localStorage.setItem('MoveLeftKey', MoveLeftKey)
 
 		}
 	
 		else if (keyNow === 'right') {
-			chooseKeyRight.textContent = key_text
+			chooseKeyRight.innerHTML = key_text
 			MoveRightKey = keyReal
 			localStorage.setItem('MoveRightKey', MoveRightKey)
 		}
 	
 		else if (keyNow === 'interact') {
-			chooseKeyInteract.textContent = key_text
+			chooseKeyInteract.innerHTML = key_text
 			InteractKey = keyReal
 			localStorage.setItem('InteractKey', InteractKey)
 		}
 
 		else if (keyNow === 'up') {
-			chooseKeyUp.textContent = key_text
+			chooseKeyUp.innerHTML = key_text
 			UpKey = keyReal
 			localStorage.setItem('UpKey', UpKey)
 		}
 	
 		else if (keyNow === 'down') {
-			chooseKeyDown.textContent = key_text
+			chooseKeyDown.innerHTML = key_text
 			DownKey = keyReal
 			localStorage.setItem('DownKey', DownKey)
 		}
@@ -122,31 +122,31 @@ function chooseKeyCancel() {
 	invisibleScreen.style.zIndex = -10
 
 	if (keyNow === 'settings') {
-		chooseKeySettingsT.textContent = 'Настройки'
+		chooseKeySettingsT.innerHTML = 'Настройки'
 	}
 
 	else if (keyNow === 'inventory') {
-		chooseKeyInventoryT.textContent = 'Инвентарь'
+		chooseKeyInventoryT.innerHTML = 'Инвентарь'
 	}
 
 	else if (keyNow === 'left') {
-		chooseKeyLeftT.textContent = 'Влево'
+		chooseKeyLeftT.innerHTML = 'Влево'
 	}
 
 	else if (keyNow === 'right') {
-		chooseKeyRightT.textContent = 'Вправо'
+		chooseKeyRightT.innerHTML = 'Вправо'
 	}
 
 	else if (keyNow === 'interact') {
-		chooseKeyInteractT.textContent = 'Взаимодействие'
+		chooseKeyInteractT.innerHTML = 'Взаимодействие'
 	}
 
 	else if (keyNow === 'down') {
-		chooseKeyDownT.textContent = 'Вниз'
+		chooseKeyDownT.innerHTML = 'Вниз'
 	}
 	
 	else if (keyNow === 'up') {
-		chooseKeyUpT.textContent = 'Вверх'
+		chooseKeyUpT.innerHTML = 'Вверх'
 	}
 }
 
@@ -154,33 +154,40 @@ function chooseKeyOnClick(a) {
 	keyNow = a
 	if (!isKeyChoosing) {
 		if (keyNow === 'settings') {
-			chooseKeySettingsT.textContent = 'Выберите клавишу'
+			chooseKeySettingsT.innerHTML = 'Выберите клавишу'
+			chooseKey()
 		}
 	
 		else if (keyNow === 'inventory') {
-			chooseKeyInventoryT.textContent = 'Выберите клавишу'
+			chooseKeyInventoryT.innerHTML = 'Выберите клавишу'
+			chooseKey()
 		}
 		
 		else if (keyNow === 'left') {
-			chooseKeyLeftT.textContent = 'Выберите клавишу'
+			chooseKeyLeftT.innerHTML = 'Выберите клавишу'
+			chooseKey()
 		}
 	
 		else if (keyNow === 'right') {
-			chooseKeyRightT.textContent = 'Выберите клавишу'
+			chooseKeyRightT.innerHTML = 'Выберите клавишу'
+			chooseKey()
 		}
 		
 		else if (keyNow === 'interact') {
-			chooseKeyInteractT.textContent = 'Выберите клавишу'
+			chooseKeyInteractT.innerHTML = 'Выберите клавишу'
+			chooseKey()
 		}
 
 		else if (keyNow === 'down') {
-			chooseKeyDownT.textContent = 'Выберите клавишу'
+			chooseKeyDownT.innerHTML = 'Выберите клавишу'
+			chooseKey()
 		}
 		
 		else if (keyNow === 'up') {
-			chooseKeyUpT.textContent = 'Выберите клавишу'
+			chooseKeyUpT.innerHTML = 'Выберите клавишу'
+			chooseKey()
 		}
-		chooseKey()
+		
 	}
 }
 
