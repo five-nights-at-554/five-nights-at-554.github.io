@@ -53,7 +53,7 @@ let discsound = true
 function discClose() {
 	let disc_pass_input = document.getElementById('disc-pass')
 	disc_pass = disc_pass_input.value
-	if (disc_pass === 'filipok226') {
+	if (disc_pass === 'qweasdzxc') {
 		disc_pass_input.style.border = 'solid 0.1rem green'
 		audTF = true
 		f11Message()

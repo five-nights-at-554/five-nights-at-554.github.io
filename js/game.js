@@ -62,7 +62,6 @@ const GG = [
 function changeBG(bgnum) {
 	BG.forEach((bgn) => {
 		document.getElementById(`game-bg-${bgn}`).style.zIndex = -10
-		console.log(bgn)
 	})
 	document.getElementById(`game-bg-${bgnum}`).style.zIndex = 2
 }
@@ -767,7 +766,6 @@ let dsn = true
 document.addEventListener('keydown', function(event) {
     if (!isGameStop) {
 		if (event.key === InteractKey) {
-			console.log('Нажата стрелочка вверх')
 
 			if (bg_number === 204) {
 				if (lef >= 64 && lef <= 96) {
@@ -827,7 +825,6 @@ document.addEventListener('keydown', function(event) {
 									ITEMS_ON_INVENT.push({
 										id: 2,
 									})
-									console.log(ITEMS_ON_INVENT)
 
 								}, 100)
 								setTimeout(() => {
@@ -959,7 +956,6 @@ document.addEventListener('keydown', function(event) {
 					ITEMS_ON_INVENT.push({
 						id: 0,
 					})
-					console.log(ITEMS_ON_INVENT)
 				}
 			}
 
@@ -1019,13 +1015,13 @@ function CloseMiniGame1() {
 	isAnyActivityOpen = false
 	mg1_input.blur()
 }
+
 document.querySelector('#close_mini-game-1').addEventListener('click', CloseMiniGame1)
 
 
 // settings
 let settingsOn = false
 var volume_val = localStorage.getItem('volume_value') || 80
-console.log(volume_val)
 	
 document.getElementById('volume').value = volume_val
 AUDIO.game_bg.volume = volume_val / 100
@@ -1234,6 +1230,8 @@ function checkItemsCount() {
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
 		document.getElementById('slot1').style.backgroundPosition = 'center'
 		document.getElementById('slot1').style.borderColor = '#1fbd00'
+		slotnow = 1
+
 
 		document.getElementById('slot2').style.borderColor = '#000'
 		document.getElementById('slot3').style.borderColor = '#000'
@@ -1258,7 +1256,7 @@ function checkItemsCount() {
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
 		document.getElementById('slot1').style.backgroundPosition = 'center'
-		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
 
 		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
 		document.getElementById('slot2').style.backgroundSize = 'cover'
@@ -1280,7 +1278,7 @@ function checkItemsCount() {
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
 		document.getElementById('slot1').style.backgroundPosition = 'center'
-		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
 
 		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
 		document.getElementById('slot2').style.backgroundSize = 'cover'
@@ -1307,7 +1305,7 @@ function checkItemsCount() {
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
 		document.getElementById('slot1').style.backgroundPosition = 'center'
-		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
 
 		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
 		document.getElementById('slot2').style.backgroundSize = 'cover'
@@ -1340,7 +1338,7 @@ function checkItemsCount() {
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
 		document.getElementById('slot1').style.backgroundPosition = 'center'
-		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
 
 		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
 		document.getElementById('slot2').style.backgroundSize = 'cover'
@@ -1378,7 +1376,7 @@ function checkItemsCount() {
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
 		document.getElementById('slot1').style.backgroundPosition = 'center'
-		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
 
 		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
 		document.getElementById('slot2').style.backgroundSize = 'cover'
@@ -1421,7 +1419,7 @@ function checkItemsCount() {
 		document.getElementById('slot1').style.backgroundSize = 'cover'
 		document.getElementById('slot1').style.backgroundRepeat = 'no-repeat'
 		document.getElementById('slot1').style.backgroundPosition = 'center'
-		document.getElementById('slot1').style.borderColor = '#1fbd00'
+
 
 		document.getElementById('slot2').style.background = `#b4b4b44d url('/images/item${b}.png')`
 		document.getElementById('slot2').style.backgroundSize = 'cover'
@@ -1487,6 +1485,10 @@ document.addEventListener('keydown', function(event) {
 	if (event.key === 'Enter' && inventoryOn) {
 		if (ITEMS_ON_INVENT[i_count - 1].id === 4) {
 			INVENT[4].isOnInventory = false
+			--slotnow
+			let a = ITEMS_ON_INVENT[slotnow - 1].id
+			document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+			document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 			changeGG('right-ng')
 			document.querySelector('.inventoryView-box').style.opacity = 0
 			setTimeout(function() {
@@ -1509,11 +1511,8 @@ function inventoryView() {
 	document.querySelector('.inventoryView-box').style.opacity = 100
 	inventoryOn = true
 	pauseGame()
-	itemBorderColor(1)
+	itemBorderColor(slotnow || 1)
 	checkItemsCount()
-	if (ITEMS_ON_INVENT.length > 0) {
-		document.getElementById(`slot1`).style.backgroundColor = '#a1a1a186'
-	}
 }
 
 document.querySelector('#close_inventory').addEventListener('click', () => {
