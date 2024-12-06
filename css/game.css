@@ -108,13 +108,14 @@ h2 {
 	aspect-ratio: 1/1;
 	height: 10vh;
 	border-radius: 50%;
-	background: #00000000;
+	background: #66666634;
 	transition: background 0.5s;
 	margin-right: 0.5vh;
 }
 
 #settings-svg g {
-	fill: #666666;
+	/* fill: #666666; */
+	fill: #000000;
 }
 
 #settings-svg:hover {
@@ -410,6 +411,7 @@ h2 {
 
 #arrow_hint {
 	border-radius: 1vh;
+	letter-spacing: 0.3vh;
 	padding: 1vh;
 	top: 4vh;
 	/* display: block; */

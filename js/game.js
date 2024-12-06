@@ -1,13 +1,19 @@
+let secretPassCount = 0
 let isGameStop = false
+let isInfoOpened = false
 let audTF = true
 let speed = 2
 let isAnyActivityOpen = false
 let candles = 0
-let ReallyFloorNow = 2
-let firstPassNum = Math.floor(Math.random() * 10)
-let secondPassNum = Math.floor(Math.random() * 10)
-let ThirdPassNum = Math.floor(Math.random() * 10)
-let FourthPassNum = Math.floor(Math.random() * 10)
+// let firstPassNum = Math.floor(Math.random() * 10)
+// let secondPassNum = Math.floor(Math.random() * 10)
+// let ThirdPassNum = Math.floor(Math.random() * 10)
+// let FourthPassNum = Math.floor(Math.random() * 10)
+let ReallyFloorNow = 1
+let firstPassNum = 0
+let secondPassNum = 4
+let ThirdPassNum = 0
+let FourthPassNum = 5
 let randomPassword = `${firstPassNum}${secondPassNum}${ThirdPassNum}${FourthPassNum}`
 let secretNumber1 = document.getElementById('secretNumber1')
 let secretNumber2 = document.getElementById('secretNumber2')
@@ -31,6 +37,15 @@ function pauseGame() {
 }
 
 const BG = [
+	'109',
+	'110',
+	'111',
+
+	'197',
+	'198',
+	'199',
+	'200',
+	'201',
 	'202',
 	'203',
 	'204',
@@ -39,16 +54,21 @@ const BG = [
 	'207',
 	'208',
 
+	'303',
+	'304',
+	'305',
 	'306',
 	'307',
 	'308',
 	'309',
 	'310',
 	'311',
+	'312',
 
 	'207-1',
 	'207-2',
 	'207-3',
+	'311-toilet',
 	'310-help',
 ]
 
@@ -150,6 +170,7 @@ const AUDIO = {
 	take_key: createSound('/js/sounds/take_key.mp3'),
 	steps: createSound('/js/sounds/steps.mp3'),
 	ng2024: createSound('/js/sounds/ng2024.mp3'),
+	piano: createSound('/js/sounds/piano.mp3'),
 }
 
 // AUDIO.monster.volume = 0.5
@@ -247,7 +268,7 @@ function npcTalk(npc__talk, time1 = 2000) {
 
 let lef = 40
 gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-let bg_number = 202
+let bg_number = 110
 
 changeBG(bg_number)
 
@@ -287,11 +308,73 @@ function movegg() {
 		}
 		document.getElementById('item0').style.zIndex = -10
 	}
+	else if (bg_number === 199) {
+		if (lef >= 4 && lef <= 56) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Лестница'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else if (lef >= 124 && lef <= 150) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Женский туалет'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+	else if (bg_number === 198) {
+		if (lef >= 46 && lef <= 67) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Кабинет информатики'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+	else if (bg_number === 197) {
+		if (lef >= 2 && lef <= 150) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Стол для пинг-понга'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
 
 	else if (bg_number === 202) {
 		if (lef >= 56 && lef <= 98) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.innerHTML = 'Шкаф с наградами'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 304) {
+		if (lef >= 54 && lef <= 104) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Кабинет химии'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else if (lef >= 107 && lef <= 140) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Мусор'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 305) {
+		if (lef >= 2 && lef <= 30) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Женский туалет'
 			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
@@ -401,8 +484,43 @@ function movegg() {
 			arrow_hint.innerHTML = 'Лестница'
 			arrow_hint.style.color = '#d63a3a'
 		}
-		else if (lef <= 4) {
-			npcTalk('Эта дверь такая большая... Но я не могу пройти туда...')
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 110) {
+		if (lef >= 74 && lef <= 120) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Лестница'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else if (lef >= 2 && lef <= 24) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Туалет'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 111) {
+		if (lef >= 94 && lef <= 139) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Кабинет информатики'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 109) {
+		if (lef >= 12 && lef <= 81) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Старое пианино'
+			arrow_hint.style.color = '#d63a3a'
 		}
 		else {
 			arrow_hint.style.display = 'none'
@@ -436,7 +554,7 @@ function movegg() {
     }
 
 	if (lef <= 2) {
-		if ((bg_number >= 203 && bg_number <= 250) || (bg_number >= 307 && bg_number <= 350)) {
+		if ((bg_number > 197 && bg_number < 250) || (bg_number > 303 && bg_number <= 350) || (bg_number > 109 && bg_number <= 150)) {
 			--bg_number
 			if (monster_on_toilet_voice && bg_number === 310) {
 				changeBG('310-help')
@@ -464,7 +582,7 @@ function movegg() {
 		}
 	}
 	else if (lef >= 150) {
-		if ((bg_number <= 207 && bg_number >=150) || (bg_number < 311 && bg_number >= 260)) {
+		if ((bg_number < 208 && bg_number > 150) || (bg_number < 312 && bg_number > 260) || (bg_number < 111 && bg_number >= 50)) {
 			++bg_number
 			if (monster_on_toilet_voice && bg_number === 310) {
 				changeBG('310-help')	
@@ -566,6 +684,7 @@ requestAnimationFrame(movegg)
 
 
 let floorNow
+let isFloorChoosing = false
 
 function openFloorMenu(a) {
 	document.getElementById('text').style.opacity = 0
@@ -578,6 +697,7 @@ function openFloorMenu(a) {
     document.getElementById('choose-floor').style.opacity = 100
     document.getElementById('choose-floor').style.zIndex = 210
     isGameStop = true
+	isFloorChoosing = true
 
     // Сброс состояния и активация второго этажа
     floorNow = a
@@ -590,12 +710,14 @@ function closeFloorMenu() {
     document.getElementById('choose-floor').style.display = 'none'
     document.getElementById('choose-floor').style.opacity = 0
     document.getElementById('choose-floor').style.zIndex = -210
+	isFloorChoosing = false
 
     // Удаление обработчика событий
     document.removeEventListener('keydown', handleKeyDown)
 }
 
 function openFloorMenu1(a) {
+	isFloorChoosing = true
 	document.getElementById('text').style.opacity = 0
 		setTimeout(function() {
 			document.getElementById('text').style.display = 'none'
@@ -616,6 +738,7 @@ function openFloorMenu1(a) {
 
 function closeFloorMenu1() {
     isGameStop = false
+	isFloorChoosing = false
     document.getElementById('choose-floor').style.display = 'none'
     document.getElementById('choose-floor').style.opacity = 0
     document.getElementById('choose-floor').style.zIndex = -210
@@ -625,7 +748,7 @@ function closeFloorMenu1() {
 }
 
 function handleKeyDown(event) {
-    if (isGameStop) {
+    if (isGameStop && isFloorChoosing) {
         if (event.key === UpKey) {
             if (floorNow === 3) {
                 floorNow = 1
@@ -705,7 +828,7 @@ function handleKeyDown(event) {
 }
 
 function handleKeyDown2(event) {
-    if (isGameStop) {
+    if (isGameStop && isFloorChoosing) {
         if (event.key === UpKey) {
             if (floorNow === 3) {
                 floorNow = 1
@@ -725,24 +848,83 @@ function handleKeyDown2(event) {
             }
             updateActiveFloor()
         } else if (event.key === 'Enter') {
-            if (floorNow === 3) {
-				lef = 112
-				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-				bg_number = 311
-				changeBG(bg_number)
-				ReallyFloorNow = 3
+
+			if (floorNow === 3) {
+				if (ReallyFloorNow != 3) {
+					pauseGame()
+					blackScreen.style.zIndex = 1000
+					blackScreen.style.opacity = 100
+					AUDIO.steps.play()
+					setTimeout(() => {
+						lef = 112
+						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+						bg_number = 311
+						changeBG('311')
+						ReallyFloorNow = 3
+						setTimeout(() => {
+							blackScreen.style.opacity = 0
+							setTimeout(() => {
+								blackScreen.style.zIndex = 1
+								isGameStop = false
+							}, 1000)
+						}, 2500)
+					}, 1000)
+				}
+				else {
+					isGameStop = false
+				}
 			}
 			else if (floorNow === 2) {
-				lef = 126
-				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-				bg_number = 206
-				changeBG('206')
-				ReallyFloorNow = 2
+				if (ReallyFloorNow != 2) {
+					pauseGame()
+					blackScreen.style.zIndex = 1000
+					blackScreen.style.opacity = 100
+					AUDIO.steps.play()
+					setTimeout(() => {
+						ReallyFloorNow = 2
+						lef = 26
+						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+						bg_number = 199
+						changeBG('199')
+						setTimeout(() => {
+							blackScreen.style.opacity = 0
+							setTimeout(() => {
+								blackScreen.style.zIndex = 1
+								isGameStop = false
+							}, 1000)
+						}, 2500)
+					}, 1000)
+				}
+				else {
+					isGameStop = false
+				}
 			}
-			else {
-				isGameStop = false
+			else if (floorNow === 1) {
+				if (ReallyFloorNow != 1) {
+					pauseGame()
+					blackScreen.style.zIndex = 1000
+					blackScreen.style.opacity = 100
+					AUDIO.steps.play()
+					setTimeout(() => {
+						ReallyFloorNow = 1
+						lef = 98
+						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+						bg_number = 110
+						changeBG('110')
+						setTimeout(() => {
+							blackScreen.style.opacity = 0
+							setTimeout(() => {
+								blackScreen.style.zIndex = 1
+								isGameStop = false
+							}, 1000)
+						}, 2500)
+					}, 1000)
+				}
+				else {
+					isGameStop = false
+				}
 			}
-            closeFloorMenu1()
+            closeFloorMenu()
         }
     }
 }
@@ -796,16 +978,26 @@ document.addEventListener('keydown', function(event) {
 			else if (bg_number === 207) {
 				if (lef >= 58 && lef <= 82) {
 					if (candles === 1) {
-						npcTalk('Стоп... Эта свеча разве горела?')
+						npcTalk('Стой... Эта свеча разве горела? А на стене появилась еще одна цифра, <br> надо записать', 4000)
+						secretNumber1.textContent = '0'
+						secretNumber2.textContent = '4'
 					}
 					else if (candles === 2) {
 						npcTalk('Что за бред?! Горела же всего одна свеча!')
+						secretNumber1.textContent = '0'
+						secretNumber2.textContent = '4'
+						secretNumber3.textContent = '0'
 					}
 					else if (candles === 3) {
 						npcTalk('...')
+						secretNumber1.textContent = '0'
+						secretNumber2.textContent = '4'
+						secretNumber3.textContent = '0'
+						secretNumber4.textContent = '5'
 					}
 					else {
-						npcTalk('Свечи? Откуда они здесь...')
+						secretNumber1.textContent = '0'
+						npcTalk('Свечи? Откуда они здесь... Еще и эта цифра на стене... <br> Запишу ее на всякий случай...')
 					}
 				}
 				else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles === 1) {
@@ -968,15 +1160,101 @@ document.addEventListener('keydown', function(event) {
 				}
 			}
 
+			else if (bg_number === 199) {
+				if (lef >= 4 && lef <= 54) {
+					openFloorMenu1(2)
+				}
+				else if (lef >= 124 && lef <= 150) {
+					npcTalk('Нэт, я не пойду в женский туалет!')
+				}
+			}
+
+			else if (bg_number === 110) {
+				if (lef >= 74 && lef <= 120) {
+					openFloorMenu1(1)
+				}
+				else if (lef >= 2 && lef <= 24) {
+					npcTalk('coming soon')
+				}
+			}
+
+			else if (bg_number === 109) {
+				if (lef >= 12 && lef <= 81) {
+					AUDIO.piano.currentTime = 0
+					AUDIO.piano.play()
+				}
+			}
+
+			else if (bg_number === 111) {
+				if (lef >= 94 && lef <= 139) {
+					if (!isInfoOpened) {
+						if (secretPassCount === 0) {
+							npcTalk(`Нужен пароль из 4 цифр... Ну и где мне его взять?`, 4000)
+						}
+						else if (secretPassCount >= 1 && secretPassCount <= 3) {
+							npcTalk(`Пароль... Я вроде бы находил какие-то цифры, но их всего ${secretPassCount}`, 4000)
+						}
+						else if (secretPassCount === 4) {
+							npcTalk(`Хм... Пароль из 4 цифр? Я вроде как находил что-то подобное... Как там, ${randomPassword}?`, 4000)
+							pauseGame()
+							setTimeout(() => {
+								blackScreen.style.zIndex = 1000
+								blackScreen.style.opacity = 100
+								setTimeout(() => {
+									setTimeout(() => {
+										blackScreen.style.opacity = 0
+										npcTalk('Отлично! Пароль подошел!', 4000)
+										isInfoOpened = true
+										setTimeout(() => {
+											blackScreen.style.zIndex = 1
+											isGameStop = false
+										}, 1000)
+									}, 2500)
+								}, 1000)
+							}, 3000);
+						}
+					}
+					else {
+						npcTalk('зашел')
+					}
+				}
+			}
+
 			else if (bg_number === 306) {
 				if (lef >= 38 && lef <= 82) {
 					openFloorMenu(3)
 				}
 			}
 
+			else if (bg_number === 304) {
+				if (lef >= 54 && lef <= 104) {
+					npcTalk('И тут заперто...')
+				}
+				else if (lef >= 107 && lef <= 140) {
+					npcTalk('Я не буду рыться в мусоре!')
+				}
+			}
+			else if (bg_number === 305) {
+				if (lef >= 2 && lef <= 30) {
+					npcTalk('Я промолчу...')
+				}
+			}
+
 			else if (bg_number === 309) {
 				if (lef >= 118 && lef <= 150) {
 					npcTalk('Ну уж нет... Туда я не пойду!')
+				}
+			}
+
+			else if (bg_number === 198) {
+				if (lef >= 46 && lef <= 67) {
+					npcTalk('Как всегда заперто на ключ...')
+				}
+			}
+
+			else if (bg_number === 197) {
+				if (lef >= 2 && lef <= 150) {
+					npcTalk('Сейчас бы с Петровичем поиграть...')
 				}
 			}
 		}
@@ -1040,6 +1318,9 @@ function settingsView() {
 	document.querySelector('.settingsView-box').style.zIndex = 850
 	document.querySelector('.settingsView-box').style.opacity = 100
 	settingsOn = true
+	if (isConsoleUnlocked) {
+		devConsoleInset.style.display = 'flex'
+	}
 }
 
 document.getElementById('volume').addEventListener('input', () => {
@@ -1492,12 +1773,24 @@ function checkItemsCount() {
 
 document.addEventListener('keydown', function(event) {
 	if (event.key === 'Enter' && inventoryOn) {
-		if (ITEMS_ON_INVENT[i_count - 1].id === 4) {
+		if (ITEMS_ON_INVENT[slotnow - 1].id === 4) {
+			let hatCount = 0
 			INVENT[4].isOnInventory = false
-			--slotnow
-			let a = ITEMS_ON_INVENT[slotnow - 1].id
-			document.getElementById('descript_item-name').innerHTML = INVENT[a].name
-			document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
+			for (let i = ITEMS_ON_INVENT.length - 1; i >= 0; i--) {
+				if (ITEMS_ON_INVENT[i].id === 4) {
+					ITEMS_ON_INVENT.splice(i, 1)
+					++hatCount
+				}
+			}
+			if (slotnow > 1) {
+				--slotnow
+			}
+			if (ITEMS_ON_INVENT.length > 0) {
+				let a = ITEMS_ON_INVENT[slotnow - 1].id
+				document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+				document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
+			}
+			
 			changeGG('right-ng')
 			document.querySelector('.inventoryView-box').style.opacity = 0
 			setTimeout(function() {
@@ -1506,11 +1799,6 @@ document.addEventListener('keydown', function(event) {
 			inventoryOn = false
 			isGameStop = false
 			ngHat = true
-			for (let i = ITEMS_ON_INVENT.length - 1; i >= 0; i--) {
-				if (ITEMS_ON_INVENT[i].id === 4) {
-					ITEMS_ON_INVENT.splice(i, 1)
-				}
-			}
 		}
 	}	
 })
@@ -1519,9 +1807,18 @@ function inventoryView() {
 	document.querySelector('.inventoryView-box').style.zIndex = 849
 	document.querySelector('.inventoryView-box').style.opacity = 100
 	inventoryOn = true
-	pauseGame()
 	itemBorderColor(slotnow || 1)
 	checkItemsCount()
+	pauseGame()
+
+	if (ITEMS_ON_INVENT.length > 0) {
+		let a = ITEMS_ON_INVENT[slotnow - 1].id
+		document.getElementById('descript_item-name').innerHTML = INVENT[a].name
+		document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
+	}
+	else {
+		let a = undefined
+	}
 }
 
 document.querySelector('#close_inventory').addEventListener('click', () => {

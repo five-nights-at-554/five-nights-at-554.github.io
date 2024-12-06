@@ -1,5 +1,6 @@
 let ng_2024 = false
-let isConsoleUnlocked = localStorage.getItem('isConsoleUnlocked') || true
+// let isConsoleUnlocked = localStorage.getItem('isConsoleUnlocked') || false
+let isConsoleUnlocked = false
 let isConsoleOpened = false
 let devConsoleInset = document.getElementById('dev-console-inset')
 let commandConsoleBox = document.getElementById('command-console-box')
@@ -21,10 +22,6 @@ function closeCC() {
 	}, 200)
 	isGameStop = false
 	isConsoleOpened = false
-}
-
-if (isConsoleUnlocked) {
-	devConsoleInset.style.display = 'flex'
 }
 
 document.addEventListener('keydown', function(event) {
@@ -140,6 +137,22 @@ function checkCommand() {
 		let itemid = parseInt(CCvalue.slice(5))
 		ITEMS_ON_INVENT.push({id: itemid})
 		INVENT[itemid].isOnInventory = true
+		closeCC()
+	}
+	else if (CCvalue === 'ng hat') {
+		ITEMS_ON_INVENT.push({id: 4})
+		INVENT[4].isOnInventory = true
+		closeCC()
+	}
+	else if (CCvalue === 'clear') {
+		while (ITEMS_ON_INVENT.length > 0) {
+			ITEMS_ON_INVENT.pop()
+		}
+		for (const item of ITEMS_ON_INVENT) {
+			if (item.isOnInventory) {
+				item.isOnInventory = false
+			}
+		}
 		closeCC()
 	}
 	else {
