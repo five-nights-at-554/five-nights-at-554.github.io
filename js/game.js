@@ -1334,11 +1334,11 @@ document.getElementById('volume').addEventListener('input', () => {
 	muz_game()
 })
 
-// document.getElementById('speed-vaule').addEventListener('input', () => {
-// 	let speed_value = document.getElementById('speed-vaule').value
-// 	speed = speed_value / 10
-// 	document.getElementById('speed-span').innerHTML = speed_value * 10
-// })
+document.getElementById('speed-vaule').addEventListener('input', () => {
+	let speed_value = document.getElementById('speed-vaule').value
+	speed = speed_value / 10
+	document.getElementById('speed-span').innerHTML = speed_value * 10
+})
 
 document.querySelector('#close_settings').addEventListener('click', () => {
 	volume_val = document.getElementById('volume').value
