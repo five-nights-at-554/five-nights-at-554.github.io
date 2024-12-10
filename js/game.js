@@ -172,6 +172,7 @@ const AUDIO = {
 	mainMenu: createSound('/js/sounds/mainMenu.mp3'),
 	game_bg: createSound('/js/sounds/game_bg.mp3'),
 	monster: createSound('/js/sounds/monster.mp3'),
+	monster_steps: createSound('/js/sounds/monster_steps.mp3'),
 	mainMenu: createSound('/js/sounds/mainMenu.mp3'),
 	toilet: createSound('/js/sounds/toilet.mp3'),
 	skaf_open: createSound('/js/sounds/skaf_open.mp3'),
@@ -714,7 +715,6 @@ function openFloorMenu(a) {
     isGameStop = true
 	isFloorChoosing = true
 
-    // Сброс состояния и активация второго этажа
     floorNow = a
     updateActiveFloor()
 
@@ -727,7 +727,6 @@ function closeFloorMenu() {
     document.getElementById('choose-floor').style.zIndex = -210
 	isFloorChoosing = false
 
-    // Удаление обработчика событий
     document.removeEventListener('keydown', handleKeyDown)
 }
 
@@ -744,7 +743,6 @@ function openFloorMenu1(a) {
     document.getElementById('choose-floor').style.zIndex = 210
     isGameStop = true
 
-    // Сброс состояния и активация второго этажа
     floorNow = a
     updateActiveFloor()
 
@@ -1275,13 +1273,15 @@ document.addEventListener('keydown', function(event) {
 
 			else if (bg_number === 197) {
 				if (lef >= 2 && lef <= 150) {
-					npcTalk('Сейчас бы с Петровичем поиграть...')
 					let isPingOnInvent = INVENT[5].isOnInventory
 					let isPingUsed = INVENT[5].isUsed
-
+					
 					if (isPingOnInvent && !isPingUsed) {
 						removeInventItem(5)
 						mg2_Start()
+					}
+					else {
+						npcTalk('Сейчас бы с Петровичем поиграть...')
 					}
 				}
 			}
