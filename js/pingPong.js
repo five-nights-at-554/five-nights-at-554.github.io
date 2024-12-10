@@ -9,6 +9,7 @@ function mg2_Start() {
 		}
 		else {
 			changeGG('left')
+			isGameStop = false
 		}
 	}
 	function move_mg2_left() {
@@ -19,10 +20,11 @@ function mg2_Start() {
 		}
 		else {
 			changeGG('left')
+			isGameStop = false
 		}
 	}
 
-	
+
 
 
 
