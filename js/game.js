@@ -134,6 +134,14 @@ const INVENT = [
 		isOnInventory: false,
 		isUsed: false
 	},
+
+	{
+		id: 5,
+		name: 'НАБОР ДЛЯ ПИНГ-ПОНГА',
+		description: 'Щас бы с Петровичем поиграть...',
+		isOnInventory: false,
+		isUsed: false
+	},
 ]
 
 const ITEMS_ON_INVENT = []
@@ -685,6 +693,7 @@ requestAnimationFrame(movegg)
 
 let floorNow
 let isFloorChoosing = false
+let isFloorChoosing1 = false
 
 function openFloorMenu(a) {
 	document.getElementById('text').style.opacity = 0
@@ -717,7 +726,7 @@ function closeFloorMenu() {
 }
 
 function openFloorMenu1(a) {
-	isFloorChoosing = true
+	isFloorChoosing1 = true
 	document.getElementById('text').style.opacity = 0
 		setTimeout(function() {
 			document.getElementById('text').style.display = 'none'
@@ -738,7 +747,7 @@ function openFloorMenu1(a) {
 
 function closeFloorMenu1() {
     isGameStop = false
-	isFloorChoosing = false
+	isFloorChoosing1 = false
     document.getElementById('choose-floor').style.display = 'none'
     document.getElementById('choose-floor').style.opacity = 0
     document.getElementById('choose-floor').style.zIndex = -210
@@ -828,7 +837,7 @@ function handleKeyDown(event) {
 }
 
 function handleKeyDown2(event) {
-    if (isGameStop && isFloorChoosing) {
+    if (isGameStop && isFloorChoosing1) {
         if (event.key === UpKey) {
             if (floorNow === 3) {
                 floorNow = 1
@@ -924,7 +933,7 @@ function handleKeyDown2(event) {
 					isGameStop = false
 				}
 			}
-            closeFloorMenu()
+            closeFloorMenu1()
         }
     }
 }
@@ -1205,17 +1214,23 @@ document.addEventListener('keydown', function(event) {
 										blackScreen.style.opacity = 0
 										npcTalk('Отлично! Пароль подошел!', 4000)
 										isInfoOpened = true
+										isConsoleUnlocked = true
+										localStorage.setItem('isConsoleUnlocked', true)
 										setTimeout(() => {
 											blackScreen.style.zIndex = 1
 											isGameStop = false
 										}, 1000)
 									}, 2500)
 								}, 1000)
-							}, 3000);
+							}, 3000)
 						}
 					}
 					else {
 						npcTalk('зашел')
+						if (!isConsoleUnlocked) {
+							isConsoleUnlocked = true
+							localStorage.setItem('isConsoleUnlocked', true)
+						}
 					}
 				}
 			}

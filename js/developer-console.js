@@ -1,6 +1,6 @@
 let ng_2024 = false
-// let isConsoleUnlocked = localStorage.getItem('isConsoleUnlocked') || false
-let isConsoleUnlocked = false
+let isConsoleUnlocked = localStorage.getItem('isConsoleUnlocked') || false
+// let isConsoleUnlocked = false
 let isConsoleOpened = false
 let devConsoleInset = document.getElementById('dev-console-inset')
 let commandConsoleBox = document.getElementById('command-console-box')
@@ -51,7 +51,7 @@ ccInput.addEventListener("input", function(event) {
 })
 
 function checkItemCommandFormat(s) {
-    let pattern = /^item (0|1|2|3|4)$/
+    let pattern = /^item (0|1|2|3|4|5)$/
     return pattern.test(s)
 }
 
@@ -153,6 +153,11 @@ function checkCommand() {
 				item.isOnInventory = false
 			}
 		}
+		closeCC()
+	}
+	else if (CCvalue === 'lock cmd') {
+		isConsoleUnlocked = false
+		localStorage.setItem('isConsoleUnlocked', true)
 		closeCC()
 	}
 	else {
