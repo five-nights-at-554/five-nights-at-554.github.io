@@ -1,5 +1,5 @@
 let ng_2024 = false
-let isConsoleUnlocked = localStorage.getItem('isConsoleUnlocked') || false
+let isConsoleUnlocked = localStorage.getItem('isConsoleUnlocked') || null
 // let isConsoleUnlocked = false
 let isConsoleOpened = false
 let devConsoleInset = document.getElementById('dev-console-inset')
@@ -157,7 +157,7 @@ function checkCommand() {
 	}
 	else if (CCvalue === 'lock cmd') {
 		isConsoleUnlocked = false
-		localStorage.setItem('isConsoleUnlocked', true)
+		localStorage.removeItem('isConsoleUnlocked')
 		closeCC()
 	}
 	else {

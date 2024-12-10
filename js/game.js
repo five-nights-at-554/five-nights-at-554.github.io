@@ -218,6 +218,12 @@ function f11Message() {
 }
 f11Message()
 
+function removeInventItem(e) {
+	INVENT[e].isOnInventory = false
+	INVENT[e].isUsed = true
+	ITEMS_ON_INVENT.splice(ITEMS_ON_INVENT.findIndex(item => item.id === e), 1)	
+}
+
 const contextMenu = document.getElementById('context-menu')
 
 window.addEventListener('contextmenu', (e) => {
@@ -1270,6 +1276,13 @@ document.addEventListener('keydown', function(event) {
 			else if (bg_number === 197) {
 				if (lef >= 2 && lef <= 150) {
 					npcTalk('Сейчас бы с Петровичем поиграть...')
+					let isPingOnInvent = INVENT[5].isOnInventory
+					let isPingUsed = INVENT[5].isUsed
+
+					if (isPingOnInvent && !isPingUsed) {
+						removeInventItem(5)
+						mg2_Start()
+					}
 				}
 			}
 		}
