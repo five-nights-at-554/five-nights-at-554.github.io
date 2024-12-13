@@ -283,7 +283,8 @@ function npcTalk(npc__talk, time1 = 2000) {
 
 let lef = 40
 gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-let bg_number = 110
+let bg_number = 197
+// let bg_number = 110
 
 changeBG(bg_number)
 
@@ -398,7 +399,7 @@ function movegg() {
 	}
 
 	else if (bg_number === 207) {
-		if (!INVENT[0].isOnInventory && !INVENT[0].isUsed && candles === 1) {
+		if (!INVENT[0].isOnInventory && !INVENT[0].isUsed && candles >= 1) {
 			document.getElementById('item0').style.zIndex = 3
 		}
 		else {
@@ -410,7 +411,7 @@ function movegg() {
 			arrow_hint.innerHTML = 'Свечи'
 			arrow_hint.style.color = '#d63a3a'
 		}
-		else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles === 1) {
+		else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles >= 1) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.innerHTML = 'Какой-то ключ...'
 			arrow_hint.style.color = '#3ad6c9'
@@ -991,29 +992,33 @@ document.addEventListener('keydown', function(event) {
 			else if (bg_number === 207) {
 				if (lef >= 58 && lef <= 82) {
 					if (candles === 1) {
+						secretPassCount = 2
 						npcTalk('Стой... Эта свеча разве горела? А на стене появилась еще одна цифра, <br> надо записать', 4000)
 						secretNumber1.textContent = '0'
 						secretNumber2.textContent = '4'
 					}
 					else if (candles === 2) {
+						secretPassCount = 3
 						npcTalk('Что за бред?! Горела же всего одна свеча!')
 						secretNumber1.textContent = '0'
 						secretNumber2.textContent = '4'
 						secretNumber3.textContent = '0'
 					}
 					else if (candles === 3) {
-						npcTalk('...')
+						secretPassCount = 4
+						npcTalk('Да что здесь вообще происходит...')
 						secretNumber1.textContent = '0'
 						secretNumber2.textContent = '4'
 						secretNumber3.textContent = '0'
 						secretNumber4.textContent = '5'
 					}
 					else {
+						secretPassCount = 1
 						secretNumber1.textContent = '0'
 						npcTalk('Свечи? Откуда они здесь... Еще и эта цифра на стене... <br> Запишу ее на всякий случай...')
 					}
 				}
-				else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles === 1) {
+				else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles >= 1) {
 					AUDIO.take_key.currentTime = 0
 					AUDIO.take_key.play()
 					npcTalk('Что?! Откуда здесь ключ? Надеюсь, он поможет мне выбраться...', 3000)

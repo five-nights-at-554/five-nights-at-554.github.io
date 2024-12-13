@@ -9,7 +9,9 @@ function mg2_Start() {
 		}
 		else {
 			changeGG('left')
-			isGameStop = false
+			setTimeout(() => {
+				mg2_game()
+			}, 1000)
 		}
 	}
 	function move_mg2_left() {
@@ -20,51 +22,38 @@ function mg2_Start() {
 		}
 		else {
 			changeGG('left')
-			isGameStop = false
+			setTimeout(() => {
+				mg2_game()
+			}, 1000)
 		}
 	}
 
+	AUDIO.monster_steps.play()
+	fadeOutAudio(AUDIO.game_bg, 4)
+	fadeOutAudio(AUDIO.mainMenu, 4)
 
+	setTimeout(() => {
+		npcTalk('Что это за шаги?!')
+		setTimeout(() => {
+			if (lef > 146) {
+				changeGG('left')
+				move_mg2_left()
+			}
+			else if (lef < 146) {
+				changeGG('right')
+				move_mg2_right()
+			}
+		}, 500)
+	}, 1000)
 
-
-
-	// blackScreen.style.zIndex = 1000
-	// blackScreen.style.opacity = 100
-	
-	// setTimeout(() => {
-	// 	setTimeout(() => {
-	// 		setTimeout(() => {
-	// 			AUDIO.toilet.pause()
-	// 			AUDIO.toilet.currentTime = 0
-	
-	// 			INVENT[2].isOnInventory = true
-	// 			ITEMS_ON_INVENT.push({
-	// 				id: 2,
-	// 			})
-	
-	// 		}, 100)
-	// 		setTimeout(() => {
-	// 			blackScreen.style.opacity = 0
-	// 			setTimeout(() => {
-	// 				blackScreen.style.zIndex = 1
-	// 				npcTalk('О! деревянная палка! Возьму с собой!', 3000)
-	// 				setTimeout(() => {
-	// 					isGameStop = false
-	// 				}, 200)
-	// 			}, 1000)
-	// 		}, 200)
-	// 	}, 4000)
-	// }, 1000)
-	
-
-
-	
-	if (lef > 146) {
-		changeGG('left')
-		move_mg2_left()
-	}
-	else if (lef < 146) {
-		changeGG('right')
-		move_mg2_right()
-	}
 }
+
+
+function mg2_game() {
+	blackScreen.style.zIndex = 1000
+	blackScreen.style.opacity = 100
+	setTimeout(() => {
+		
+	}, 1000)
+}
+
