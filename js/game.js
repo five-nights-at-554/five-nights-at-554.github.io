@@ -205,7 +205,6 @@ function fadeOutAudio(audioElement, duration) {
     }, interval)
 }
 
-
 muz_game()
 
 function f11Message() {
