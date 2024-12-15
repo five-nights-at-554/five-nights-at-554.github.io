@@ -2,7 +2,8 @@ let secretPassCount = 0
 let isGameStop = false
 let isInfoOpened = false
 let audTF = true
-let speed = 2
+let speed_storage = localStorage.getItem('speed') || 2
+let speed = parseFloat(speed_storage)
 let isAnyActivityOpen = false
 let candles = 0
 // let firstPassNum = Math.floor(Math.random() * 10)
@@ -139,6 +140,30 @@ const INVENT = [
 		id: 5,
 		name: 'НАБОР ДЛЯ ПИНГ-ПОНГА',
 		description: 'Щас бы с Петровичем поиграть...',
+		isOnInventory: false,
+		isUsed: false
+	},
+
+	{
+		id: 6,
+		name: 'ВЕРЕВКА',
+		description: 'Может пригодиться... <br> Жаль, что она воняет мусором...',
+		isOnInventory: false,
+		isUsed: false
+	},
+
+	{
+		id: 7,
+		name: 'КУХОННЫЙ НОЖ',
+		description: 'Он весь... В крови? <br> Зато из него можно сделать отличное оружие!',
+		isOnInventory: false,
+		isUsed: false
+	},
+
+	{
+		id: 8,
+		name: 'САМОДЕЛЬНОЕ ОРУЖИЕ',
+		description: 'Отлично! Теперь я точно справлюсь с тем монстром! <br> Главное не подходить слишком близко...',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -1073,7 +1098,12 @@ document.addEventListener('keydown', function(event) {
 
 			else if (bg_number === 307) {
 				if (lef >= 44 && lef <= 102) {
-					npcTalk('Сейчас не лучшее время для отдыха...')
+					if (INVENT[2].isOnInventory && INVENT[6].isOnInventory && INVENT[7].isOnInventory) {
+						
+					}
+					else {
+						npcTalk('Сейчас не лучшее время для отдыха...')
+					}
 				}
 			}
 
@@ -1127,7 +1157,21 @@ document.addEventListener('keydown', function(event) {
 						npcTalk('Нее, я туда не хочу... Я ХОЧУ ПРАЗДНОВАТЬ')
 					}
 					else {
-						npcTalk('Ну уж нет! Без оружия я туда не пойду!')
+						if (INVENT[2].isOnInventory && !INVENT[7].isOnInventory) {
+							npcTalk('Одной палки не хватит, чтобы победить...')
+						}
+						else if (INVENT[2].isOnInventory && !INVENT[6].isOnInventory && INVENT[7].isOnInventory) {
+							npcTalk('Ни нож ни палка не подходят на роль оружия! <br> Вот была бы у меня веревка...', 4000)
+						}
+						else if (!INVENT[2].isOnInventory && INVENT[7].isOnInventory) {
+							npcTalk('Идти с ножом рискованно, он слишком короткий! <br> Вот закрепить бы его на какой-нибудь палке...', 4000)
+						}
+						else if (INVENT[2].isOnInventory && INVENT[6].isOnInventory && INVENT[7].isOnInventory) {
+							npcTalk('У меня есть все необходимое, чтобы создать оружие... <br> Только... Хорошо бы отдохнуть перед боем', 4000)
+						}
+						else {
+							npcTalk('Ну уж нет! Без оружия я туда не пойду!')
+						}
 					}
 				}
 			}
@@ -1349,6 +1393,8 @@ document.getElementById('volume-span').innerHTML = volume_val
 function settingsView() {
 	document.querySelector('.settingsView-box').style.zIndex = 850
 	document.querySelector('.settingsView-box').style.opacity = 100
+	document.getElementById('speed-vaule').value = speed * 10
+	document.getElementById('speed-span').innerHTML = speed * 100
 	settingsOn = true
 	if (isConsoleUnlocked) {
 		devConsoleInset.style.display = 'flex'
@@ -1375,6 +1421,7 @@ document.getElementById('speed-vaule').addEventListener('input', () => {
 document.querySelector('#close_settings').addEventListener('click', () => {
 	volume_val = document.getElementById('volume').value
 	localStorage.setItem('volume_value', volume_val)
+	localStorage.setItem('speed', speed)
 	document.querySelector('.settingsView-box').style.opacity = 0
 	setTimeout(function() {
 		document.querySelector('.settingsView-box').style.zIndex = -10
@@ -1396,6 +1443,7 @@ document.addEventListener('keydown', function(event) {
 				document.querySelector('.settingsView-box').style.zIndex = -10
 			}, 200)
 			settingsOn = false
+			localStorage.setItem('speed', speed)
 		} else if (!settingsOn && !isGameStop && !inventoryOn) {
 			settingsView()
 		}

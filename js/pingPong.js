@@ -1,32 +1,41 @@
+function move_mg2_right() {
+	if (lef < 146) {
+		lef = lef + speed
+		gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+		requestAnimationFrame(move_mg2_right)
+	}
+	else {
+		changeGG('left')
+		setTimeout(() => {
+			blackScreen.style.zIndex = 1000
+			blackScreen.style.opacity = 100
+			setTimeout(() => {
+				mg2_game()
+			}, 1000)
+		}, 1000)
+	}
+}
+function move_mg2_left() {
+	if (lef > 146) {
+		lef = lef - speed
+		gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+		requestAnimationFrame(move_mg2_left)
+	}
+	else {
+		changeGG('left')
+		setTimeout(() => {
+			blackScreen.style.zIndex = 1000
+			blackScreen.style.opacity = 100
+			setTimeout(() => {
+				mg2_game()
+			}, 1000)
+		}, 1000)
+	}
+}
+
 function mg2_Start() {
 	pauseGame()
 	changeGG('left')
-	function move_mg2_right() {
-		if (lef < 146) {
-			lef = lef + speed
-			gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-			requestAnimationFrame(move_mg2_right)
-		}
-		else {
-			changeGG('left')
-			setTimeout(() => {
-				mg2_game()
-			}, 1000)
-		}
-	}
-	function move_mg2_left() {
-		if (lef > 146) {
-			lef = lef - speed
-			gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-			requestAnimationFrame(move_mg2_left)
-		}
-		else {
-			changeGG('left')
-			setTimeout(() => {
-				mg2_game()
-			}, 1000)
-		}
-	}
 
 	AUDIO.monster_steps.play()
 	fadeOutAudio(AUDIO.game_bg, 4)
@@ -45,15 +54,10 @@ function mg2_Start() {
 			}
 		}, 500)
 	}, 1000)
-
 }
 
 
 function mg2_game() {
-	blackScreen.style.zIndex = 1000
-	blackScreen.style.opacity = 100
-	setTimeout(() => {
-		
-	}, 1000)
+	
 }
 
