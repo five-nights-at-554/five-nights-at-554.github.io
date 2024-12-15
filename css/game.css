@@ -783,7 +783,7 @@ h2 {
 	right: calc((100vw - 100vh * 16 / 9 + 4vh) / 2);
 	top: 74vh;
 	z-index: -100;
-	background: #0000007c;
+	background: #000000ef;
 	opacity: 0;
 	transition: opacity 0.2s;
 	padding: 0.3vh;

@@ -6,11 +6,12 @@ let speed_storage = localStorage.getItem('speed') || 2
 let speed = parseFloat(speed_storage)
 let isAnyActivityOpen = false
 let candles = 0
+let isMonsterLive = false
 // let firstPassNum = Math.floor(Math.random() * 10)
 // let secondPassNum = Math.floor(Math.random() * 10)
 // let ThirdPassNum = Math.floor(Math.random() * 10)
 // let FourthPassNum = Math.floor(Math.random() * 10)
-let ReallyFloorNow = 1
+let ReallyFloorNow = 3
 let firstPassNum = 0
 let secondPassNum = 4
 let ThirdPassNum = 0
@@ -307,7 +308,7 @@ function npcTalk(npc__talk, time1 = 2000) {
 
 let lef = 40
 gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-let bg_number = 197
+let bg_number = 311
 // let bg_number = 110
 
 changeBG(bg_number)
@@ -326,11 +327,49 @@ function movegg() {
 		}
 
 	}
+
 	else if (bg_number === 205) {
 		if (lef >= 91.5 && lef <= 155) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.innerHTML = 'Дверь в актовый зал'
 			arrow_hint.style.color = '#d63a3a'
+		}
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	}
+
+	else if (bg_number === 1) {
+		if (lef >= 2 && lef <= 40) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Туалетная кабинка'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else if (lef >= 62 && lef <= 104) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Туалетная кабинка'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else if (lef >= 116 && lef <= 148) {
+			arrow_hint.style.display = 'block'
+			arrow_hint.innerHTML = 'Туалетная кабинка'
+			arrow_hint.style.color = '#d63a3a'
+		}
+		else if (lef >= 148.5) {
+			pauseGame()
+			blackScreen.style.zIndex = 1000
+			blackScreen.style.opacity = 100
+			setTimeout(() => {
+				bg_number = 311
+				changeBG('311')
+				lef = 21
+				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+				blackScreen.style.opacity = 0
+				setTimeout(() => {
+					blackScreen.style.zIndex = 1
+					isGameStop = false
+				}, 1000)
+			}, 1000)
 		}
 		else {
 			arrow_hint.style.display = 'none'
@@ -1157,7 +1196,39 @@ document.addEventListener('keydown', function(event) {
 						npcTalk('Нее, я туда не хочу... Я ХОЧУ ПРАЗДНОВАТЬ')
 					}
 					else {
-						if (INVENT[2].isOnInventory && !INVENT[7].isOnInventory) {
+						if (INVENT[8].isOnInventory) {
+							isMonsterLive = true
+							removeInventItem(8)
+							pauseGame()
+							blackScreen.style.zIndex = 1000
+							blackScreen.style.opacity = 100
+							setTimeout(() => {
+								bg_number = 1
+								changeBG('311-toilet')
+								blackScreen.style.opacity = 0
+								setTimeout(() => {
+									blackScreen.style.zIndex = 1
+									isGameStop = false
+									npcTalk('Монстр... Он... Убежал?', 4000)
+								}, 1000)
+							}, 1000)
+						}
+						else if (isMonsterLive) {
+							removeInventItem(8)
+							pauseGame()
+							blackScreen.style.zIndex = 1000
+							blackScreen.style.opacity = 100
+							setTimeout(() => {
+								bg_number = 1
+								changeBG('311-toilet')
+								blackScreen.style.opacity = 0
+								setTimeout(() => {
+									blackScreen.style.zIndex = 1
+									isGameStop = false
+								}, 1000)
+							}, 1000)
+						}
+						else if (INVENT[2].isOnInventory && !INVENT[7].isOnInventory) {
 							npcTalk('Одной палки не хватит, чтобы победить...')
 						}
 						else if (INVENT[2].isOnInventory && !INVENT[6].isOnInventory && INVENT[7].isOnInventory) {
@@ -1173,6 +1244,18 @@ document.addEventListener('keydown', function(event) {
 							npcTalk('Ну уж нет! Без оружия я туда не пойду!')
 						}
 					}
+				}
+			}
+
+			else if (bg_number === 1) {
+				if (lef >= 2 && lef <= 40) {
+
+				}
+				else if (lef >= 62 && lef <= 104) {
+
+				}
+				else if (lef >= 116 && lef <= 150) {
+
 				}
 			}
 	
