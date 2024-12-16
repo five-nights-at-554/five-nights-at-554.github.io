@@ -145,13 +145,14 @@ function checkCommand() {
 		closeCC()
 	}
 	else if (CCvalue === 'clear') {
+		for (const item of ITEMS_ON_INVENT) {
+			let id = item.id
+			if (INVENT[id].isOnInventory) {
+				INVENT[id].isOnInventory = false
+			}
+		}
 		while (ITEMS_ON_INVENT.length > 0) {
 			ITEMS_ON_INVENT.pop()
-		}
-		for (const item of ITEMS_ON_INVENT) {
-			if (item.isOnInventory) {
-				item.isOnInventory = false
-			}
 		}
 		closeCC()
 	}

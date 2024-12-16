@@ -27,6 +27,9 @@ secretNumber3.textContent = '*'
 secretNumber4.textContent = '*'
 let isPasswordUnlocked = false
 let ngHat = false
+let contextMenuTF = false
+let monster_on_toilet_voice = true
+
 
 let blackScreen = document.getElementById('black-screen')
 let invisibleScreen = document.getElementById('invisible-screen')
@@ -42,7 +45,7 @@ const BG = [
 	'109',
 	'110',
 	'111',
-
+	
 	'197',
 	'198',
 	'199',
@@ -55,7 +58,7 @@ const BG = [
 	'206',
 	'207',
 	'208',
-
+	
 	'303',
 	'304',
 	'305',
@@ -104,7 +107,7 @@ const INVENT = [
 		isOnInventory: false,
 		isUsed: false
 	},
-
+	
 	{
 		id: 1,
 		name: 'СИНИЙ КАМЕШЕК',
@@ -136,7 +139,7 @@ const INVENT = [
 		isOnInventory: false,
 		isUsed: false
 	},
-
+	
 	{
 		id: 5,
 		name: 'НАБОР ДЛЯ ПИНГ-ПОНГА',
@@ -160,11 +163,19 @@ const INVENT = [
 		isOnInventory: false,
 		isUsed: false
 	},
-
+	
 	{
 		id: 8,
 		name: 'САМОДЕЛЬНОЕ ОРУЖИЕ',
 		description: 'Отлично! Теперь я точно справлюсь с тем монстром! <br> Главное не подходить слишком близко...',
+		isOnInventory: false,
+		isUsed: false
+	},
+
+	{
+		id: 9,
+		name: 'РЕЗИНОВЫЕ ПЕРЧАТКИ',
+		description: 'Почти как новые!',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -176,13 +187,9 @@ document.addEventListener('visibilitychange', function() {
 	if (audTF && !ng_2024) {
 		if (document.visibilityState === 'hidden') {
 			AUDIO.game_bg.pause()
-			AUDIO.mainMenu.pause()
 		}
 		else {
 			AUDIO.game_bg.play()
-			if (monster_on_toilet_voice) {
-				AUDIO.mainMenu.play()
-			}
 		}
 	}
 })
@@ -209,6 +216,23 @@ const AUDIO = {
 }
 
 // AUDIO.monster.volume = 0.5
+
+function blackScreenFun(dur, action) {
+	pauseGame()
+	blackScreen.style.zIndex = 1000
+	blackScreen.style.opacity = 100
+	setTimeout(() => {
+		setTimeout(() => {
+			blackScreen.style.opacity = 0
+			setTimeout(() => {
+				blackScreen.style.zIndex = 1
+				isGameStop = false
+			}, 1000)
+		}, dur)
+
+		action()
+	}, 1000)
+}
 
 function muz_game() {
 	AUDIO.game_bg.play()
@@ -248,6 +272,11 @@ function removeInventItem(e) {
 	INVENT[e].isOnInventory = false
 	INVENT[e].isUsed = true
 	ITEMS_ON_INVENT.splice(ITEMS_ON_INVENT.findIndex(item => item.id === e), 1)	
+}
+
+function addInventItem(e) {
+	INVENT[e].isOnInventory = true
+	ITEMS_ON_INVENT.push({id: e})
 }
 
 const contextMenu = document.getElementById('context-menu')
@@ -307,7 +336,10 @@ function npcTalk(npc__talk, time1 = 2000) {
 }
 
 let lef = 40
-gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+function lefFun() {
+	gg.style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+}
+lefFun()
 let bg_number = 311
 // let bg_number = 110
 
@@ -1021,7 +1053,6 @@ function updateActiveFloor() {
 }
 
 
-let monster_on_toilet_voice = false
 let toilet_check = false
 let isSkafOpened = false
 let dsn = true
@@ -1056,20 +1087,20 @@ document.addEventListener('keydown', function(event) {
 				if (lef >= 58 && lef <= 82) {
 					if (candles === 1) {
 						secretPassCount = 2
-						npcTalk('Стой... Эта свеча разве горела? А на стене появилась еще одна цифра, <br> надо записать', 4000)
+						npcTalk('Стой... Эта свеча разве горела? А на столе появилась еще одна цифра, <br> надо записать', 4000)
 						secretNumber1.textContent = '0'
 						secretNumber2.textContent = '4'
 					}
 					else if (candles === 2) {
 						secretPassCount = 3
-						npcTalk('Что за бред?! Горела же всего одна свеча!')
+						npcTalk('Что за бред?! Горела же всего одна свеча! И снова новая цифра...')
 						secretNumber1.textContent = '0'
 						secretNumber2.textContent = '4'
 						secretNumber3.textContent = '0'
 					}
 					else if (candles === 3) {
 						secretPassCount = 4
-						npcTalk('Да что здесь вообще происходит...')
+						npcTalk('Да что здесь вообще происходит?!')
 						secretNumber1.textContent = '0'
 						secretNumber2.textContent = '4'
 						secretNumber3.textContent = '0'
@@ -1078,7 +1109,7 @@ document.addEventListener('keydown', function(event) {
 					else {
 						secretPassCount = 1
 						secretNumber1.textContent = '0'
-						npcTalk('Свечи? Откуда они здесь... Еще и эта цифра на стене... <br> Запишу ее на всякий случай...')
+						npcTalk('Свечи? Откуда они здесь... Еще и эта цифра на столе... <br> Запишу ее на всякий случай...')
 					}
 				}
 				else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles >= 1) {
@@ -1113,17 +1144,14 @@ document.addEventListener('keydown', function(event) {
 									AUDIO.toilet.pause()
 									AUDIO.toilet.currentTime = 0
 
-									INVENT[2].isOnInventory = true
-									ITEMS_ON_INVENT.push({
-										id: 2,
-									})
+									addInventItem(9)
 
 								}, 100)
 								setTimeout(() => {
 									blackScreen.style.opacity = 0
 									setTimeout(() => {
 										blackScreen.style.zIndex = 1
-										npcTalk('О! деревянная палка! Возьму с собой!', 3000)
+										npcTalk('О! Резиновые перчатки! Возьму с собой!', 3000)
 										setTimeout(() => {
 											isGameStop = false
 										}, 200)
@@ -1138,7 +1166,21 @@ document.addEventListener('keydown', function(event) {
 			else if (bg_number === 307) {
 				if (lef >= 44 && lef <= 102) {
 					if (INVENT[2].isOnInventory && INVENT[6].isOnInventory && INVENT[7].isOnInventory) {
-						
+						pauseGame()
+						npcTalk('Надо бы смастерить какое-нибудь оружие, чтобы победить того монстра...', 5000)
+						setTimeout(() => {
+							blackScreenFun(3000, function(){
+								lef = 74.5
+								lefFun()
+								setTimeout(() => {
+									npcTalk('Оружие готово! Должно сработать...', 4000)
+								}, 3000)
+								removeInventItem(2)
+								removeInventItem(6)
+								removeInventItem(7)
+								addInventItem(8)
+							})
+						}, 4500)			
 					}
 					else {
 						npcTalk('Сейчас не лучшее время для отдыха...')
@@ -1169,13 +1211,12 @@ document.addEventListener('keydown', function(event) {
 						blackScreen.style.opacity = 100
 						
 						setTimeout(() => {
-							AUDIO.mainMenu.play()
-							AUDIO.mainMenu.loop = true
-							AUDIO.mainMenu.autoplay = true
-							fadeOutAudio(AUDIO.game_bg, 3)
+							fadeOutAudio(AUDIO.game_bg, 1)
 							setTimeout(() => {
-								AUDIO.game_bg.currentTime = 0
-							}, 3000)
+								AUDIO.game_bg.currentTime = 564
+								AUDIO.game_bg.play()
+								AUDIO.game_bg.volume = 1.0
+							}, 1100)
 							monster_on_toilet_voice = true
 							++candles
 							AUDIO.monster.play()
@@ -1238,7 +1279,7 @@ document.addEventListener('keydown', function(event) {
 							npcTalk('Идти с ножом рискованно, он слишком короткий! <br> Вот закрепить бы его на какой-нибудь палке...', 4000)
 						}
 						else if (INVENT[2].isOnInventory && INVENT[6].isOnInventory && INVENT[7].isOnInventory) {
-							npcTalk('У меня есть все необходимое, чтобы создать оружие... <br> Только... Хорошо бы отдохнуть перед боем', 4000)
+							npcTalk('У меня есть все необходимое, чтобы создать оружие! <br> А еще... Хорошо бы отдохнуть перед боем...', 4000)
 						}
 						else {
 							npcTalk('Ну уж нет! Без оружия я туда не пойду!')
@@ -1248,14 +1289,14 @@ document.addEventListener('keydown', function(event) {
 			}
 
 			else if (bg_number === 1) {
-				if (lef >= 2 && lef <= 40) {
-
+				if (lef >= 2 && lef <= 40) { 
+					
 				}
 				else if (lef >= 62 && lef <= 104) {
-
+					npcTalk('Заперто...')
 				}
 				else if (lef >= 116 && lef <= 150) {
-
+					
 				}
 			}
 	
@@ -1381,7 +1422,17 @@ document.addEventListener('keydown', function(event) {
 					npcTalk('И тут заперто...')
 				}
 				else if (lef >= 107 && lef <= 140) {
-					npcTalk('Я не буду рыться в мусоре!')
+					if (INVENT[9].isOnInventory && !INVENT[9].isUsed) {
+						blackScreenFun(3000, function() {
+							
+						})
+					}
+					else if (INVENT[9].isUsed) {
+						npcTalk('Больше я туда не полезу!')
+					}
+					else {
+						npcTalk('Я не буду рыться в мусоре!')
+					}
 				}
 			}
 			else if (bg_number === 305) {

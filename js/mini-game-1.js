@@ -51,12 +51,8 @@ function mg1_checkAnswer() {
 			}, 200)
 			miniGame1On = false
 			isGameStop = false
-			npcTalk('Какой красивый камешек! Положу его в рюкзак')
-			INVENT[1].isOnInventory = true
-			ITEMS_ON_INVENT.push({
-				id: 1,
-			})
-			console.log(ITEMS_ON_INVENT)
+			npcTalk('Нож? Лишним точно не будет...')
+			addInventItem(7)
 		}
 	}
 	if (mg1_attempts === 0 && mg1_win === false) {
