@@ -1093,7 +1093,7 @@ document.addEventListener('keydown', function(event) {
 					}
 					else if (candles === 2) {
 						secretPassCount = 3
-						npcTalk('Что за бред?! Горела же всего одна свеча! И снова новая цифра...')
+						npcTalk('Что за бред?! Горела же всего одна свеча! И снова новая цифра...', 4000)
 						secretNumber1.textContent = '0'
 						secretNumber2.textContent = '4'
 						secretNumber3.textContent = '0'
@@ -1109,7 +1109,7 @@ document.addEventListener('keydown', function(event) {
 					else {
 						secretPassCount = 1
 						secretNumber1.textContent = '0'
-						npcTalk('Свечи? Откуда они здесь... Еще и эта цифра на столе... <br> Запишу ее на всякий случай...')
+						npcTalk('Свечи? Откуда они здесь... Еще и эта цифра на столе... <br> Запишу ее на всякий случай...', 4000)
 					}
 				}
 				else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles >= 1) {
@@ -1402,7 +1402,7 @@ document.addEventListener('keydown', function(event) {
 						}
 					}
 					else {
-						npcTalk('зашел')
+						npcTalk('Консоль разблокирована!')
 						if (!isConsoleUnlocked) {
 							isConsoleUnlocked = true
 							localStorage.setItem('isConsoleUnlocked', true)
@@ -1424,7 +1424,11 @@ document.addEventListener('keydown', function(event) {
 				else if (lef >= 107 && lef <= 140) {
 					if (INVENT[9].isOnInventory && !INVENT[9].isUsed) {
 						blackScreenFun(3000, function() {
-							
+							INVENT[9].isUsed = true
+							addInventItem(6)
+							setTimeout(() => {
+								npcTalk('О! Веревка! Может пригодиться...', 4000)
+							}, 4000)
 						})
 					}
 					else if (INVENT[9].isUsed) {
