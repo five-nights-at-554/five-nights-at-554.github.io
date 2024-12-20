@@ -29,6 +29,7 @@ let isPasswordUnlocked = false
 let ngHat = false
 let contextMenuTF = false
 let monster_on_toilet_voice = true
+let zapiskaOnInvent = false
 
 
 let blackScreen = document.getElementById('black-screen')
@@ -176,6 +177,14 @@ const INVENT = [
 		id: 9,
 		name: 'РЕЗИНОВЫЕ ПЕРЧАТКИ',
 		description: 'Почти как новые!',
+		isOnInventory: false,
+		isUsed: false
+	},
+
+	{
+		id: 10,
+		name: 'СТРАННАЯ ЗАПИСКА',
+		description: '"Здесь "',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -551,10 +560,24 @@ function movegg() {
 	}
 
 	else if (bg_number === 310) {
+		if (!INVENT[10].isOnInventory && !INVENT[10].isUsed) {
+			document.getElementById('item10').style.zIndex = 3
+		}
+		else {
+			document.getElementById('item10').style.zIndex = -10
+		}
+
 		if (lef >= 72.5 && lef <= 102.5 && monster_on_toilet_voice) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Надпись на стене'
-			arrow_hint.style.color = '#d63a3a'
+			if (!INVENT[10].isOnInventory && !INVENT[10].isUsed) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Записка'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Надпись на стене'
+				arrow_hint.style.color = '#d63a3a'
+			}
 		}
 		else {
 			arrow_hint.style.display = 'none'
@@ -562,6 +585,7 @@ function movegg() {
 	}
 
 	else if (bg_number === 311) {
+		document.getElementById('item10').style.zIndex = -10
 		if (lef >= 88.5 && lef <= 132.5) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.innerHTML = 'Лестница'
@@ -639,6 +663,7 @@ function movegg() {
 	}
 
 	else if (bg_number === 309) {
+		document.getElementById('item10').style.zIndex = -10
 		if (lef >= 118 && lef <= 150) {
 			arrow_hint.style.display = 'block'
 			arrow_hint.innerHTML = 'Женский туалет'
@@ -1196,7 +1221,14 @@ document.addEventListener('keydown', function(event) {
 
 			else if (bg_number === 310) {
 				if (lef >= 72.5 && lef <= 102.5 && monster_on_toilet_voice) {
-					npcTalk('HELP? Этой надписи здесь точно не было...')
+					if (!INVENT[10].isOnInventory && !INVENT[10].isUsed) {
+						npcTalk('HELP? Еще и какая-то записка на стене...', 4000)
+						addInventItem(10)
+						zapiskaOnInvent = true
+					}
+					else {
+						npcTalk('Кто же мог это написать...')
+					}
 				}
 			}
 
@@ -1425,6 +1457,7 @@ document.addEventListener('keydown', function(event) {
 					if (INVENT[9].isOnInventory && !INVENT[9].isUsed) {
 						blackScreenFun(3000, function() {
 							INVENT[9].isUsed = true
+							removeInventItem(9)
 							addInventItem(6)
 							setTimeout(() => {
 								npcTalk('О! Веревка! Может пригодиться...', 4000)

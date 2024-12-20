@@ -626,7 +626,8 @@ h2 {
 
 .items {
 	aspect-ratio: 1/1;
-	
+	position: fixed;
+	z-index: -10;
 }
 
 #item0 {
@@ -637,9 +638,18 @@ h2 {
 	height: 10vh;
 	top: 85vh;
 	left: calc((100vw - 100vh * 16 / 9) / 2 + 120vh);
+}
 
-	position: fixed;
-	z-index: -10;
+#item10 {
+	background: url('/images/item10-bg.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 6vh;
+	top: 41vh;
+	rotate: 5deg;
+	left: calc((100vw - 100vh * 16 / 9) / 2 + 96vh);
+	z-index: 10;
 }
 
 
