@@ -35,7 +35,7 @@ let dverBroken = false
 let kladovka_door = false
 let kladovka_count = 0
 // let bg_number = 303
-let bg_number = 310
+let bg_number = 110
 
 
 
