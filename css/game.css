@@ -649,7 +649,6 @@ h2 {
 	top: 41vh;
 	rotate: 5deg;
 	left: calc((100vw - 100vh * 16 / 9) / 2 + 96vh);
-	z-index: 10;
 }
 
 

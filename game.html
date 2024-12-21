@@ -6,12 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="css/game.css">
 	<title>five nights at 554</title>
-	<!-- <script>
+	<script>
 		window.addEventListener('beforeunload', function (event) {
             const confirmationMessage = 'Весь прогресс будет потерян. Вы точно хотите выйти?'
             event.returnValue = confirmationMessage
         })
-	</script> -->
+	</script>
 	<link rel="shortcut icon" href="icon.ico">
 </head>
 
@@ -42,11 +42,13 @@
 		<img draggable="false" class="game-bg" id="game-bg-208" src="images/208-game-bg.jpg" alt="none">
 
 		<img draggable="false" class="game-bg" id="game-bg-303" src="images/303-game-bg.jpg" alt="none">
+		<img draggable="false" class="game-bg" id="game-bg-303-2" src="images/303-2-game-bg.jpg" alt="none">
 		<img draggable="false" class="game-bg" id="game-bg-304" src="images/304-game-bg.jpg" alt="none">
 		<img draggable="false" class="game-bg" id="game-bg-305" src="images/305-game-bg.jpg" alt="none">
 		<img draggable="false" class="game-bg" id="game-bg-306" src="images/306-game-bg.jpg" alt="none">
 		<img draggable="false" class="game-bg" id="game-bg-307" src="images/307-game-bg.jpg" alt="none">
 		<img draggable="false" class="game-bg" id="game-bg-308" src="images/308-game-bg.jpg" alt="none">
+		<img draggable="false" class="game-bg" id="game-bg-308-2" src="images/308-2-game-bg.jpg" alt="none">
 		<img draggable="false" class="game-bg" id="game-bg-309" src="images/309-game-bg.jpg" alt="none">
 		<img draggable="false" class="game-bg" id="game-bg-310" src="images/310-game-bg.jpg" alt="none">
 		<img draggable="false" class="game-bg" id="game-bg-310-help" src="images/310-help-game-bg.jpg" alt="none">
@@ -289,7 +291,7 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 
 					<div id="inventory_descript">
 						<span id="descript_item-name"></span>
-						<span id="descript_item-descript"></span>
+						<div id="descript_item-descript"></div>
 					</div>
 				</div>
 			</div>
@@ -299,7 +301,7 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 		<div id="command-console-box"></div>
 		<div id="command-console">
 			<div id="cc-history">Введите команду</div>
-			<input  autocomplete="off" type="text" id="cc-input">
+			<input maxlength="15" autocomplete="off" type="text" id="cc-input">
 		</div>
 
 		<!-- ОБЪЕКТЫ КОМНАТ И КОРИДОРОВ -->
