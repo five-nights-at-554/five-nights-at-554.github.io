@@ -379,6 +379,58 @@ function lefFun() {
 lefFun()
 changeBG(bg_number)
 
+function setMapRoom(n) {
+	let room = document.getElementById(`room-${n}`)
+	room.style.background = `url('/images/${n}-game-bg.jpg')`
+	room.style.backgroundPosition = 'center'
+	room.style.backgroundSize = 'cover'
+	room.style.backgroundRepeat = 'no-repeat'
+	room.style.borderColor = '#0c941e'
+}
+setMapRoom(bg_number)
+
+let map_svg = document.getElementById('map-svg')
+let map_bg = document.getElementById('map')
+let mapInterval
+
+map_svg.addEventListener('mousedown', function() {
+	if (!isGameStop && !settingsOn) {
+		clearTimeout(mapInterval)
+		map_bg.style.zIndex = 1000
+		map_bg.style.opacity = 1
+	}
+})
+
+map_svg.addEventListener('mouseup', function() {
+	map_bg.style.opacity = 0
+	mapInterval = setTimeout(() => {
+		map_bg.style.zIndex = -10
+	}, 300)
+})
+
+map_svg.addEventListener('mouseleave', function() {
+	map_bg.style.opacity = 0
+	mapInterval = setTimeout(() => {
+		map_bg.style.zIndex = -10
+	}, 300)
+})
+
+document.addEventListener('keydown', function(event) {
+	if (event.key === MapKey && !isGameStop && !settingsOn) {
+		clearTimeout(mapInterval)
+		map_bg.style.zIndex = 1000
+		map_bg.style.opacity = 1
+	}
+})
+document.addEventListener('keyup', function(event) {
+	if (event.key === MapKey) {
+		map_bg.style.opacity = 0
+		mapInterval = setTimeout(() => {
+			map_bg.style.zIndex = -10
+		}, 300)
+	}
+})
+
 
 function movegg() {
 	const arrow_hint = document.getElementById('arrow_hint')
@@ -729,6 +781,7 @@ function movegg() {
 	if (lef <= 2) {
 		if ((bg_number > 197 && bg_number < 250) || (bg_number > 303 && bg_number <= 350) || (bg_number > 109 && bg_number <= 150)) {
 			--bg_number
+			setMapRoom(bg_number)
 			if (monster_on_toilet_voice && bg_number === 310) {
 				changeBG('310-help')
 	
@@ -763,6 +816,7 @@ function movegg() {
 	else if (lef >= 150) {
 		if ((bg_number < 208 && bg_number > 150) || (bg_number < 312 && bg_number > 260) || (bg_number < 111 && bg_number >= 50)) {
 			++bg_number
+			setMapRoom(bg_number)
 			if (monster_on_toilet_voice && bg_number === 310) {
 				changeBG('310-help')	
 			}
@@ -961,6 +1015,7 @@ function handleKeyDown(event) {
 						lef = 62
 						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 						bg_number = 306
+						setMapRoom(bg_number)
 						changeBG('306')
 						ReallyFloorNow = 3
 						setTimeout(() => {
@@ -987,6 +1042,7 @@ function handleKeyDown(event) {
 						lef = 126
 						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 						bg_number = 206
+						setMapRoom(bg_number)
 						changeBG('206')
 						setTimeout(() => {
 							blackScreen.style.opacity = 0
@@ -1042,6 +1098,7 @@ function handleKeyDown2(event) {
 						lef = 112
 						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 						bg_number = 311
+						setMapRoom(bg_number)
 						changeBG('311')
 						ReallyFloorNow = 3
 						setTimeout(() => {
@@ -1068,6 +1125,7 @@ function handleKeyDown2(event) {
 						lef = 26
 						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 						bg_number = 199
+						setMapRoom(bg_number)
 						changeBG('199')
 						setTimeout(() => {
 							blackScreen.style.opacity = 0
@@ -1093,6 +1151,7 @@ function handleKeyDown2(event) {
 						lef = 98
 						document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 						bg_number = 110
+						setMapRoom(bg_number)
 						changeBG('110')
 						setTimeout(() => {
 							blackScreen.style.opacity = 0
@@ -1724,9 +1783,9 @@ function settingsView() {
 	document.getElementById('speed-vaule').value = speed * 10
 	document.getElementById('speed-span').innerHTML = speed * 100
 	settingsOn = true
-	if (isConsoleUnlocked) {
-		devConsoleInset.style.display = 'flex'
-	}
+	// if (isConsoleUnlocked) {
+	// 	devConsoleInset.style.display = 'flex'
+	// }
 }
 
 document.getElementById('volume').addEventListener('input', () => {

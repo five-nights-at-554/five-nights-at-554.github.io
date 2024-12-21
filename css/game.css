@@ -864,8 +864,33 @@ h2 {
 	aspect-ratio: 1920 / 1080;
 	height: 100vh;
 	position: fixed;
-	z-index: 1000;
+	z-index: -10;
 	background: #000000f8;
-	opacity: 100;
-	transition: opacity 2s;
+	opacity: 0;
+	transition: opacity 0.3s;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.map_title {
+	font-size: 4vh;
+	color: #cccccc;
+}
+
+.map_floor {
+	margin: 0 0 10vh 0;
+	display: flex;
+	justify-content: center;
+}
+
+.map_room {
+	aspect-ratio: 16 / 9;
+	height: 7.5vh;
+	border: solid 0.3vh;
+	border-color: #ff0000;
+	border-radius: 1vh;
+	margin: 0.5vh;
 }

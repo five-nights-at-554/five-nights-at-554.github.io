@@ -23,6 +23,7 @@ let DownKey = localStorage.getItem('DownKey') || 's'
 let SettingsKey = localStorage.getItem('SettingsKey') || 'r'
 let InventoryKey = localStorage.getItem('InventoryKey') || 'e'
 let InteractKey = localStorage.getItem('InteractKey') || 'w'
+let MapKey = localStorage.getItem('MapKey') || 'q'
 
 
 let keyNow
