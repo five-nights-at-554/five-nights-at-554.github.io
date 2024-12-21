@@ -6,12 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="css/game.css">
 	<title>five nights at 554</title>
-	<script>
+	<!-- <script>
 		window.addEventListener('beforeunload', function (event) {
             const confirmationMessage = 'Весь прогресс будет потерян. Вы точно хотите выйти?'
             event.returnValue = confirmationMessage
         })
-	</script>
+	</script> -->
 	<link rel="shortcut icon" href="icon.ico">
 </head>
 
@@ -58,7 +58,7 @@
 
 		<div id="black-screen"></div>
 		<div id="invisible-screen"></div>
-		
+
 		<div id="gg">
 			<img class="gg-img" id="gg-left" draggable="false" src="images/fil-left.png" alt="">
 			<img class="gg-img" id="gg-right" draggable="false" src="images/fil-right.png" alt="">
@@ -69,7 +69,7 @@
 		<div id="text">
 			<p id="text__com"><span id="npc-name">ФИЛИПП: </span><span id="npc-talk"></span></p>
 		</div>
-		
+
 		<div id="choose-floor">
 			<h2>ВЫБЕРИТЕ ЭТАЖ: (Enter)</h2>
 			<ul class="floors-menu">
@@ -78,11 +78,11 @@
 				<li id="floor1">Первый</li>
 			</ul>
 		</div>
-		
+
 		<div class="settings-svg-box">
 			<svg id="settings-svg" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000"
-			preserveAspectRatio="xMidYMid meet">
-			<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+				preserveAspectRatio="xMidYMid meet">
+				<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
 					<path id="path1" d="M2175 4626 c-36 -16 -83 -68 -90 -99 -2 -12 -6 -92 -7 -177 -3 -138
 			-6 -160 -26 -197 -45 -85 -145 -132 -240 -112 -49 10 -64 20 -174 126 -66 63
 			-132 119 -145 124 -40 15 -116 10 -145 -9 -15 -10 -135 -129 -267 -264 -264
@@ -121,8 +121,8 @@
 				</g>
 			</svg>
 
-			<svg id="inventory" version="1.0" xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+			<svg id="inventory" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000"
+				preserveAspectRatio="xMidYMid meet">
 
 				<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
 					<path d="M2427 5104 c-131 -31 -285 -137 -408 -279 -68 -79 -178 -237 -233
@@ -159,6 +159,37 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 -153 425 -12 66 -17 157 -17 302 l-1 207 -156 30 c-473 92 -1139 142 -1644
 123 -126 -5 -236 -7 -243 -4 -7 2 -12 12 -10 21 3 13 21 17 93 22 158 9 634 9
 815 -1z" />
+				</g>
+			</svg>
+
+			<svg id="map-svg" version="1.0" xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+
+				<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+					<path d="M3880 5114 c-207 -38 -280 -61 -406 -128 -341 -181 -565 -529 -590
+-916 -12 -176 32 -343 157 -595 148 -302 417 -686 750 -1076 136 -159 186
+-185 275 -143 83 40 529 607 730 928 265 425 355 707 310 978 -78 476 -417
+834 -881 933 -77 17 -294 28 -345 19z m345 -349 c286 -84 497 -317 559 -617 9
+-42 16 -103 16 -135 0 -200 -188 -565 -528 -1023 -108 -146 -264 -340 -272
+-340 -18 0 -331 411 -457 600 -159 238 -288 489 -324 630 -51 198 18 451 171
+633 204 243 531 342 835 252z" />
+					<path d="M3893 4465 c-238 -52 -403 -296 -364 -538 42 -259 288 -439 544 -398
+259 42 439 288 398 544 -16 101 -62 189 -135 262 -73 73 -142 111 -233 130
+-82 18 -129 18 -210 0z m171 -319 c18 -8 45 -29 60 -48 52 -69 47 -147 -14
+-208 -66 -66 -151 -67 -219 -2 -128 122 9 326 173 258z" />
+					<path d="M909 3512 c-448 -180 -828 -335 -843 -345 -15 -10 -36 -37 -47 -60
+-18 -41 -19 -91 -19 -1512 l0 -1470 23 -40 c24 -44 92 -85 139 -85 15 0 381
+141 813 314 l785 314 785 -314 c432 -173 798 -314 815 -314 37 0 1653 644
+1697 676 67 50 64 1 61 1106 -3 989 -3 997 -24 1024 -39 53 -71 69 -134 69
+-63 0 -95 -16 -134 -69 -21 -27 -21 -38 -26 -964 l-5 -936 -620 -248 c-341
+-137 -628 -251 -637 -254 -17 -5 -18 45 -20 865 -3 861 -3 870 -24 897 -39 53
+-71 69 -134 69 -63 0 -95 -16 -134 -69 -21 -27 -21 -36 -24 -897 -2 -820 -3
+-870 -20 -865 -9 3 -296 117 -637 254 l-620 248 -3 1267 c-1 697 0 1267 3
+1267 3 0 175 -68 382 -151 347 -139 382 -151 429 -147 28 3 62 13 77 24 34 24
+67 90 67 133 0 41 -32 103 -64 124 -50 33 -1026 417 -1059 417 -18 -1 -385
+-142 -848 -328z m689 -1339 l-3 -1267 -620 -248 c-341 -137 -628 -251 -638
+-254 -16 -5 -17 58 -15 1262 l3 1268 630 253 c347 138 633 252 638 253 4 0 6
+-570 5 -1267z" />
 				</g>
 			</svg>
 		</div>
@@ -217,15 +248,15 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 							<h2 class="key-choose-title" id="choose-key-downT">Вниз</h2>
 						</div>
 
-						
+
 					</div>
-					
+
 					<div id="control-box-right" class="control-box-children">
 						<div class="key-choose">
 							<h2 class="key-choose-key" id="choose-key-interact"></h2>
 							<h2 class="key-choose-title" id="choose-key-interactT">Взаимодействие</h2>
 						</div>
-						
+
 						<div class="key-choose">
 							<h2 class="key-choose-key" id="choose-key-inventory"></h2>
 							<h2 class="key-choose-title" id="choose-key-inventoryT">Инвентарь</h2>
@@ -236,7 +267,7 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 							<h2 class="key-choose-title" id="choose-key-settingsT">Настройки</h2>
 						</div>
 
-						<div class="key-choose"	id="dev-console-inset">
+						<div class="key-choose" id="dev-console-inset">
 							<h2 class="key-choose-key" id="choose-key-console">/</h2>
 							<h2 class="key-choose-title" id="choose-key-consoleT">Консоль разработчика</h2>
 						</div>
@@ -277,7 +308,7 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 						</svg>
 					</div>
 				</div>
-				
+
 				<div class="inventory_content">
 					<div class="inventory_menu">
 						<div id="slot1" class="inventory_item"></div>
@@ -334,7 +365,8 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 					</svg>
 				</div>
 
-				<h2 id="mg1_title"><span class="redSpan">Волшебная записка...</span> <br><br> Угадай число от 0 до 100 <br><br> Осталось попыток: <span class="redSpan" id="mg1_attempts_span">7</span></h2>
+				<h2 id="mg1_title"><span class="redSpan">Волшебная записка...</span> <br><br> Угадай число от 0 до 100
+					<br><br> Осталось попыток: <span class="redSpan" id="mg1_attempts_span">7</span></h2>
 				<div id="mg1_box">
 					<input id="mg1_input" type="text" autocomplete="off" placeholder="Твой ответ" maxlength="3">
 					<button id="mg1_button" onclick="mg1_checkAnswer()">Проверить ответ</button>
@@ -343,6 +375,12 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 				</div>
 
 			</div>
+		</div>
+
+
+		<!-- MAAAAAAAP -->
+		<div id="map">
+			
 		</div>
 
 	</div>
