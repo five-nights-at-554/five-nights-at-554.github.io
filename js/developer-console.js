@@ -1,3 +1,5 @@
+const BGTP = ['109', '110', '111', '197', '198', '199', '200', '201', '202', '203', '204', '205', '206', '207', '208', '303', '304', '305', '306', '307', '308', '309', '310', '311', '312']
+
 let ng_2024 = false
 let isConsoleUnlocked = localStorage.getItem('isConsoleUnlocked') || null
 // let isConsoleUnlocked = false
@@ -53,6 +55,11 @@ ccInput.addEventListener("input", function(event) {
 function checkItemCommandFormat(s) {
     let pattern = /^item (0|1|2|3|4|5|6|7|8|9|10|11)$/
     return pattern.test(s)
+}
+
+function checkBgCommandFormat(s) {
+	let bgnum = BGTP.some(item => s.includes(`bg ${item}`))
+    return(bgnum)
 }
 
 
@@ -150,6 +157,21 @@ function checkCommand() {
 	else if (CCvalue === 'lock cmd') {
 		isConsoleUnlocked = false
 		localStorage.removeItem('isConsoleUnlocked')
+		closeCC()
+	}
+
+	else if (checkBgCommandFormat(CCvalue)) {
+		bg_number = parseInt(CCvalue.slice(3))
+		changeBG(bg_number)
+		if (bg_number > 150 && bg_number < 250) {
+			ReallyFloorNow = 2
+		}
+		else if (bg_number > 50 && bg_number < 150) {
+			ReallyFloorNow = 1
+		}
+		else if (bg_number > 250 && bg_number < 350) {
+			ReallyFloorNow = 3
+		}
 		closeCC()
 	}
 	else {

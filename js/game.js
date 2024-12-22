@@ -193,7 +193,7 @@ const INVENT = [
 	{
 		id: 10,
 		name: 'СТРАННАЯ ЗАПИСКА',
-		description: '*Непонятные символы* <br>...<br> "|*/|  0  |-|  $  T  |⁾  ___  /.  |-0  8  |/|  T  ___  |*/|  */  3  |<sub>)</sub>|  |<  */" <br>...<br> Пароль: $49dt*a3#1@d-m!$t~1&',
+		description: '*Непонятные символы* <br>...<br> |*/|  0  |-|  $  T  |⁾  ___  /.  |-0  8  |/|  T  ___  |*/|  */  3  |<sub>)</sub>|  |<  */ <br>...<br> Пароль: $49dt*a3#1@d-m!$t~1&',
 		isOnInventory: false,
 		isUsed: false
 	},
