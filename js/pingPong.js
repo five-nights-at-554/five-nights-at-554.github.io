@@ -8,6 +8,7 @@ function move_mg2_right() {
 		changeGG('left')
 		setTimeout(() => {
 			blackScreenFun(4000, function() {
+
 				mg2_game()
 			})
 		}, 1000)
@@ -35,7 +36,6 @@ function mg2_Start() {
 
 	AUDIO.monster_steps.play()
 	fadeOutAudio(AUDIO.game_bg, 4)
-	fadeOutAudio(AUDIO.mainMenu, 4)
 
 	setTimeout(() => {
 		npcTalk('Что это за шаги?!')

@@ -72,22 +72,13 @@ function checkCommand() {
 			closeCC()
 			// ITEMS_ON_INVENT.push({id:4})
 			AUDIO.ng2024.play()
-			setTimeout(() => {
-				AUDIO.mainMenu.pause()
-				AUDIO.game_bg.pause()
-			}, 50)
+			AUDIO.game_bg.pause()
 			npcTalk('Ого! Новогодняя шапочка!')
 			ng_2024 = true
 			changeGG('right-ng')
 			aTime = setTimeout(() => {
-				if (monster_on_toilet_voice) {
-					AUDIO.mainMenu.play()
-					AUDIO.mainMenu.loop = true
-				}
-				else {
 					AUDIO.game_bg.play()
 					AUDIO.game_bg.loop = true
-				}
 				if (!ngHat) {
 					changeGG('right')
 				}
@@ -117,14 +108,9 @@ function checkCommand() {
 	}
 	else if (CCvalue === 'ng stop') {
 		clearTimeout(aTime)
-		if (monster_on_toilet_voice) {
-			AUDIO.mainMenu.play()
-			AUDIO.mainMenu.loop = true
-		}
-		else {
-			AUDIO.game_bg.play()
-			AUDIO.game_bg.loop = true
-		}
+
+		AUDIO.game_bg.play()
+		AUDIO.game_bg.loop = true
 		AUDIO.ng2024.pause()
 		AUDIO.ng2024.currentTime = 0
 		changeGG('right')

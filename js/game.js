@@ -228,7 +228,6 @@ function createSound(path) {
 
 const AUDIO = {
 	calm: createSound('/js/sounds/calm.mp3'),
-	mainMenu: createSound('/js/sounds/mainMenu.mp3'),
 	game_bg: createSound('/js/sounds/game_bg.mp3'),
 	monster: createSound('/js/sounds/monster.mp3'),
 	monster_steps: createSound('/js/sounds/monster_steps.mp3'),
