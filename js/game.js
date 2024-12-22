@@ -1205,7 +1205,7 @@ document.addEventListener('keydown', function(event) {
 					}
 					else {
 						npcTalk('Не открывается!')
-						dverSound()
+						
 					}
 				}
 			}
@@ -1470,7 +1470,7 @@ document.addEventListener('keydown', function(event) {
 					npcTalk('Ничего интересного...')
 				}
 				else if (lef >= 62 && lef <= 104) {
-					dverSound()
+					
 					npcTalk('Заперто... Интересно, а эта дверь закрыта изнутри?', 4000)
 				}
 				else if (lef >= 116 && lef <= 150) {
@@ -1508,7 +1508,7 @@ document.addEventListener('keydown', function(event) {
 					}
 
 					else if (isSkafOpened) {
-						dverSound()
+						
 						openMiniGame1()
 					} 
 					
@@ -1660,7 +1660,7 @@ document.addEventListener('keydown', function(event) {
 
 			else if (bg_number === 304) {
 				if (lef >= 54 && lef <= 104) {
-					dverSound()
+					
 					npcTalk('И тут заперто...')
 				}
 				else if (lef >= 107 && lef <= 140) {
@@ -1700,7 +1700,7 @@ document.addEventListener('keydown', function(event) {
 
 			else if (bg_number === 198) {
 				if (lef >= 46 && lef <= 67) {
-					dverSound()
+					
 					npcTalk('Как всегда заперто на ключ...')
 				}
 			}

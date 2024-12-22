@@ -107,17 +107,22 @@ function checkCommand() {
 		closeCC()
 	}
 	else if (CCvalue === 'ng stop') {
-		clearTimeout(aTime)
-
-		AUDIO.game_bg.play()
-		AUDIO.game_bg.loop = true
-		AUDIO.ng2024.pause()
-		AUDIO.ng2024.currentTime = 0
-		changeGG('right')
-		npcTalk('Все, новый год закончился :(')
-		ng_2024 = false
-		ngHat = false
-		closeCC()
+		if (ng_2024) {
+			clearTimeout(aTime)
+			AUDIO.game_bg.play()
+			AUDIO.game_bg.loop = true
+			AUDIO.ng2024.pause()
+			AUDIO.ng2024.currentTime = 0
+			changeGG('right')
+			npcTalk('Все, новый год закончился :(')
+			ng_2024 = false
+			ngHat = false
+			closeCC()
+		}
+		else {
+			closeCC()
+			npcTalk('Новый год и не начинался...')
+		}
 	}
 	else if (checkItemCommandFormat(CCvalue)) {
 		let itemid = parseInt(CCvalue.slice(5))
