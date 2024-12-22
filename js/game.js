@@ -1,5 +1,5 @@
 let secretPassCount = 0
-let isGameStop = false
+let isGameStop = true
 let isInfoOpened = false
 let audTF = true
 let speed_storage = localStorage.getItem('speed') || 2
@@ -1399,7 +1399,7 @@ document.addEventListener('keydown', function(event) {
 							}, 4000)
 						}, 1000)
 					}
-					else if (!monster_on_toilet_voice && ng_2024) {
+					else if (ng_2024) {
 						npcTalk('Нее, я туда не хочу... Я ХОЧУ ПРАЗДНОВАТЬ')
 					}
 					else {
@@ -2305,4 +2305,15 @@ document.getElementById('settings-svg').addEventListener('click', () => {
 
 document.getElementById('inventory').addEventListener('click', () => {
 	inventoryView()
+})
+
+
+document.addEventListener('DOMContentLoaded', () => {
+	setTimeout(() => {
+		document.getElementById('loading-window').style.opacity = 0
+		setTimeout(() => {
+			document.getElementById('loading-window').style.zIndex = -10
+			isGameStop = false
+		}, 1000)
+	}, 4000)
 })
