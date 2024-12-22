@@ -7,11 +7,9 @@ function move_mg2_right() {
 	else {
 		changeGG('left')
 		setTimeout(() => {
-			blackScreen.style.zIndex = 1000
-			blackScreen.style.opacity = 100
-			setTimeout(() => {
+			blackScreenFun(4000, function() {
 				mg2_game()
-			}, 1000)
+			})
 		}, 1000)
 	}
 }
@@ -24,11 +22,9 @@ function move_mg2_left() {
 	else {
 		changeGG('left')
 		setTimeout(() => {
-			blackScreen.style.zIndex = 1000
-			blackScreen.style.opacity = 100
-			setTimeout(() => {
+			blackScreenFun(4000, function() {
 				mg2_game()
-			}, 1000)
+			})
 		}, 1000)
 	}
 }
