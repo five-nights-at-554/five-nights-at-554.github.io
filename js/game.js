@@ -153,7 +153,7 @@ const INVENT = [
 	{
 		id: 4,
 		name: 'НОВОГОДНЯЯ ШЛЯПА',
-		description: 'Всех с наступающим! <br> Нажмите "Enter" чтобы надеть',
+		description: 'Всех с новым годом! <br> Нажмите "Enter" чтобы надеть',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -981,7 +981,6 @@ function openFloorMenu1(a) {
 }
 
 function closeFloorMenu1() {
-    isGameStop = false
 	isFloorChoosing1 = false
     document.getElementById('choose-floor').style.display = 'none'
     document.getElementById('choose-floor').style.opacity = 0
@@ -1174,6 +1173,7 @@ function handleKeyDown2(event) {
 				}
 			}
             closeFloorMenu1()
+
         }
     }
 }
