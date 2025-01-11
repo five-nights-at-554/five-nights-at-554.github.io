@@ -45,6 +45,7 @@ let kladovka_door = false
 let kladovka_count = 0
 // let bg_number = 303
 let bg_number = 110
+let thunder = false
 
 
 
@@ -59,6 +60,7 @@ function pauseGame() {
 }
 
 const BG = [
+	'108',
 	'109',
 	'110',
 	'111',
@@ -222,6 +224,14 @@ const INVENT = [
 		isOnInventory: false,
 		isUsed: false
 	},
+
+	{
+		id: 13,
+		name: 'ЗАГАДОЧНЫЕ НОТЫ',
+		description: 'Что это за произведение?... "Вальс смерти"? <br> Ни разу не слышал...',
+		isOnInventory: false,
+		isUsed: false
+	},
 ]
 
 const ITEMS_ON_INVENT = []
@@ -263,6 +273,10 @@ const AUDIO = {
 	trash: createSound('/js/sounds/trash.mp3'),
 	otmychka: createSound('/js/sounds/otmychka.mp3'),
 	pin: createSound('/js/sounds/pin.mp3'),
+	spichka: createSound('/js/sounds/spichka.mp3'),
+	molnia: createSound('/js/sounds/molnia.mp3'),
+	vals: createSound('/js/sounds/vals.mp3'),
+	rain: createSound('/js/sounds/rain.mp3'),
 }
 
 // AUDIO.monster.volume = 0.5
@@ -531,6 +545,7 @@ function movegg(timestamp) {
 		}
 	
 		else if (bg_number === 206) {
+			document.getElementById('item13').style.zIndex = -10
 			if (lef >= 100 && lef <= 155) {
 				arrow_hint.style.display = 'block'
 				arrow_hint.innerHTML = 'Лестница'
@@ -579,6 +594,7 @@ function movegg(timestamp) {
 
 		else if (bg_number === 200) {
 				document.getElementById('item12').style.zIndex = -10
+				arrow_hint.style.display = 'none'
 		}
 
 		else if (bg_number === 201) {
@@ -650,6 +666,12 @@ function movegg(timestamp) {
 		}
 	
 		else if (bg_number === 207) {
+			if (!INVENT[13].isOnInventory && !INVENT[13].isUsed && thunder) {
+				document.getElementById('item13').style.zIndex = 3
+			}
+			else {
+				document.getElementById('item13').style.zIndex = -10
+			}
 			if (!INVENT[0].isOnInventory && !INVENT[0].isUsed && candles >= 1) {
 				document.getElementById('item0').style.zIndex = 3
 			}
@@ -662,6 +684,11 @@ function movegg(timestamp) {
 				arrow_hint.innerHTML = 'Свечи'
 				arrow_hint.style.color = '#d63a3a'
 			}
+			else if (lef >= 127 && lef <= 150 && !INVENT[13].isOnInventory && !INVENT[13].isUsed && thunder) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Загадочные ноты'
+				arrow_hint.style.color = '#3ad6c9'
+			}
 			else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles >= 1) {
 				arrow_hint.style.display = 'block'
 				arrow_hint.innerHTML = 'Какой-то ключ...'
@@ -673,6 +700,7 @@ function movegg(timestamp) {
 		}
 	
 		else if (bg_number === 208) {
+			document.getElementById('item13').style.zIndex = -10
 			document.getElementById('item0').style.zIndex = -10
 			if (lef >= 102.5 && lef <= 150) {
 				arrow_hint.style.display = 'block'
@@ -772,6 +800,7 @@ function movegg(timestamp) {
 		}
 	
 		else if (bg_number === 110) {
+			document.getElementById('item3').style.zIndex = -10
 			if (lef >= 74 && lef <= 120) {
 				arrow_hint.style.display = 'block'
 				arrow_hint.innerHTML = 'Лестница'
@@ -799,10 +828,22 @@ function movegg(timestamp) {
 		}
 	
 		else if (bg_number === 109) {
+			if (!INVENT[3].isOnInventory && !INVENT[3].isUsed && isMonsterLive) {
+				document.getElementById('item3').style.zIndex = 3
+			}
+			else {
+				document.getElementById('item3').style.zIndex = -10
+			}
+
 			if (lef >= 12 && lef <= 81) {
 				arrow_hint.style.display = 'block'
 				arrow_hint.innerHTML = 'Старое пианино'
 				arrow_hint.style.color = '#d63a3a'
+			}
+			else if (lef >= 90 && lef <= 110 && !INVENT[3].isOnInventory && !INVENT[3].isUsed && isMonsterLive) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Спички'
+				arrow_hint.style.color = '#3ad6c9'
 			}
 			else {
 				arrow_hint.style.display = 'none'
@@ -826,12 +867,10 @@ function movegg(timestamp) {
 		}
 	
 		if (isArrowLeftPressed) {
-	 
 			lef = lef - speed
 			lefFun()
 		}
 		if (isArrowRightPressed) {
-	
 			lef = lef + speed
 			lefFun()
 		}
@@ -872,7 +911,7 @@ function movegg(timestamp) {
 			}
 		}
 		else if (lef >= 150) {
-			if ((bg_number < 208 && bg_number > 150) || (bg_number < 312 && bg_number > 260) || (bg_number < 111 && bg_number >= 50)) {
+			if ((bg_number < 208 && bg_number > 150) || (bg_number < 312 && bg_number > 260) || (bg_number < 111 && bg_number >= 109)) {
 				++bg_number
 				setMapRoom(bg_number)
 				if (monster_on_toilet_voice && bg_number === 310) {
@@ -903,6 +942,17 @@ function movegg(timestamp) {
 			} else {
 				lef = 149
 				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+			}
+		}
+
+		if (bg_number === 108) {
+			if (lef >= 140) {
+				lef = 140
+				lefFun()
+			}
+			else if (lef <= 15) {
+				lef = 15
+				lefFun()
 			}
 		}
 	}
@@ -1284,15 +1334,38 @@ document.addEventListener('keydown', function(event) {
 						secretNumber2.textContent = '4'
 					}
 					else if (candles === 2) {
-						secretPassCount = 3
-						npcTalk('Что за бред?! Горела же всего одна свеча! Еще и новая цифра на столе...', 5000)
-						secretNumber1.textContent = '0'
-						secretNumber2.textContent = '4'
-						secretNumber3.textContent = '0'
+						if (INVENT[3].isOnInventory) {
+							candles = 3
+							blackScreenFun(4000, function() {
+								fadeOutAudio(AUDIO.game_bg, 2)
+								AUDIO.spichka.play()
+								setTimeout(() => {
+									AUDIO.molnia.play()
+									blackScreen.style.background = '#fff'
+									thunder = true
+									AUDIO.game_bg.play()
+        							AUDIO.game_bg.currentTime = 612
+        							AUDIO.game_bg.volume = volume_val / 100
+								}, 2000)
+								setTimeout(() => {
+									npcTalk('ЧТО ЭТО БЫЛО?! ОТКУДА ЗДЕСЬ МОЛНИЯ?!', 6000)
+								}, 4500)
+							})
+							setTimeout(() => {
+								blackScreen.style.background = '#000'
+							}, 5000)
+						}
+						else {
+							secretPassCount = 3
+							npcTalk('Что за бред?! Горела же всего одна свеча! Еще и новая цифра на столе...', 5000)
+							secretNumber1.textContent = '0'
+							secretNumber2.textContent = '4'
+							secretNumber3.textContent = '0'
+						}
 					}
 					else if (candles === 3) {
 						secretPassCount = 4
-						npcTalk('Да что здесь вообще происходит?!')
+						npcTalk('Да что здесь вообще происходит?! На столе появилась четвертая цифра... Похоже последняя...', 6000)
 						secretNumber1.textContent = '0'
 						secretNumber2.textContent = '4'
 						secretNumber3.textContent = '0'
@@ -1313,6 +1386,11 @@ document.addEventListener('keydown', function(event) {
 					ITEMS_ON_INVENT.push({
 						id: 0,
 					})
+				}
+				else if (lef >= 127 && lef <= 150 && !INVENT[13].isOnInventory && !INVENT[13].isUsed && thunder) {
+					addInventItem(13)
+					document.getElementById('item13').style.zIndex = -10
+					npcTalk('Откуда здесь... Ноты?', 5000)
 				}
 			}
 
@@ -1491,7 +1569,7 @@ document.addEventListener('keydown', function(event) {
 							}, 1000)
 						}
 						else if (isMonsterLive) {
-							removeInventItem(8)
+							// removeInventItem(8)
 							pauseGame()
 							blackScreen.style.zIndex = 1000
 							blackScreen.style.opacity = 100
@@ -1536,6 +1614,9 @@ document.addEventListener('keydown', function(event) {
 					else if (INVENT[12].isUsed) {
 						npcTalk('Эту дверь лучше не трогать...', 4000)
 					}
+					else {
+						npcTalk('Заперто... Интересно, кто закрыл эту дверь?')
+					}
 				}
 				else if (lef >= 116 && lef <= 150) {
 					npcTalk('Здесь походу трубу прорвало... Фу!')
@@ -1572,7 +1653,6 @@ document.addEventListener('keydown', function(event) {
 					}
 
 					else if (isSkafOpened) {
-						
 						openMiniGame1()
 					} 
 					
@@ -1602,14 +1682,33 @@ document.addEventListener('keydown', function(event) {
 					openFloorMenu1(1)
 				}
 				else if (lef >= 2 && lef <= 24) {
-					npcTalk('coming soon')
+					blackScreenFun(2000, function() {
+						bg_number = 309
+						changeBG('309')
+						lef = 138
+						ReallyFloorNow = 3
+						lefFun()
+						setTimeout(() => {
+							npcTalk('Что? Как я тут оказался?')
+						}, 1000)
+					})
 				}
 			}
 
 			else if (bg_number === 109) {
 				if (lef >= 12 && lef <= 81) {
-					AUDIO.piano.currentTime = 0
-					AUDIO.piano.play()
+					if (INVENT[13].isOnInventory) {
+						startPiano()
+					}
+					else {
+						AUDIO.piano.currentTime = 0
+						AUDIO.piano.play()
+					}
+				}
+				else if (lef >= 90 && lef <= 110 && !INVENT[3].isOnInventory && !INVENT[3].isUsed && isMonsterLive) {
+					addInventItem(3)
+					document.getElementById('item3').style.zIndex = -10
+					npcTalk('Здесь всего одна спичка...', 5000)
 				}
 			}
 
@@ -2380,6 +2479,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			isGameStop = false
 			npcTalk('Ты можешь посмотреть управление в настройках...', 5000)
 		}, 1000)
-	}, 5000)
+	}, 1000)
 })
 
