@@ -683,6 +683,17 @@ h2 {
 	left: calc((100vw - 100vh * 16 / 9) / 2 + 96vh);
 }
 
+#item12 {
+	background: url('/images/item12.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 6vh;
+	top: 69vh;
+	rotate: 125deg;
+	left: calc((100vw - 100vh * 16 / 9) / 2 + 96vh);
+}
+
 
 
 /* MINI-GAMES */

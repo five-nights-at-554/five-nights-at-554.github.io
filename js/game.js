@@ -10,8 +10,9 @@ let secretPassCount = 0
 let isGameStop = true
 let isInfoOpened = false
 let audTF = true
-let speed_storage = localStorage.getItem('speed') || 2
-let speed = parseFloat(speed_storage)
+let speed_storage = localStorage.getItem('speed') || 1
+// let speed = parseFloat(speed_storage)
+let speed = 1
 let isAnyActivityOpen = false
 let candles = 0
 let isMonsterLive = false
@@ -201,7 +202,7 @@ const INVENT = [
 	{
 		id: 10,
 		name: 'СТРАННАЯ ЗАПИСКА',
-		description: '*Непонятные символы* <br>...<br> |*/|  0  |-|  $  T  |⁾  ___  /.  |-0  8  |/|  T  ___  |*/|  */  3  |<sub>)</sub>|  |<  */ <br>...<br> Пароль: $49dt*a3#1@d-m!$t~1&',
+		description: '*Непонятные символы* <br>...<br> |*/|  0  |-|  $  T  |⁾  ___  /.  |-0  8  |/|  T  ___  |*/|  */  3  |<sub>)</sub>|  |<  */ <br>...<br> Ручка на той двери... Я почти отломал ее...',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -210,6 +211,14 @@ const INVENT = [
 		id: 11,
 		name: 'ДВЕРНАЯ РУЧКА',
 		description: 'Не надо было баловаться с той дверью...',
+		isOnInventory: false,
+		isUsed: false
+	},
+
+	{
+		id: 12,
+		name: 'ОТМЫЧКА',
+		description: 'Это старьё сгодится только чтобы... чтобы... <br> Отпереть кабинку в туалете!',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -252,6 +261,7 @@ const AUDIO = {
 	dver_slom: createSound('/js/sounds/dver_slom.mp3'),
 	create_weapon: createSound('/js/sounds/create_weapon.mp3'),
 	trash: createSound('/js/sounds/trash.mp3'),
+	otmychka: createSound('/js/sounds/otmychka.mp3'),
 }
 
 // AUDIO.monster.volume = 0.5
@@ -285,7 +295,7 @@ function dverSound() {
 }
 
 function fadeOutAudio(audioElement, duration) {
-    let volume = 1.0
+    let volume = volume_val / 100
     const interval = 50
 
     const fadeOutInterval = setInterval(() => {
@@ -438,420 +448,461 @@ document.addEventListener('keyup', function(event) {
 	}
 })
 
+const fps = 60
+let lastTime = 0
+const interval = 1000 / fps
 
-function movegg() {
+function fps_optimis(time, action) {
+	if (!lastTime) lastTime = time
+    const deltaTime = time - lastTime
+
+	if (deltaTime >= interval) {
+		action()
+	}
+}
+
+function movegg(timestamp) {
 	const arrow_hint = document.getElementById('arrow_hint')
 
-	if (bg_number === 204) {
-		if (lef >= 64 && lef <= 96) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Горшок с деревом'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
+	if (!lastTime) lastTime = timestamp
+    const deltaTime = timestamp - lastTime
 
-	}
-
-	else if (bg_number === 205) {
-		if (lef >= 91.5 && lef <= 155) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Дверь в актовый зал'
-			arrow_hint.style.color = '#d63a3a'
+	if (deltaTime >= interval) {
+		lastTime = timestamp - (deltaTime % interval)
+		if (bg_number === 204) {
+			if (lef >= 64 && lef <= 96) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Горшок с деревом'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+	
 		}
-		else {
-			arrow_hint.style.display = 'none'
+	
+		else if (bg_number === 205) {
+			if (lef >= 91.5 && lef <= 155) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Дверь в актовый зал'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
 		}
-	}
-
-	else if (bg_number === 1) {
-		if (lef >= 2 && lef <= 40) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Туалетная кабинка'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else if (lef >= 62 && lef <= 104) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Туалетная кабинка'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else if (lef >= 116 && lef <= 148) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Туалетная кабинка'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else if (lef >= 148.5) {
-			pauseGame()
-			blackScreen.style.zIndex = 1000
-			blackScreen.style.opacity = 100
-			setTimeout(() => {
-				bg_number = 311
-				changeBG('311')
-				lef = 21
-				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-				blackScreen.style.opacity = 0
+	
+		else if (bg_number === 1) {
+			if (lef >= 2 && lef <= 40) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Туалетная кабинка'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else if (lef >= 62 && lef <= 104) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Туалетная кабинка'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else if (lef >= 116 && lef <= 148) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Туалетная кабинка'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else if (lef >= 148.5) {
+				pauseGame()
+				blackScreen.style.zIndex = 1000
+				blackScreen.style.opacity = 100
 				setTimeout(() => {
-					blackScreen.style.zIndex = 1
-					isGameStop = false
+					bg_number = 311
+					changeBG('311')
+					lef = 21
+					document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+					blackScreen.style.opacity = 0
+					setTimeout(() => {
+						blackScreen.style.zIndex = 1
+						isGameStop = false
+					}, 1000)
 				}, 1000)
-			}, 1000)
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
 		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 206) {
-		if (lef >= 100 && lef <= 155) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Лестница'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-		document.getElementById('item0').style.zIndex = -10
-	}
-	else if (bg_number === 199) {
-		if (lef >= 4 && lef <= 56) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Лестница'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else if (lef >= 124 && lef <= 150) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Женский туалет'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-	else if (bg_number === 198) {
-		if (lef >= 46 && lef <= 67) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Кабинет информатики'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-	else if (bg_number === 197) {
-		if (lef >= 2 && lef <= 150) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Стол для пинг-понга'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 202) {
-		if (lef >= 56 && lef <= 98) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Шкаф с наградами'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 304) {
-		if (lef >= 54 && lef <= 104) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Кабинет химии'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else if (lef >= 107 && lef <= 140) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Мусор'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 305) {
-		if (lef >= 2 && lef <= 30) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Женский туалет'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 303) {
-		if (lef >= 98.5 && lef <= 136) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Кладовка'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 207) {
-		if (!INVENT[0].isOnInventory && !INVENT[0].isUsed && candles >= 1) {
-			document.getElementById('item0').style.zIndex = 3
-		}
-		else {
+	
+		else if (bg_number === 206) {
+			if (lef >= 100 && lef <= 155) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Лестница'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
 			document.getElementById('item0').style.zIndex = -10
 		}
-
-		if (lef >= 58 && lef <= 82) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Свечи'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles >= 1) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Какой-то ключ...'
-			arrow_hint.style.color = '#3ad6c9'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 208) {
-		document.getElementById('item0').style.zIndex = -10
-		if (lef >= 102.5 && lef <= 150) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Мужской туалет'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 307) {
-		if (lef >= 44 && lef <= 102) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Скамейка'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 308) {
-		if (lef >= 94 && lef <= 148.5 && !dverBroken) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Дверь на лестницу'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 310) {
-		if (!INVENT[10].isOnInventory && !INVENT[10].isUsed && monster_on_toilet_voice) {
-			document.getElementById('item10').style.zIndex = 3
-		}
-		else {
-			document.getElementById('item10').style.zIndex = -10
-		}
-
-		if (lef >= 72.5 && lef <= 102.5 && monster_on_toilet_voice) {
-			if (!INVENT[10].isOnInventory && !INVENT[10].isUsed) {
+		else if (bg_number === 199) {
+			if (lef >= 4 && lef <= 56) {
 				arrow_hint.style.display = 'block'
-				arrow_hint.innerHTML = 'Записка'
+				arrow_hint.innerHTML = 'Лестница'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else if (lef >= 124 && lef <= 150) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Женский туалет'
 				arrow_hint.style.color = '#d63a3a'
 			}
 			else {
-				arrow_hint.style.display = 'block'
-				arrow_hint.innerHTML = 'Надпись на стене'
-				arrow_hint.style.color = '#d63a3a'
+				arrow_hint.style.display = 'none'
 			}
 		}
-		else {
-			arrow_hint.style.display = 'none'
+		else if (bg_number === 198) {
+			if (lef >= 46 && lef <= 67) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Кабинет информатики'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
 		}
-	}
+		else if (bg_number === 197) {
+			if (lef >= 2 && lef <= 150) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Стол для пинг-понга'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
 
-	else if (bg_number === 311) {
-		document.getElementById('item10').style.zIndex = -10
-		if (lef >= 88.5 && lef <= 132.5) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Лестница'
-			arrow_hint.style.color = '#d63a3a'
+		else if (bg_number === 200) {
+				document.getElementById('item12').style.zIndex = -10
 		}
-		else if (lef >= 2 && lef <= 40) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Мужской туалет'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
 
-	else if (bg_number === 203) {
-		if (lef >= 27 && lef <= 62) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Окно на улицу'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
+		else if (bg_number === 201) {
+			if (!INVENT[12].isOnInventory && !INVENT[12].isUsed) {
+				document.getElementById('item12').style.zIndex = 3
+			}
+			else {
+				document.getElementById('item12').style.zIndex = -10
+			}
 
-	else if (bg_number === 306) {
-		if (lef >= 38 && lef <= 82) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Лестница'
-			arrow_hint.style.color = '#d63a3a'
+			if (lef >= 80 && lef <= 95 && !INVENT[12].isOnInventory && !INVENT[12].isUsed) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Что-то лежит на полу...'
+				arrow_hint.style.color = '#3ad6c9'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
 		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 110) {
-		if (lef >= 74 && lef <= 120) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Лестница'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else if (lef >= 2 && lef <= 24) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Туалет'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 111) {
-		if (lef >= 94 && lef <= 139) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Кабинет информатики'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 109) {
-		if (lef >= 12 && lef <= 81) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Старое пианино'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else if (bg_number === 309) {
-		document.getElementById('item10').style.zIndex = -10
-		if (lef >= 118 && lef <= 150) {
-			arrow_hint.style.display = 'block'
-			arrow_hint.innerHTML = 'Женский туалет'
-			arrow_hint.style.color = '#d63a3a'
-		}
-		else {
-			arrow_hint.style.display = 'none'
-		}
-	}
-
-	else {
-		arrow_hint.style.display = 'none'
-	}
-
-    if (isArrowLeftPressed) {
- 
-        lef = lef - speed
-        lefFun()
-    }
-    if (isArrowRightPressed) {
-
-        lef = lef + speed
-        lefFun()
-    }
-
-	if (lef <= 2) {
-		if ((bg_number > 197 && bg_number < 250) || (bg_number > 303 && bg_number <= 350) || (bg_number > 109 && bg_number <= 150)) {
-			--bg_number
-			setMapRoom(bg_number)
-			if (monster_on_toilet_voice && bg_number === 310) {
-				changeBG('310-help')
 	
-			}
-			else if (candles > 0 && bg_number === 207) {
-				if (candles === 1) {
-					changeBG('207-1')
-				}
-				else if (candles === 2) {
-					changeBG('207-2')
-				}
-				else if (candles === 3) {
-					changeBG('207-3')
-				}
-			}
-			else if (bg_number === 308 && dverBroken) {
-				changeBG('308-2')
-			}
-			else if (bg_number === 303 && kladovka_door) {
-				changeBG('303-2')
+		else if (bg_number === 202) {
+			document.getElementById('item12').style.zIndex = -10
+			if (lef >= 56 && lef <= 98) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Шкаф с наградами'
+				arrow_hint.style.color = '#d63a3a'
 			}
 			else {
-				changeBG(bg_number)
+				arrow_hint.style.display = 'none'
 			}
-			lef = 148.5
-			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-		} else {
-			lef = 2
-			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
 		}
-	}
-	else if (lef >= 150) {
-		if ((bg_number < 208 && bg_number > 150) || (bg_number < 312 && bg_number > 260) || (bg_number < 111 && bg_number >= 50)) {
-			++bg_number
-			setMapRoom(bg_number)
-			if (monster_on_toilet_voice && bg_number === 310) {
-				changeBG('310-help')	
+	
+		else if (bg_number === 304) {
+			if (lef >= 54 && lef <= 104) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Кабинет химии'
+				arrow_hint.style.color = '#d63a3a'
 			}
-			else if (candles > 0 && bg_number === 207) {
-				if (candles === 1) {
-					changeBG('207-1')
-				} 
-				else if (candles === 2) {
-					changeBG('207-2')
-				}
-				else if (candles === 3) {
-					changeBG('207-3')
-				}
-			}
-			else if (bg_number === 308 && dverBroken) {
-				changeBG('308-2')
-			}
-			else if (bg_number === 303 && kladovka_door) {
-				changeBG('303-2')
+			else if (lef >= 107 && lef <= 140) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Мусор'
+				arrow_hint.style.color = '#d63a3a'
 			}
 			else {
-				changeBG(bg_number)
+				arrow_hint.style.display = 'none'
 			}
-			lef = 2
-			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
-		} else {
-			lef = 148.5
-			document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+		}
+	
+		else if (bg_number === 305) {
+			if (lef >= 2 && lef <= 30) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Женский туалет'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 303) {
+			if (lef >= 98.5 && lef <= 136) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Кладовка'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 207) {
+			if (!INVENT[0].isOnInventory && !INVENT[0].isUsed && candles >= 1) {
+				document.getElementById('item0').style.zIndex = 3
+			}
+			else {
+				document.getElementById('item0').style.zIndex = -10
+			}
+	
+			if (lef >= 58 && lef <= 82) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Свечи'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else if (lef >= 102 && lef <= 122 && !INVENT[0].isOnInventory && !INVENT[0].isUsed && candles >= 1) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Какой-то ключ...'
+				arrow_hint.style.color = '#3ad6c9'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 208) {
+			document.getElementById('item0').style.zIndex = -10
+			if (lef >= 102.5 && lef <= 150) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Мужской туалет'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 307) {
+			if (lef >= 44 && lef <= 102) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Скамейка'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 308) {
+			if (lef >= 94 && lef <= 148.5 && !dverBroken) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Дверь на лестницу'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 310) {
+			if (!INVENT[10].isOnInventory && !INVENT[10].isUsed && monster_on_toilet_voice) {
+				document.getElementById('item10').style.zIndex = 3
+			}
+			else {
+				document.getElementById('item10').style.zIndex = -10
+			}
+	
+			if (lef >= 72.5 && lef <= 102.5 && monster_on_toilet_voice) {
+				if (!INVENT[10].isOnInventory && !INVENT[10].isUsed) {
+					arrow_hint.style.display = 'block'
+					arrow_hint.innerHTML = 'Записка'
+					arrow_hint.style.color = '#d63a3a'
+				}
+				else {
+					arrow_hint.style.display = 'block'
+					arrow_hint.innerHTML = 'Надпись на стене'
+					arrow_hint.style.color = '#d63a3a'
+				}
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 311) {
+			document.getElementById('item10').style.zIndex = -10
+			if (lef >= 88.5 && lef <= 132.5) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Лестница'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else if (lef >= 2 && lef <= 40) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Мужской туалет'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 203) {
+			if (lef >= 27 && lef <= 62) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Окно на улицу'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 306) {
+			if (lef >= 38 && lef <= 82) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Лестница'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 110) {
+			if (lef >= 74 && lef <= 120) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Лестница'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else if (lef >= 2 && lef <= 24) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Туалет'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 111) {
+			if (lef >= 94 && lef <= 139) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Кабинет информатики'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 109) {
+			if (lef >= 12 && lef <= 81) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Старое пианино'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else if (bg_number === 309) {
+			document.getElementById('item10').style.zIndex = -10
+			if (lef >= 118 && lef <= 150) {
+				arrow_hint.style.display = 'block'
+				arrow_hint.innerHTML = 'Женский туалет'
+				arrow_hint.style.color = '#d63a3a'
+			}
+			else {
+				arrow_hint.style.display = 'none'
+			}
+		}
+	
+		else {
+			arrow_hint.style.display = 'none'
+		}
+	
+		if (isArrowLeftPressed) {
+	 
+			lef = lef - speed
+			lefFun()
+		}
+		if (isArrowRightPressed) {
+	
+			lef = lef + speed
+			lefFun()
+		}
+	
+		if (lef <= 2) {
+			if ((bg_number > 197 && bg_number < 250) || (bg_number > 303 && bg_number <= 350) || (bg_number > 109 && bg_number <= 150)) {
+				--bg_number
+				setMapRoom(bg_number)
+				if (monster_on_toilet_voice && bg_number === 310) {
+					changeBG('310-help')
+		
+				}
+				else if (candles > 0 && bg_number === 207) {
+					if (candles === 1) {
+						changeBG('207-1')
+					}
+					else if (candles === 2) {
+						changeBG('207-2')
+					}
+					else if (candles === 3) {
+						changeBG('207-3')
+					}
+				}
+				else if (bg_number === 308 && dverBroken) {
+					changeBG('308-2')
+				}
+				else if (bg_number === 303 && kladovka_door) {
+					changeBG('303-2')
+				}
+				else {
+					changeBG(bg_number)
+				}
+				lef = 148.5
+				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+			} else {
+				lef = 2
+				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+			}
+		}
+		else if (lef >= 150) {
+			if ((bg_number < 208 && bg_number > 150) || (bg_number < 312 && bg_number > 260) || (bg_number < 111 && bg_number >= 50)) {
+				++bg_number
+				setMapRoom(bg_number)
+				if (monster_on_toilet_voice && bg_number === 310) {
+					changeBG('310-help')	
+				}
+				else if (candles > 0 && bg_number === 207) {
+					if (candles === 1) {
+						changeBG('207-1')
+					} 
+					else if (candles === 2) {
+						changeBG('207-2')
+					}
+					else if (candles === 3) {
+						changeBG('207-3')
+					}
+				}
+				else if (bg_number === 308 && dverBroken) {
+					changeBG('308-2')
+				}
+				else if (bg_number === 303 && kladovka_door) {
+					changeBG('303-2')
+				}
+				else {
+					changeBG(bg_number)
+				}
+				lef = 2
+				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+			} else {
+				lef = 149
+				document.getElementById('gg').style.left = `calc((100vw - 100vh * 16 / 9) / 2 + 2vh + ${lef}vh)`
+			}
 		}
 	}
 	
@@ -1413,7 +1464,7 @@ document.addEventListener('keydown', function(event) {
 						if (INVENT[8].isOnInventory && !isMonsterLive) {
 							isMonsterLive = true
 							++candles
-							removeInventItem(8)
+							// removeInventItem(8)
 							pauseGame()
 							blackScreen.style.zIndex = 1000
 							blackScreen.style.opacity = 100
@@ -1474,12 +1525,17 @@ document.addEventListener('keydown', function(event) {
 			}
 
 			else if (bg_number === 1) {
-				if (lef >= 2 && lef <= 40) { 
-					npcTalk('Ничего интересного...')
+				if (lef >= 2 && lef <= 40) {
+					npcTalk('Ничего особенного...')
 				}
 				else if (lef >= 62 && lef <= 104) {
-					
-					npcTalk('Заперто... Интересно, а эта дверь закрыта изнутри?', 4000)
+					if (INVENT[12].isOnInventory) {
+						INVENT[12].isUsed = true
+						otmychkaStart()
+					}
+					else if (INVENT[12].isUsed) {
+						npcTalk('Эту дверь лучше не трогать...', 4000)
+					}
 				}
 				else if (lef >= 116 && lef <= 150) {
 					npcTalk('Здесь походу трубу прорвало... Фу!')
@@ -1727,6 +1783,14 @@ document.addEventListener('keydown', function(event) {
 					}
 				}
 			}
+
+			else if (bg_number === 201) {
+				if (lef >= 80 && lef <= 95 && !INVENT[12].isOnInventory && !INVENT[12].isUsed) {
+					INVENT[12].isOnInventory = true
+					npcTalk('Это... Отмычка? Откуда она здесь?')
+					addInventItem(12)
+				}
+			}
 		}
 	}
 	else if (isAnyActivityOpen && event.key === InteractKey) {
@@ -1805,11 +1869,11 @@ document.getElementById('volume').addEventListener('input', () => {
 	muz_game()
 })
 
-document.getElementById('speed-vaule').addEventListener('input', () => {
-	let speed_value = document.getElementById('speed-vaule').value
-	speed = speed_value / 10
-	document.getElementById('speed-span').innerHTML = speed_value * 10
-})
+// document.getElementById('speed-vaule').addEventListener('input', () => {
+// 	let speed_value = document.getElementById('speed-vaule').value
+// 	speed = speed_value / 10
+// 	document.getElementById('speed-span').innerHTML = speed_value * 10
+// })
 
 document.querySelector('#close_settings').addEventListener('click', () => {
 	volume_val = document.getElementById('volume').value
@@ -2321,6 +2385,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		setTimeout(() => {
 			document.getElementById('loading-window').style.zIndex = -10
 			isGameStop = false
+			npcTalk('Ты можешь посмотреть управление в настройках...', 5000)
 		}, 1000)
-	}, 4000)
+	}, 5000)
 })
+
