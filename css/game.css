@@ -397,7 +397,7 @@ h2 {
 .gg-img {
 	position: fixed;
 	z-index: 200;
-	height: 80vh;
+	max-height: 80vh;
 	display: none;
 	top: 14vh;
 }
@@ -960,4 +960,44 @@ h2 {
 
 	opacity: 1;
 	transition: opacity 1s;
+}
+
+
+#monster1 {
+	aspect-ratio: 750 / 1311;
+	position: fixed;
+	top: 17.5vh;
+	height: 70vh;
+	background: url('/images/monster1.png');
+	background-position: center;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	z-index: -4;
+	left: calc((100vw - 100vh * 16 / 9) / 2 + 30vh);
+	animation: rota 9s infinite cubic-bezier(0.5, 0, 0.5, 1);
+}
+
+#weapon {
+	aspect-ratio: 1 / 1;
+	margin-top: 18vh;
+	padding-right: 10vh;
+	height: 50vh;
+	animation: hit 0.5s infinite linear;
+}
+
+
+@keyframes rota {
+    0% { transform: rotate(1deg); }
+    25% { transform: rotate(-1deg); }
+    50% { transform: rotate(1deg); }
+    75% { transform: rotate(-1deg); }
+    100% { transform: rotate(1deg); }
+}
+
+@keyframes hit {
+	0% { margin-right: 10vh; }
+	25% { margin-right: 12vh; }
+	50% { margin-right: 16vh; }
+	75% { margin-right: 12vh; }
+	100% { margin-right: 10vh; }
 }

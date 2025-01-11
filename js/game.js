@@ -946,12 +946,12 @@ function movegg(timestamp) {
 		}
 
 		if (bg_number === 108) {
-			if (lef >= 140) {
-				lef = 140
+			if (lef >= 145) {
+				lef = 145
 				lefFun()
 			}
-			else if (lef <= 15) {
-				lef = 15
+			else if (lef <= 75) {
+				lef = 75
 				lefFun()
 			}
 		}
@@ -966,19 +966,19 @@ document.addEventListener('keydown', (event) => {
     if (!isGameStop) {
 		if (event.key === MoveLeftKey && !isArrowLeftPressed) {
 			if (ng_2024 || ngHat) {
-				changeGG('left-ng')
+				if (!isfiting) changeGG('left-ng')
 			}
 			else {
-				changeGG('left')
+				if (!isfiting) changeGG('left')
 			}
 			isArrowLeftPressed = true
 			isArrowRightPressed = false
 		} else if (event.key === MoveRightKey && !isArrowRightPressed) {
 			if (ng_2024 || ngHat) {
-				changeGG('right-ng')
+				if (!isfiting) changeGG('right-ng')
 			}
 			else {
-				changeGG('right')
+				if (!isfiting) changeGG('right')
 			}
 			isArrowRightPressed = true
 			isArrowLeftPressed = false
@@ -1112,7 +1112,7 @@ function handleKeyDown(event) {
                 floorNow = 2
             }
             updateActiveFloor()
-        } else if (event.key === ' ') {
+        } else if (event.key === ' ' || event.key === 'Enter') {
             if (floorNow === 3) {
 				if (ReallyFloorNow != 3) {
 					pauseGame()
@@ -1194,8 +1194,7 @@ function handleKeyDown2(event) {
                 floorNow = 2
             }
             updateActiveFloor()
-        } else if (event.key === ' ') {
-
+        } else if (event.key === ' ' || event.key === 'Enter') {
 			if (floorNow === 3) {
 				if (ReallyFloorNow != 3) {
 					pauseGame()
@@ -1944,8 +1943,8 @@ document.getElementById('volume-span').innerHTML = volume_val
 function settingsView() {
 	document.querySelector('.settingsView-box').style.zIndex = 850
 	document.querySelector('.settingsView-box').style.opacity = 100
-	document.getElementById('speed-vaule').value = speed * 10
-	document.getElementById('speed-span').innerHTML = speed * 100
+	// document.getElementById('speed-vaule').value = speed * 10
+	// document.getElementById('speed-span').innerHTML = speed * 100
 	settingsOn = true
 	// if (isConsoleUnlocked) {
 	// 	devConsoleInset.style.display = 'flex'
@@ -2424,7 +2423,8 @@ document.addEventListener('keydown', function(event) {
 				document.getElementById('descript_item-descript').innerHTML = INVENT[a].description
 			}
 			
-			changeGG('right-ng')
+			if (!isfiting) changeGG('right-ng')
+			else changeGG('left-ng')
 			document.querySelector('.inventoryView-box').style.opacity = 0
 			setTimeout(function() {
 				document.querySelector('.inventoryView-box').style.zIndex = -10
