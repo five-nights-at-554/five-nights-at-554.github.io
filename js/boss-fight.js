@@ -7,9 +7,11 @@ function startPiano() {
         AUDIO.rain.play()
         AUDIO.rain.loop = true
         setTimeout(() => {
+            let ggimg = document.getElementById('gg-img')
             lef = 116
             lefFun()
-            gg.style.height = 
+            ggimg.style.height = '60vh'
+            gg.style.height = '60vh'
             AUDIO.vals.play()
             AUDIO.molnia.currentTime = 0
             AUDIO.molnia.play()
