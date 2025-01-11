@@ -156,7 +156,7 @@ const INVENT = [
 	{
 		id: 4,
 		name: 'НОВОГОДНЯЯ ШЛЯПА',
-		description: 'Всех с новым годом! <br> Нажмите "space" чтобы надеть',
+		description: 'Всех с новым годом! <br> Нажмите "Space" чтобы надеть',
 		isOnInventory: false,
 		isUsed: false
 	},
@@ -1112,7 +1112,7 @@ function handleKeyDown(event) {
                 floorNow = 2
             }
             updateActiveFloor()
-        } else if (event.key === 'space') {
+        } else if (event.key === ' ') {
             if (floorNow === 3) {
 				if (ReallyFloorNow != 3) {
 					pauseGame()
@@ -1194,7 +1194,7 @@ function handleKeyDown2(event) {
                 floorNow = 2
             }
             updateActiveFloor()
-        } else if (event.key === 'space') {
+        } else if (event.key === ' ') {
 
 			if (floorNow === 3) {
 				if (ReallyFloorNow != 3) {
@@ -2405,7 +2405,7 @@ function checkItemsCount() {
 }
 
 document.addEventListener('keydown', function(event) {
-	if (event.key === 'space' && inventoryOn) {
+	if (event.key === ' ' && inventoryOn) {
 		if (ITEMS_ON_INVENT[slotnow - 1].id === 4) {
 			let hatCount = 0
 			INVENT[4].isOnInventory = false
