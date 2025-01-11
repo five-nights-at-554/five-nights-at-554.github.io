@@ -962,6 +962,26 @@ h2 {
 	transition: opacity 1s;
 }
 
+#monster1_hp {
+	aspect-ratio: 10 / 1;
+	position: fixed;
+	z-index: -4;
+	top: 2vh;
+	height: 30vh;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	left: calc((100vw - 100vh * 16 / 9) / 2 + 20vh);
+}
+
+.mhps {
+	aspect-ratio: 1 / 1;
+	height: 5vh;
+	margin: 1vh;
+	background: url('/images/hp_2.png');
+	background-size: 100%;
+	background-position: center;
+}
 
 #monster1 {
 	aspect-ratio: 750 / 1311;
@@ -974,17 +994,52 @@ h2 {
 	background-repeat: no-repeat;
 	z-index: -4;
 	left: calc((100vw - 100vh * 16 / 9) / 2 + 30vh);
+	transition: left 3s, rotate 1s, top 1s;
 	animation: rota 9s infinite cubic-bezier(0.5, 0, 0.5, 1);
 }
 
 #weapon {
 	aspect-ratio: 1 / 1;
-	margin-top: 18vh;
-	padding-right: 10vh;
+	display: none;
+	position: fixed;
+	z-index: 10;
+	top: 31vh;
 	height: 50vh;
-	animation: hit 0.5s infinite linear;
+	left: calc((100vw - 100vh * 16 / 9) / 2 + 116vh - 25vh);
+	animation: hit 0.5s linear;
+	/* transition: left 1s; */
+	/* animation: hit 0.5s infinite linear; */
 }
 
+#win-screen {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	aspect-ratio: 1920/1080;
+	height: 100vh;
+	position: fixed;
+	z-index: -10;
+	background: #dfdfdf;
+	opacity: 0;
+	transition: opacity 3s;
+}
+#win-screen h2 {
+	text-align: center;
+	font-size: 10vh;
+}
+#win-screen h3 {
+	text-align: center;
+	font-size: 5vh;
+	margin: 0 0 3vh 0;
+}
+#win-screen button {
+	text-align: center;
+	font-size: 5vh;
+	padding: 1vh 2vh;
+	border-radius: 1vh;
+	cursor: pointer;
+}
 
 @keyframes rota {
     0% { transform: rotate(1deg); }
@@ -995,9 +1050,9 @@ h2 {
 }
 
 @keyframes hit {
-	0% { margin-right: 10vh; }
-	25% { margin-right: 12vh; }
-	50% { margin-right: 16vh; }
-	75% { margin-right: 12vh; }
-	100% { margin-right: 10vh; }
+	0% { left: calc((100vw - 100vh * 16 / 9) / 2 + 116vh - 25vh); }
+	25% { left: calc((100vw - 100vh * 16 / 9) / 2 + 116vh - 25vh); }
+	50% { left: calc((100vw - 100vh * 16 / 9) / 2 + 116vh - 25vh); }
+	75% { left: calc((100vw - 100vh * 16 / 9) / 2 + 116vh - 25vh); }
+	100% { left: calc((100vw - 100vh * 16 / 9) / 2 + 116vh - 25vh); }
 }

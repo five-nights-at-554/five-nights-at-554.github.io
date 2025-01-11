@@ -6,12 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="css/game.css">
 	<title>five nights at 554</title>
-	<!-- <script>
+	<script>
 		window.addEventListener('beforeunload', function (event) {
             const confirmationMessage = 'Весь прогресс будет потерян. Вы точно хотите выйти?'
             event.returnValue = confirmationMessage
         })
-	</script> -->
+	</script>
 	<link rel="shortcut icon" href="icon.ico">
 </head>
 
@@ -69,6 +69,11 @@
 		<img draggable="false" class="game-bg" id="game-bg-312" src="images/312-game-bg.jpg" alt="none">
 
 		<div id="black-screen"></div>
+		<div id="win-screen">
+			<h2>МОЛОДЕЦ, ТЫ ПОБЕДИЛ )</h2>
+			<h3>разработчик пока не придумал концовку, ждите обновлений</h3>
+			<button onclick="window.location = 'index.html'">В ГЛАВНОЕ МЕНЮ</button>
+		</div>
 		<div id="invisible-screen"></div>
 
 		<div id="gg">
@@ -361,6 +366,18 @@ l-94 -205 0 -200 c0 -260 28 -418 106 -622 124 -318 358 -547 668 -652 398
 		<div class="items" id="item12"></div>
 		<div class="items" id="item13"></div>
 
+		<div id="monster1_hp">
+			<div class="mhps" id="mhp1"></div>
+			<div class="mhps" id="mhp2"></div>
+			<div class="mhps" id="mhp3"></div>
+			<div class="mhps" id="mhp4"></div>
+			<div class="mhps" id="mhp5"></div>
+			<div class="mhps" id="mhp6"></div>
+			<div class="mhps" id="mhp7"></div>
+			<div class="mhps" id="mhp8"></div>
+			<div class="mhps" id="mhp9"></div>
+			<div class="mhps" id="mhp10"></div>
+		</div>
 		<div id="monster1"></div>
 
 

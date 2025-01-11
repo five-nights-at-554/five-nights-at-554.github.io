@@ -277,6 +277,8 @@ const AUDIO = {
 	molnia: createSound('/js/sounds/molnia.mp3'),
 	vals: createSound('/js/sounds/vals.mp3'),
 	rain: createSound('/js/sounds/rain.mp3'),
+	hit: createSound('/js/sounds/hit.mp3'),
+	damage: createSound('/js/sounds/damage.mp3'),
 }
 
 // AUDIO.monster.volume = 0.5
@@ -869,10 +871,16 @@ function movegg(timestamp) {
 		if (isArrowLeftPressed) {
 			lef = lef - speed
 			lefFun()
+			if (isfiting) {
+				lefFunBoss()
+			}
 		}
 		if (isArrowRightPressed) {
 			lef = lef + speed
 			lefFun()
+			if (isfiting) {
+				lefFunBoss()
+			}
 		}
 	
 		if (lef <= 2) {
@@ -950,8 +958,8 @@ function movegg(timestamp) {
 				lef = 145
 				lefFun()
 			}
-			else if (lef <= 75) {
-				lef = 75
+			else if (lef <= 85) {
+				lef = 85
 				lefFun()
 			}
 		}
@@ -2480,6 +2488,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			isGameStop = false
 			npcTalk('Ты можешь посмотреть управление в настройках...', 5000)
 		}, 1000)
-	}, 1000)
+	}, 5000)
 })
 
