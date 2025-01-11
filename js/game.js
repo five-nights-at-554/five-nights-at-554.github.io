@@ -1341,6 +1341,7 @@ document.addEventListener('keydown', function(event) {
 								AUDIO.spichka.play()
 								setTimeout(() => {
 									AUDIO.molnia.play()
+									changeBG('207-3')
 									blackScreen.style.background = '#fff'
 									thunder = true
 									AUDIO.game_bg.play()
