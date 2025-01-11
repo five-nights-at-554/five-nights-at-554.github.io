@@ -100,6 +100,7 @@ function checkCommand() {
 		}
 	}
 	else if (CCvalue === 'password unlock') {
+		secretPassCount = 4
 		secretNumber1.textContent = firstPassNum
 		secretNumber2.textContent = secondPassNum
 		secretNumber3.textContent = ThirdPassNum

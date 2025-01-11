@@ -1,5 +1,5 @@
 // СПИСОК ДЕЛ:
-// Пинг-понг
+// Пинг-понг потом
 // Туалет на первом этаже
 // Добавить способ получения спичек => когда поджигаешь 3 свечу молния бьет и появляются ноты
 // Добавить концовку босс файт с монстром
@@ -262,6 +262,7 @@ const AUDIO = {
 	create_weapon: createSound('/js/sounds/create_weapon.mp3'),
 	trash: createSound('/js/sounds/trash.mp3'),
 	otmychka: createSound('/js/sounds/otmychka.mp3'),
+	pin: createSound('/js/sounds/pin.mp3'),
 }
 
 // AUDIO.monster.volume = 0.5
@@ -1264,7 +1265,6 @@ document.addEventListener('keydown', function(event) {
 					}
 					else {
 						npcTalk('Не открывается!')
-						
 					}
 				}
 			}
@@ -1624,24 +1624,17 @@ document.addEventListener('keydown', function(event) {
 						}
 						else if (secretPassCount === 4) {
 							npcTalk(`Хм... Пароль из 4 цифр? Я вроде как находил что-то подобное... Как там, ${randomPassword}?`, 4000)
-							pauseGame()
+							AUDIO.pin.play()
 							setTimeout(() => {
-								blackScreen.style.zIndex = 1000
-								blackScreen.style.opacity = 100
+								npcTalk('Отлично! Пароль подошел!', 4000)
+								isInfoOpened = true
+								isConsoleUnlocked = true
+								localStorage.setItem('isConsoleUnlocked', true)
 								setTimeout(() => {
-									setTimeout(() => {
-										blackScreen.style.opacity = 0
-										npcTalk('Отлично! Пароль подошел!', 4000)
-										isInfoOpened = true
-										isConsoleUnlocked = true
-										localStorage.setItem('isConsoleUnlocked', true)
-										setTimeout(() => {
-											blackScreen.style.zIndex = 1
-											isGameStop = false
-										}, 1000)
-									}, 2500)
-								}, 1000)
-							}, 3000)
+									isGameStop = false
+									npcTalk('Теперь я могу открыть консоль разрабочика на клавишу "/"...', 5000)
+								}, 3000)
+							}, 2000)
 						}
 					}
 					else {
